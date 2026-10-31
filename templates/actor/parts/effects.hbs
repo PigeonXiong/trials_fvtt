@@ -1,0 +1,25 @@
+<div class="item-section effects">
+  <header class="item-header">
+    <h3>{{localize "TRAILS.Effect.Title"}}</h3>
+    {{#if @root.editable}}
+    <a class="item-create" data-action="createEffect" data-tooltip="TRAILS.Sheet.Create"><i class="fa-solid fa-plus"></i></a>
+    {{/if}}
+  </header>
+  <ol class="item-list">
+    {{#each effects}}
+    <li class="item {{#if disabled}}disabled{{/if}}" data-effect-id="{{id}}" data-parent-id="{{parentId}}">
+      <img class="item-img" src="{{img}}" alt="">
+      <a class="item-name" data-action="editEffect">{{name}}</a>
+      <span class="item-meta">{{source}}</span>
+      <div class="item-controls">
+        {{#if @root.editable}}
+        <a data-action="toggleEffect" data-tooltip="TRAILS.Effect.Toggle"><i class="fa-solid {{#if disabled}}fa-toggle-off{{else}}fa-toggle-on{{/if}}"></i></a>
+        {{#if canDelete}}<a data-action="deleteEffect" data-tooltip="TRAILS.Sheet.Delete"><i class="fa-solid fa-trash"></i></a>{{/if}}
+        {{/if}}
+      </div>
+    </li>
+    {{else}}
+    <li class="empty">{{localize "TRAILS.Effect.Hint"}}</li>
+    {{/each}}
+  </ol>
+</div>

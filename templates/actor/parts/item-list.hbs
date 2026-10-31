@@ -1,0 +1,25 @@
+<div class="item-section">
+  <header class="item-header">
+    <h3>{{localize title}}</h3>
+    {{#if @root.editable}}
+    <a class="item-create" data-action="createItem" data-type="{{type}}" data-tooltip="TRAILS.Sheet.Create"><i class="fa-solid fa-plus"></i></a>
+    {{/if}}
+  </header>
+  <ol class="item-list">
+    {{#each items}}
+    <li class="item" data-item-id="{{id}}">
+      <img class="item-img" src="{{img}}" alt="">
+      <a class="item-name" data-action="editItem">{{name}}</a>
+      <span class="item-meta">{{meta}}</span>
+      <div class="item-controls">
+        <a data-action="useItem" data-tooltip="TRAILS.Sheet.Post"><i class="fa-solid fa-comment"></i></a>
+        {{#if @root.editable}}
+        <a data-action="deleteItem" data-tooltip="TRAILS.Sheet.Delete"><i class="fa-solid fa-trash"></i></a>
+        {{/if}}
+      </div>
+    </li>
+    {{else}}
+    <li class="empty">{{localize "TRAILS.Sheet.Empty"}}</li>
+    {{/each}}
+  </ol>
+</div>

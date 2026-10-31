@@ -1,0 +1,49 @@
+<section class="tab main {{#if (eq tab 'main')}}active{{/if}}" data-group="primary" data-tab="main">
+  {{> "systems/trails-of-destiny/templates/actor/parts/combat-strip.hbs"}}
+
+  <h3 class="section-title">{{localize "TRAILS.Sheet.Abilities"}}</h3>
+  <div class="abilities">
+    {{#each abilities}}
+    <div class="ability">
+      <a class="ability-name rollable" data-action="rollAbility" data-ability="{{key}}">{{localize label}}</a>
+      <input type="number" name="system.abilities.{{key}}.value" value="{{value}}" min="0">
+      <span class="ability-dice {{#if challenges}}challenge{{/if}}">
+        {{#if challenges}}{{localize "TRAILS.Roll.Challenge"}}{{else}}+{{dice}}{{/if}}
+      </span>
+    </div>
+    {{/each}}
+  </div>
+
+  <h3 class="section-title">{{localize "TRAILS.Sheet.Skills"}}</h3>
+  <ol class="skills">
+    <li class="skill skill-header">
+      <span>{{localize "TRAILS.Sheet.Skill"}}</span>
+      <span>{{localize "TRAILS.Sheet.Ability"}}</span>
+      <span data-tooltip="TRAILS.Sheet.SkillDiceHint">{{localize "TRAILS.Sheet.SkillDice"}}</span>
+      <span>{{localize "TRAILS.Sheet.Total"}}</span>
+    </li>
+    {{#each skills}}
+    <li class="skill">
+      <a class="rollable" data-action="rollSkill" data-skill="{{key}}">{{localize label}}</a>
+      <select name="system.skills.{{key}}.ability">{{selectOptions @root.config.abilityAbbr selected=ability localize=true}}</select>
+      <input type="number" name="system.skills.{{key}}.dice" value="{{dice}}" min="0">
+      <span class="skill-total">+{{total}}</span>
+    </li>
+    {{/each}}
+  </ol>
+
+  <details class="adjustments">
+    <summary>{{localize "TRAILS.Sheet.Adjustments"}}</summary>
+    <p class="hint">{{localize "TRAILS.Sheet.AdjustmentsHint"}}</p>
+    <div class="adjust-grid">
+      {{#each resources}}
+      <label>{{localize label}}<input type="number" name="system.resources.{{key}}.bonus" value="{{bonus}}"></label>
+      {{/each}}
+      <label>{{localize "TRAILS.DefenseTarget.guard"}}<input type="number" name="system.defenses.guard.bonus" value="{{system.defenses.guard.bonus}}"></label>
+      <label>{{localize "TRAILS.DefenseTarget.ward"}}<input type="number" name="system.defenses.ward.bonus" value="{{system.defenses.ward.bonus}}"></label>
+      <label>{{localize "TRAILS.Sheet.ArmorRank"}}<input type="number" name="system.defenses.armorRank.bonus" value="{{system.defenses.armorRank.bonus}}"></label>
+      <label>{{localize "TRAILS.Sheet.Actions"}}<input type="number" name="system.actions.bonus" value="{{system.actions.bonus}}"></label>
+      <label>{{localize "TRAILS.Sheet.InitiativeDice"}}<input type="number" name="system.initiative.bonus" value="{{system.initiative.bonus}}" min="0"></label>
+    </div>
+  </details>
+</section>

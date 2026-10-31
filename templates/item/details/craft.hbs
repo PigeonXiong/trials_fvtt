@@ -1,0 +1,51 @@
+<div class="form-grid">
+  <label>{{localize "TRAILS.Item.CraftType"}}
+    <select name="system.craftType">{{selectOptions config.craftTypes selected=system.craftType localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Resource"}}
+    <select name="system.resource">{{selectOptions config.craftResources selected=system.resource localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Cost"}}
+    <input type="number" name="system.cost" value="{{system.cost}}" min="0">
+  </label>
+  <label>{{localize "TRAILS.Item.ActionCost"}}
+    <input type="number" name="system.actions" value="{{system.actions}}" min="0">
+  </label>
+  <label>{{localize "TRAILS.Item.Targets"}}
+    <select name="system.targets">{{selectOptions config.defenseTargets selected=system.targets localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Skill"}}
+    <select name="system.skill">{{selectOptions config.skills selected=system.skill localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.AttackAbility"}}
+    <select name="system.ability">{{selectOptions config.abilities selected=system.ability localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Area"}}
+    <select name="system.area">{{selectOptions config.areas selected=system.area localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.AreaSize"}}
+    <input type="text" name="system.areaSize" value="{{system.areaSize}}">
+  </label>
+  <label data-tooltip="TRAILS.Item.DamageHint">{{localize "TRAILS.Item.DamageValue"}}
+    <input type="number" name="system.damage" value="{{system.damage}}" min="0">
+  </label>
+  <label>{{localize "TRAILS.Item.Quality"}}
+    <select name="system.quality">{{selectOptions config.ranks selected=system.quality localize=true}}</select>
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="system.addStrength" {{checked system.addStrength}}>
+    {{localize "TRAILS.Item.AddStrength"}}
+  </label>
+  <label>{{localize "TRAILS.Item.BonusDamageDice"}}
+    <input type="number" name="system.bonusDamageDice" value="{{system.bonusDamageDice}}" min="0">
+  </label>
+  <label>{{localize "TRAILS.Item.DamageType"}}
+    <input type="text" name="system.damageType" value="{{system.damageType}}">
+  </label>
+  <label>{{localize "TRAILS.Item.Affinity"}}
+    <input type="text" name="system.affinity" value="{{system.affinity}}">
+  </label>
+  <label>{{localize "TRAILS.Item.Modifier"}}
+    <input type="text" name="system.modifier" value="{{system.modifier}}">
+  </label>
+</div>

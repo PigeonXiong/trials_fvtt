@@ -1,0 +1,21 @@
+<div class="form-grid">
+  <label>{{localize "TRAILS.Item.Quality"}}
+    <select name="system.quality">{{selectOptions config.ranks selected=system.quality localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Sheet.ArmorRank"}}
+    <input type="number" name="system.armorRank" value="{{system.armorRank}}" min="0">
+  </label>
+  <label>{{localize "TRAILS.Item.GuardBonus"}}
+    <input type="number" name="system.guardBonus" value="{{system.guardBonus}}">
+  </label>
+  <label>{{localize "TRAILS.Item.WardBonus"}}
+    <input type="number" name="system.wardBonus" value="{{system.wardBonus}}">
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="system.equipped" {{checked system.equipped}}>
+    {{localize "TRAILS.Item.Equipped"}}
+  </label>
+  <label>{{localize "TRAILS.Item.Price"}}
+    <input type="number" name="system.price" value="{{system.price}}" min="0">
+  </label>
+</div>

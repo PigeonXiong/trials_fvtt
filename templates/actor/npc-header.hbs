@@ -1,0 +1,27 @@
+<header class="sheet-header">
+  <img class="profile" src="{{actor.img}}" alt="{{actor.name}}" data-action="editImage">
+  <div class="header-main">
+    <div class="header-row">
+      <input class="actor-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TRAILS.Sheet.Name'}}">
+    </div>
+    <div class="header-row header-fields">
+      <label>{{localize "TRAILS.Npc.Tier"}}
+        <select name="system.tier">{{selectOptions config.npcTiers selected=system.tier localize=true}}</select>
+      </label>
+      <label>{{localize "TRAILS.Npc.Risk"}}<input type="number" name="system.risk" value="{{system.risk}}" min="0"></label>
+      <label>{{localize "TRAILS.Npc.Size"}}<input type="text" name="system.size" value="{{system.size}}"></label>
+    </div>
+    <div class="resources">
+      {{#each resources}}
+      <div class="resource resource-{{key}}">
+        <span class="resource-label">{{localize label}}</span>
+        <div class="resource-values">
+          <input type="number" name="system.resources.{{key}}.value" value="{{value}}">
+          <span class="resource-max">/</span>
+          <input type="number" name="system.resources.{{key}}.max" value="{{max}}" min="0">
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</header>

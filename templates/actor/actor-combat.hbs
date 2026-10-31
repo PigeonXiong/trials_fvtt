@@ -1,0 +1,78 @@
+<section class="tab combat {{#if (eq tab 'combat')}}active{{/if}}" data-group="primary" data-tab="combat">
+  <div class="item-section">
+    <header class="item-header">
+      <h3>{{localize "TRAILS.Item.Weapons"}}</h3>
+      <span class="col">{{localize "TRAILS.Item.Damage"}}</span>
+      <span class="col">{{localize "TRAILS.Item.Skill"}}</span>
+      {{#if @root.editable}}<a class="item-create" data-action="createItem" data-type="weapon" data-tooltip="TRAILS.Sheet.Create"><i class="fa-solid fa-plus"></i></a>{{/if}}
+    </header>
+    <ol class="item-list">
+      {{#each items.weapon}}
+      <li class="item" data-item-id="{{id}}">
+        <img class="item-img" src="{{img}}" alt="">
+        <a class="item-name" data-action="editItem">{{name}}</a>
+        <span class="col">{{damageLabel}}</span>
+        <span class="col">{{localize (lookup @root.config.skills system.skill)}}</span>
+        <div class="item-controls">
+          <a class="{{#if system.equipped}}active{{/if}}" data-action="toggleEquipped" data-tooltip="TRAILS.Item.Equipped"><i class="fa-solid fa-hand-fist"></i></a>
+          <a data-action="useItem" data-tooltip="TRAILS.Roll.Attack"><i class="fa-solid fa-dice-d20"></i></a>
+          <a data-action="rollDamage" data-tooltip="TRAILS.Roll.Damage"><i class="fa-solid fa-burst"></i></a>
+          {{#if @root.editable}}<a data-action="deleteItem" data-tooltip="TRAILS.Sheet.Delete"><i class="fa-solid fa-trash"></i></a>{{/if}}
+        </div>
+      </li>
+      {{else}}<li class="empty">{{localize "TRAILS.Sheet.Empty"}}</li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="item-section">
+    <header class="item-header">
+      <h3>{{localize "TRAILS.Item.Crafts"}}</h3>
+      <span class="col">{{localize "TRAILS.Item.Cost"}}</span>
+      <span class="col">{{localize "TRAILS.Item.Area"}}</span>
+      <span class="col">{{localize "TRAILS.Item.Damage"}}</span>
+      {{#if @root.editable}}<a class="item-create" data-action="createItem" data-type="craft" data-tooltip="TRAILS.Sheet.Create"><i class="fa-solid fa-plus"></i></a>{{/if}}
+    </header>
+    <ol class="item-list">
+      {{#each items.craft}}
+      <li class="item" data-item-id="{{id}}">
+        <img class="item-img" src="{{img}}" alt="">
+        <a class="item-name" data-action="editItem">{{name}}</a>
+        <span class="col">{{costLabel}}</span>
+        <span class="col">{{localize (lookup @root.config.areas system.area)}} {{system.areaSize}}</span>
+        <span class="col">{{damageLabel}}</span>
+        <div class="item-controls">
+          <a data-action="useItem" data-tooltip="TRAILS.Roll.UseCraft"><i class="fa-solid fa-dice-d20"></i></a>
+          {{#if damageLabel}}<a data-action="rollDamage" data-tooltip="TRAILS.Roll.Damage"><i class="fa-solid fa-burst"></i></a>{{/if}}
+          {{#if @root.editable}}<a data-action="deleteItem" data-tooltip="TRAILS.Sheet.Delete"><i class="fa-solid fa-trash"></i></a>{{/if}}
+        </div>
+      </li>
+      {{else}}<li class="empty">{{localize "TRAILS.Sheet.Empty"}}</li>
+      {{/each}}
+    </ol>
+  </div>
+
+  <div class="item-section">
+    <header class="item-header">
+      <h3>{{localize "TRAILS.Item.Armor"}}</h3>
+      <span class="col">{{localize "TRAILS.Sheet.ArmorRank"}}</span>
+      <span class="col">{{localize "TRAILS.Item.Quality"}}</span>
+      {{#if @root.editable}}<a class="item-create" data-action="createItem" data-type="armor" data-tooltip="TRAILS.Sheet.Create"><i class="fa-solid fa-plus"></i></a>{{/if}}
+    </header>
+    <ol class="item-list">
+      {{#each items.armor}}
+      <li class="item" data-item-id="{{id}}">
+        <img class="item-img" src="{{img}}" alt="">
+        <a class="item-name" data-action="editItem">{{name}}</a>
+        <span class="col">{{system.armorRank}}</span>
+        <span class="col">{{localize (lookup @root.config.ranks system.quality)}}</span>
+        <div class="item-controls">
+          <a class="{{#if system.equipped}}active{{/if}}" data-action="toggleEquipped" data-tooltip="TRAILS.Item.Equipped"><i class="fa-solid fa-shirt"></i></a>
+          {{#if @root.editable}}<a data-action="deleteItem" data-tooltip="TRAILS.Sheet.Delete"><i class="fa-solid fa-trash"></i></a>{{/if}}
+        </div>
+      </li>
+      {{else}}<li class="empty">{{localize "TRAILS.Sheet.Empty"}}</li>
+      {{/each}}
+    </ol>
+  </div>
+</section>

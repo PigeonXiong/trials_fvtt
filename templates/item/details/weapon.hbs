@@ -1,0 +1,34 @@
+<div class="form-grid">
+  <label>{{localize "TRAILS.Item.Skill"}}
+    <select name="system.skill">{{selectOptions config.weaponSkills selected=system.skill localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.AttackAbility"}}
+    <select name="system.ability">{{selectOptions config.abilities selected=system.ability localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Quality"}}
+    <select name="system.quality">{{selectOptions config.ranks selected=system.quality localize=true}}</select>
+  </label>
+  <label data-tooltip="TRAILS.Item.DamageHint">{{localize "TRAILS.Item.DamageValue"}}
+    <input type="number" name="system.damage" value="{{system.damage}}" min="0">
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="system.addStrength" {{checked system.addStrength}}>
+    {{localize "TRAILS.Item.AddStrength"}}
+  </label>
+  <label>{{localize "TRAILS.Item.BonusDamageDice"}}
+    <input type="number" name="system.bonusDamageDice" value="{{system.bonusDamageDice}}" min="0">
+  </label>
+  <label>{{localize "TRAILS.Item.DamageType"}}
+    <input type="text" name="system.damageType" value="{{system.damageType}}">
+  </label>
+  <label>{{localize "TRAILS.Item.Range"}}
+    <input type="text" name="system.range" value="{{system.range}}">
+  </label>
+  <label class="checkbox">
+    <input type="checkbox" name="system.equipped" {{checked system.equipped}}>
+    {{localize "TRAILS.Item.Equipped"}}
+  </label>
+  <label>{{localize "TRAILS.Item.Price"}}
+    <input type="number" name="system.price" value="{{system.price}}" min="0">
+  </label>
+</div>

@@ -1,0 +1,16 @@
+<div class="trails chat-card damage-card">
+  <header class="card-header">
+    <img src="{{img}}" alt="">
+    <div><h3>{{title}}</h3></div>
+  </header>
+  {{#if tags.length}}
+  <ul class="card-tags">{{#each tags}}<li>{{this}}</li>{{/each}}</ul>
+  {{/if}}
+  {{{rollHTML}}}
+  {{#if critical}}
+  <div class="card-outcome"><span class="outcome-burst"><i class="fa-solid fa-burst"></i> {{localize "TRAILS.Roll.Critical"}} ×{{bursts}}</span></div>
+  {{/if}}
+  <div class="card-buttons">
+    <button type="button" data-trails-action="applyDamage" data-tooltip="TRAILS.Damage.ApplyHint"><i class="fa-solid fa-heart-crack"></i> {{localize "TRAILS.Damage.Apply"}}</button>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="item-sheet-content">
+  <header class="sheet-header">
+    <img class="profile" src="{{item.img}}" alt="{{item.name}}" data-action="editImage">
+    <div class="header-main">
+      <input class="item-name-input" type="text" name="name" value="{{item.name}}" placeholder="{{localize 'TRAILS.Sheet.Name'}}">
+      <div class="header-row">
+        <span class="item-type">{{localize (concat "TYPES.Item." item.type)}}</span>
+        {{#if canUse}}
+        <button type="button" data-action="use"><i class="fa-solid fa-dice-d20"></i> {{localize "TRAILS.Sheet.Use"}}</button>
+        {{/if}}
+      </div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs">
+    <a class="item {{#if (eq tab 'details')}}active{{/if}}" data-action="switchTab" data-group="primary" data-tab="details">{{localize "TRAILS.Tab.details"}}</a>
+    <a class="item {{#if (eq tab 'description')}}active{{/if}}" data-action="switchTab" data-group="primary" data-tab="description">{{localize "TRAILS.Tab.description"}}</a>
+    <a class="item {{#if (eq tab 'effects')}}active{{/if}}" data-action="switchTab" data-group="primary" data-tab="effects">{{localize "TRAILS.Tab.effects"}}</a>
+  </nav>
+
+  <div class="sheet-body">
+    <section class="tab details {{#if (eq tab 'details')}}active{{/if}}" data-group="primary" data-tab="details">
+      {{> (lookup this "detailsPartial")}}
+    </section>
+    <section class="tab description {{#if (eq tab 'description')}}active{{/if}}" data-group="primary" data-tab="description">
+      <textarea class="description" name="system.description" rows="16">{{system.description}}</textarea>
+    </section>
+    <section class="tab effects {{#if (eq tab 'effects')}}active{{/if}}" data-group="primary" data-tab="effects">
+      <p class="hint">{{localize "TRAILS.Effect.ItemHint"}}</p>
+      {{> "systems/trails-of-destiny/templates/actor/parts/effects.hbs"}}
+    </section>
+  </div>
+</div>

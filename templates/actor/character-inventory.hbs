@@ -1,0 +1,5 @@
+<section class="tab inventory {{#if (eq tab 'inventory')}}active{{/if}}" data-group="primary" data-tab="inventory">
+  {{> "systems/trails-of-destiny/templates/actor/parts/item-list.hbs" type="talent" items=items.talent title="TRAILS.Item.Talents"}}
+  {{> "systems/trails-of-destiny/templates/actor/parts/item-list.hbs" type="quartz" items=items.quartz title="TRAILS.Item.Quartz"}}
+  {{> "systems/trails-of-destiny/templates/actor/parts/item-list.hbs" type="gear" items=items.gear title="TRAILS.Item.Gear"}}
+</section>

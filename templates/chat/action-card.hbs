@@ -1,0 +1,36 @@
+<div class="trails chat-card action-card">
+  <header class="card-header">
+    <img src="{{img}}" alt="">
+    <div>
+      <h3>{{title}}</h3>
+      {{#if subtitle}}<p class="card-subtitle">{{subtitle}}</p>{{/if}}
+    </div>
+  </header>
+  {{#if tags.length}}
+  <ul class="card-tags">{{#each tags}}<li>{{this}}</li>{{/each}}</ul>
+  {{/if}}
+  {{{rollHTML}}}
+  {{#if outcome}}
+  <div class="card-outcome">
+    {{#if outcome.targetVS}}
+    <span class="outcome-vs">{{localize "TRAILS.Roll.VS"}} {{outcome.targetVS}}{{#if outcome.chances}} · {{localize "TRAILS.Roll.Chances"}} ×{{outcome.chances}}{{/if}}</span>
+    <span class="outcome-result {{#if outcome.success}}success{{else}}failure{{/if}}">
+      {{#if outcome.success}}{{localize "TRAILS.Roll.Success"}}{{else}}{{localize "TRAILS.Roll.Failure"}}{{/if}}
+    </span>
+    {{else}}
+    <span class="outcome-vs">{{localize "TRAILS.Roll.NoTarget"}}</span>
+    {{/if}}
+    {{#if outcome.bursts}}<span class="outcome-burst"><i class="fa-solid fa-burst"></i> {{localize "TRAILS.Roll.Burst"}} ×{{outcome.bursts}}</span>{{/if}}
+    {{#if (eq outcome.natural 20)}}<span class="outcome-nat20">{{localize "TRAILS.Roll.Natural20"}}</span>{{/if}}
+  </div>
+  {{/if}}
+  {{#if destined}}
+  <div class="card-destined"><i class="fa-solid fa-star"></i> {{localize "TRAILS.Destined.Gained"}}（{{destined}}）</div>
+  {{/if}}
+  {{#if description}}<div class="card-description">{{{description}}}</div>{{/if}}
+  {{#if showDamage}}
+  <div class="card-buttons">
+    <button type="button" data-trails-action="damage"><i class="fa-solid fa-burst"></i> {{localize "TRAILS.Roll.Damage"}}{{#if outcome.chances}}（+{{outcome.chances}} {{localize "TRAILS.Roll.Charges"}}）{{/if}}</button>
+  </div>
+  {{/if}}
+</div>

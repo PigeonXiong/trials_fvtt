@@ -1,0 +1,13 @@
+<section class="tab bio {{#if (eq tab 'bio')}}active{{/if}}" data-group="primary" data-tab="bio">
+  <div class="details-grid">
+    <label>{{localize "TRAILS.Details.vantageHistory"}}<input type="text" name="system.details.vantageHistory" value="{{system.details.vantageHistory}}"></label>
+    <label>{{localize "TRAILS.Details.vantageDestiny"}}<input type="text" name="system.details.vantageDestiny" value="{{system.details.vantageDestiny}}"></label>
+    <label>{{localize "TRAILS.Details.martialAffinity"}}<input type="text" name="system.details.martialAffinity" value="{{system.details.martialAffinity}}"></label>
+    <label>{{localize "TRAILS.Details.elementalAffinity"}}<input type="text" name="system.details.elementalAffinity" value="{{system.details.elementalAffinity}}"></label>
+    <label>{{localize "TRAILS.Details.memberships"}}<input type="text" name="system.details.memberships" value="{{system.details.memberships}}"></label>
+    <label>{{localize "TRAILS.Details.connections"}}<input type="text" name="system.details.connections" value="{{system.details.connections}}"></label>
+  </div>
+  <h3 class="section-title">{{localize "TRAILS.Sheet.Biography"}}</h3>
+  <textarea class="biography" name="system.biography" rows="10">{{system.biography}}</textarea>
+  {{> "systems/trails-of-destiny/templates/actor/parts/effects.hbs"}}
+</section>

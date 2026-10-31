@@ -1,0 +1,33 @@
+<section class="tab main {{#if (eq tab 'main')}}active{{/if}}" data-group="primary" data-tab="main">
+  {{> "systems/trails-of-destiny/templates/actor/parts/combat-strip.hbs"}}
+
+  <h3 class="section-title">{{localize "TRAILS.Npc.CombatStats"}}</h3>
+  <p class="hint">{{localize "TRAILS.Npc.CombatStatsHint"}}</p>
+  <div class="adjust-grid">
+    <label>{{localize "TRAILS.Sheet.Actions"}}<input type="number" name="system.combat.actions" value="{{system.combat.actions}}" min="0"></label>
+    <label>{{localize "TRAILS.Npc.Initiative"}}<input type="number" name="system.combat.initiative" value="{{system.combat.initiative}}" min="0"></label>
+    <label>{{localize "TRAILS.Npc.Attack"}}<input type="number" name="system.combat.attack" value="{{system.combat.attack}}" min="0"></label>
+    <label>{{localize "TRAILS.Npc.Assault"}}<input type="number" name="system.combat.assault" value="{{system.combat.assault}}" min="0"></label>
+    <label>{{localize "TRAILS.Npc.Defense"}}<input type="number" name="system.combat.defense" value="{{system.combat.defense}}" min="0"></label>
+    <label>{{localize "TRAILS.Npc.Resistance"}}<input type="number" name="system.combat.resistance" value="{{system.combat.resistance}}" min="0"></label>
+    <label>{{localize "TRAILS.DefenseTarget.guard"}}<input type="number" name="system.combat.guard" value="{{system.combat.guard}}"></label>
+    <label>{{localize "TRAILS.DefenseTarget.ward"}}<input type="number" name="system.combat.ward" value="{{system.combat.ward}}"></label>
+    <label>{{localize "TRAILS.Sheet.ArmorRank"}}<input type="number" name="system.combat.armorRank" value="{{system.combat.armorRank}}" min="0"></label>
+    <label>{{localize "TRAILS.Sheet.Movement"}}<input type="text" name="system.combat.movement" value="{{system.combat.movement}}"></label>
+  </div>
+
+  <h3 class="section-title">{{localize "TRAILS.Sheet.Abilities"}}</h3>
+  <div class="abilities">
+    {{#each abilities}}
+    <div class="ability">
+      <a class="ability-name rollable" data-action="rollAbility" data-ability="{{key}}">{{localize label}}</a>
+      <input type="number" name="system.abilities.{{key}}.value" value="{{value}}" min="0">
+      <span class="ability-dice {{#if challenges}}challenge{{/if}}">
+        {{#if challenges}}{{localize "TRAILS.Roll.Challenge"}}{{else}}+{{dice}}{{/if}}
+      </span>
+    </div>
+    {{/each}}
+  </div>
+
+  {{> "systems/trails-of-destiny/templates/actor/parts/item-list.hbs" type="talent" items=items.talent title="TRAILS.Npc.SkillsTalents"}}
+</section>

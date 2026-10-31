@@ -1,0 +1,17 @@
+<section class="tab bio {{#if (eq tab 'bio')}}active{{/if}}" data-group="primary" data-tab="bio">
+  <h3 class="section-title">{{localize "TRAILS.Npc.Traits"}}</h3>
+  <textarea name="system.traits" rows="6">{{system.traits}}</textarea>
+
+  <h3 class="section-title">{{localize "TRAILS.Npc.Rewards"}}</h3>
+  <div class="details-grid">
+    <label>{{localize "TRAILS.Npc.Exp"}}<input type="number" name="system.rewards.exp" value="{{system.rewards.exp}}" min="0"></label>
+    <label>{{localize "TRAILS.Npc.Sepith"}}<input type="text" name="system.rewards.sepith" value="{{system.rewards.sepith}}"></label>
+    <label>{{localize "TRAILS.Npc.Drops"}}<input type="text" name="system.rewards.items" value="{{system.rewards.items}}"></label>
+  </div>
+
+  {{> "systems/trails-of-destiny/templates/actor/parts/item-list.hbs" type="gear" items=items.gear title="TRAILS.Item.Gear"}}
+
+  <h3 class="section-title">{{localize "TRAILS.Sheet.Biography"}}</h3>
+  <textarea class="biography" name="system.biography" rows="8">{{system.biography}}</textarea>
+  {{> "systems/trails-of-destiny/templates/actor/parts/effects.hbs"}}
+</section>

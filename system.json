@@ -1,0 +1,50 @@
+{
+  "id": "trails-of-destiny",
+  "title": "英雄传说：命之轨迹 TRPG（非官方）",
+  "description": "《The Legend of Heroes: Trails of Destiny》（Promethium System）的非官方饭制自动化系统。",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "12.343"
+  },
+  "authors": [
+    { "name": "PigMourne" }
+  ],
+  "esmodules": ["module/trails.mjs"],
+  "styles": ["styles/trails.css"],
+  "languages": [
+    { "lang": "cn", "name": "中文（简体）", "path": "lang/cn.json" },
+    { "lang": "en", "name": "English", "path": "lang/en.json" }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": ["biography"]
+      },
+      "npc": {
+        "htmlFields": ["biography", "traits"]
+      }
+    },
+    "Item": {
+      "weapon": { "htmlFields": ["description"] },
+      "armor": { "htmlFields": ["description"] },
+      "craft": { "htmlFields": ["description"] },
+      "quartz": { "htmlFields": ["description"] },
+      "talent": { "htmlFields": ["description"] },
+      "gear": { "htmlFields": ["description"] }
+    }
+  },
+  "grid": {
+    "distance": 5,
+    "units": "ft"
+  },
+  "primaryTokenAttribute": "resources.durability",
+  "secondaryTokenAttribute": "resources.health",
+  "initiative": "1d20",
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "hbs", "json"],
+      "paths": ["styles", "templates", "lang"]
+    }
+  }
+}

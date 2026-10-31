@@ -1,0 +1,29 @@
+<header class="sheet-header">
+  <img class="profile" src="{{actor.img}}" alt="{{actor.name}}" data-action="editImage">
+  <div class="header-main">
+    <div class="header-row">
+      <input class="actor-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TRAILS.Sheet.Name'}}">
+      <button type="button" class="destined-toggle {{#if system.destined}}active{{/if}}" data-action="toggleDestined" data-tooltip="TRAILS.Destined.Hint">
+        <i class="fa-solid fa-star"></i> {{localize "TRAILS.Destined.Label"}}
+      </button>
+    </div>
+    <div class="header-row header-fields">
+      <label>{{localize "TRAILS.Sheet.Level"}}<input type="number" name="system.level" value="{{system.level}}" min="1"></label>
+      <label>{{localize "TRAILS.Sheet.XP"}}<input type="number" name="system.xp" value="{{system.xp}}" min="0"></label>
+      <label>{{localize "TRAILS.Sheet.SkillPoints"}}<input type="number" name="system.skillPoints" value="{{system.skillPoints}}"></label>
+      <label>{{localize "TRAILS.Sheet.Reputation"}}<input type="number" name="system.reputation" value="{{system.reputation}}"></label>
+      <label>{{localize "TRAILS.Sheet.Mira"}}<input type="number" name="system.mira" value="{{system.mira}}"></label>
+    </div>
+    <div class="resources">
+      {{#each resources}}
+      <div class="resource resource-{{key}}">
+        <span class="resource-label">{{localize label}}</span>
+        <div class="resource-values">
+          <input type="number" name="system.resources.{{key}}.value" value="{{value}}">
+          <span class="resource-max">/ {{max}}</span>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</header>

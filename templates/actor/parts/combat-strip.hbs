@@ -1,0 +1,15 @@
+<div class="combat-strip">
+  <div class="stat"><span class="stat-label">{{localize "TRAILS.DefenseTarget.guard"}}</span><span class="stat-value">{{system.defenses.guard.value}}</span></div>
+  <div class="stat"><span class="stat-label">{{localize "TRAILS.DefenseTarget.ward"}}</span><span class="stat-value">{{system.defenses.ward.value}}</span></div>
+  <div class="stat"><span class="stat-label">{{localize "TRAILS.Sheet.ArmorRank"}}</span><span class="stat-value">{{system.defenses.armorRank.value}}</span></div>
+  <div class="stat"><span class="stat-label">{{localize "TRAILS.Sheet.Actions"}}</span><span class="stat-value">{{system.actions.value}}</span></div>
+  {{#if system.movement}}
+  <div class="stat"><span class="stat-label">{{localize "TRAILS.Sheet.Movement"}}</span><span class="stat-value">{{system.movement}} ft</span></div>
+  {{/if}}
+  <div class="stat-buttons">
+    <button type="button" data-action="rollInitiative"><i class="fa-solid fa-bolt"></i> {{localize "TRAILS.Roll.Initiative"}}</button>
+    <button type="button" data-action="rollDefense"><i class="fa-solid fa-shield-halved"></i> {{localize "TRAILS.Roll.Defense"}}</button>
+    <button type="button" data-action="rollResistance"><i class="fa-solid fa-hand-sparkles"></i> {{localize "TRAILS.Roll.Resistance"}}</button>
+  </div>
+  {{#if wounded}}<p class="wounded-banner"><i class="fa-solid fa-droplet"></i> {{localize "TRAILS.Roll.WoundedBanner"}}</p>{{/if}}
+</div>

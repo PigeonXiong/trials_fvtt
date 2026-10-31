@@ -1,0 +1,20 @@
+<div class="form-grid">
+  <label>{{localize "TRAILS.Item.QuartzType"}}
+    <input type="text" name="system.quartzType" value="{{system.quartzType}}">
+  </label>
+  <label>{{localize "TRAILS.Item.Element"}}
+    <select name="system.element">{{selectOptions config.elements selected=system.element localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Rarity"}}
+    <select name="system.rarity">{{selectOptions config.quartzRarities selected=system.rarity localize=true}}</select>
+  </label>
+  <label>{{localize "TRAILS.Item.Price"}}
+    <input type="number" name="system.price" value="{{system.price}}" min="0">
+  </label>
+  <label class="wide">{{localize "TRAILS.Item.Effect"}}
+    <input type="text" name="system.effect" value="{{system.effect}}">
+  </label>
+  <label class="wide">{{localize "TRAILS.Item.Arts"}}
+    <input type="text" name="system.arts" value="{{system.arts}}">
+  </label>
+</div>

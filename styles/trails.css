@@ -1,0 +1,610 @@
+/* 英雄传说：命之轨迹 TRPG — 系统样式。所有规则都限定在 .trails 下，避免影响其他界面。 */
+
+.trails {
+  --trails-ink: #1f2430;
+  --trails-muted: #5d6475;
+  --trails-paper: #f6f3ec;
+  --trails-panel: #ffffff;
+  --trails-line: #d6d0c2;
+  --trails-accent: #2f5d9b;
+  --trails-accent-soft: #e3ecf8;
+  --trails-gold: #b8892b;
+  --trails-good: #2e7d4f;
+  --trails-bad: #b23b3b;
+  --trails-radius: 6px;
+}
+
+/* ---------- 窗口与布局 ---------- */
+
+.application.trails.sheet .window-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--trails-paper);
+  color: var(--trails-ink);
+  overflow: hidden;
+}
+
+.trails.sheet input,
+.trails.sheet select,
+.trails.sheet textarea {
+  color: var(--trails-ink);
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
+}
+
+.trails.sheet input[type="number"] {
+  text-align: center;
+}
+
+.trails.sheet textarea {
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+  padding: 6px;
+}
+
+.trails.sheet button {
+  color: var(--trails-ink);
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+}
+
+.trails .hint {
+  color: var(--trails-muted);
+  font-size: 12px;
+  margin: 4px 0;
+}
+
+.trails .section-title {
+  margin: 12px 0 6px;
+  padding-bottom: 2px;
+  border-bottom: 2px solid var(--trails-accent);
+  font-size: 15px;
+  color: var(--trails-accent);
+}
+
+.trails .rollable {
+  cursor: pointer;
+}
+
+.trails .rollable:hover {
+  color: var(--trails-accent);
+  text-shadow: 0 0 4px var(--trails-accent-soft);
+}
+
+/* ---------- 头部 ---------- */
+
+.trails .sheet-header {
+  display: flex;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+
+.trails .sheet-header .profile {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border: 2px solid var(--trails-line);
+  border-radius: var(--trails-radius);
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.trails .header-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.trails .header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.trails .actor-name,
+.trails .item-name-input {
+  flex: 1;
+  height: 34px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.trails .header-fields label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--trails-muted);
+}
+
+.trails .header-fields input {
+  width: 56px;
+}
+
+.trails .destined-toggle {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.trails .destined-toggle.active {
+  background: var(--trails-gold);
+  border-color: var(--trails-gold);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(184, 137, 43, 0.6);
+}
+
+.trails .resources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 6px;
+}
+
+.trails .resource {
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-left: 4px solid var(--trails-accent);
+  border-radius: var(--trails-radius);
+  padding: 4px 6px;
+}
+
+.trails .resource-durability { border-left-color: #7a8699; }
+.trails .resource-health { border-left-color: var(--trails-bad); }
+.trails .resource-vigor { border-left-color: #c7792a; }
+.trails .resource-mana { border-left-color: #6b4fa8; }
+.trails .resource-ep { border-left-color: var(--trails-accent); }
+
+.trails .resource-label {
+  display: block;
+  font-size: 12px;
+  color: var(--trails-muted);
+}
+
+.trails .resource-values {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trails .resource-values input {
+  width: 56px;
+  font-size: 15px;
+}
+
+.trails .resource-max {
+  white-space: nowrap;
+  color: var(--trails-muted);
+}
+
+/* ---------- 标签页 ---------- */
+
+.trails .sheet-tabs {
+  display: flex;
+  gap: 2px;
+  flex: 0 0 auto;
+  border-bottom: 1px solid var(--trails-line);
+}
+
+.trails .sheet-tabs .item {
+  padding: 4px 12px;
+  border-radius: var(--trails-radius) var(--trails-radius) 0 0;
+  color: var(--trails-muted);
+  cursor: pointer;
+}
+
+.trails .sheet-tabs .item.active {
+  background: var(--trails-accent);
+  color: #fff;
+}
+
+.trails .tab {
+  display: none;
+}
+
+.trails .tab.active {
+  display: block;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.trails.item .sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.trails.item .item-sheet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+}
+
+/* ---------- 战斗栏 ---------- */
+
+.trails .combat-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.trails .stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+  padding: 4px 8px;
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-radius: var(--trails-radius);
+}
+
+.trails .stat-label {
+  font-size: 11px;
+  color: var(--trails-muted);
+}
+
+.trails .stat-value {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.trails .stat-buttons {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.trails .stat-buttons button {
+  width: auto;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.trails .wounded-banner {
+  flex-basis: 100%;
+  margin: 2px 0 0;
+  padding: 4px 8px;
+  color: #fff;
+  background: var(--trails-bad);
+  border-radius: var(--trails-radius);
+}
+
+/* ---------- 属性与技能 ---------- */
+
+.trails .abilities {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 6px;
+}
+
+.trails .ability {
+  display: grid;
+  grid-template-columns: 1fr 52px 48px;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 6px;
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-radius: var(--trails-radius);
+}
+
+.trails .ability-name {
+  font-weight: bold;
+}
+
+.trails .ability-dice {
+  text-align: center;
+  font-weight: bold;
+  color: var(--trails-accent);
+}
+
+.trails .ability-dice.challenge {
+  color: var(--trails-bad);
+  font-size: 12px;
+}
+
+.trails .skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 2;
+  column-gap: 12px;
+}
+
+.trails .skill {
+  display: grid;
+  grid-template-columns: 1fr 52px 48px 36px;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+  border-bottom: 1px dotted var(--trails-line);
+  break-inside: avoid;
+}
+
+.trails .skill-header {
+  column-span: all;
+  font-size: 11px;
+  color: var(--trails-muted);
+  border-bottom: none;
+}
+
+.trails .skill select {
+  height: 24px;
+  padding: 0 2px;
+}
+
+.trails .skill input {
+  height: 24px;
+}
+
+.trails .skill-total {
+  text-align: center;
+  font-weight: bold;
+  color: var(--trails-accent);
+}
+
+.trails .adjustments {
+  margin-top: 12px;
+}
+
+.trails .adjustments summary {
+  cursor: pointer;
+  color: var(--trails-accent);
+}
+
+.trails .adjust-grid,
+.trails .details-grid,
+.trails .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px 10px;
+  margin: 6px 0;
+}
+
+.trails .adjust-grid label,
+.trails .details-grid label,
+.trails .form-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  color: var(--trails-muted);
+}
+
+.trails .form-grid label.checkbox {
+  flex-direction: row;
+  align-items: center;
+  color: var(--trails-ink);
+}
+
+.trails .form-grid label.wide {
+  grid-column: 1 / -1;
+}
+
+/* ---------- 物品列表 ---------- */
+
+.trails .item-section {
+  margin-bottom: 10px;
+}
+
+.trails .item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  background: var(--trails-accent);
+  color: #fff;
+  border-radius: var(--trails-radius) var(--trails-radius) 0 0;
+}
+
+.trails .item-header h3 {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  border: none;
+  color: inherit;
+}
+
+.trails .item-header .col,
+.trails .item .col {
+  width: 90px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.trails .item-header .item-create {
+  width: 64px;
+  text-align: right;
+  color: #fff;
+}
+
+.trails .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-top: none;
+  border-radius: 0 0 var(--trails-radius) var(--trails-radius);
+}
+
+.trails .item-list .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--trails-line);
+}
+
+.trails .item-list .item:last-child {
+  border-bottom: none;
+}
+
+.trails .item-list .item.disabled {
+  opacity: 0.5;
+}
+
+.trails .item-img {
+  width: 26px;
+  height: 26px;
+  border: none;
+  flex: 0 0 auto;
+}
+
+.trails .item-name {
+  flex: 1;
+  cursor: pointer;
+}
+
+.trails .item-meta {
+  font-size: 12px;
+  color: var(--trails-muted);
+}
+
+.trails .item-controls {
+  display: flex;
+  gap: 8px;
+  width: 64px;
+  justify-content: flex-end;
+  color: var(--trails-muted);
+}
+
+.trails .item-controls a.active {
+  color: var(--trails-accent);
+}
+
+.trails .item-list .empty {
+  padding: 4px 8px;
+  color: var(--trails-muted);
+  font-size: 12px;
+}
+
+.trails .biography {
+  min-height: 160px;
+}
+
+.trails .item-type {
+  color: var(--trails-muted);
+}
+
+.trails.item .header-row button {
+  width: auto;
+  margin-left: auto;
+}
+
+/* ---------- 检定对话框 ---------- */
+
+.trails-dialog .trails-roll-form .form-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.trails-dialog .trails-roll-form .form-group label {
+  flex: 0 0 110px;
+}
+
+.trails-dialog .trails-roll-form .hint {
+  font-size: 12px;
+  opacity: 0.8;
+  margin: 4px 0;
+}
+
+/* ---------- 聊天卡片 ---------- */
+
+.trails.chat-card .card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.trails.chat-card .card-header img {
+  width: 36px;
+  height: 36px;
+  border: none;
+  flex: 0 0 auto;
+}
+
+.trails.chat-card .card-header h3 {
+  margin: 0;
+  font-size: 15px;
+  border: none;
+}
+
+.trails.chat-card .card-subtitle {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.trails.chat-card .card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin: 4px 0;
+  padding: 0;
+}
+
+.trails.chat-card .card-tags li {
+  padding: 0 6px;
+  font-size: 11px;
+  border: 1px solid #9aa3b5;
+  border-radius: 10px;
+}
+
+.trails.chat-card .card-outcome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0;
+}
+
+.trails.chat-card .outcome-result {
+  margin-left: auto;
+  padding: 1px 10px;
+  font-weight: bold;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.trails.chat-card .outcome-result.success { background: #2e7d4f; }
+.trails.chat-card .outcome-result.failure { background: #b23b3b; }
+
+.trails.chat-card .outcome-burst,
+.trails.chat-card .outcome-nat20 {
+  color: #b8892b;
+  font-weight: bold;
+}
+
+.trails.chat-card .card-destined {
+  margin: 4px 0;
+  padding: 2px 8px;
+  color: #fff;
+  background: #b8892b;
+  border-radius: 4px;
+}
+
+.trails.chat-card .card-description {
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.trails.chat-card .card-buttons {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
