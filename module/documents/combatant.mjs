@@ -1,6 +1,6 @@
 import { actionPool } from "../rules/dice.mjs";
 
-/** 先攻 = 1d20 + 先攻加值骰（负伤时降一阶）。 */
+/** 先攻 = 1d20 + 先攻奖励骰（负伤时降一阶）。 */
 export class TrailsCombatant extends Combatant {
   _getInitiativeFormula() {
     const system = this.actor?.system;

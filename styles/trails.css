@@ -291,13 +291,13 @@
 
 .trails .abilities {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 6px;
 }
 
 .trails .ability {
   display: grid;
-  grid-template-columns: 1fr 52px 48px;
+  grid-template-columns: minmax(2.5em, 1fr) 52px 40px;
   align-items: center;
   gap: 4px;
   padding: 4px 6px;
@@ -308,6 +308,7 @@
 
 .trails .ability-name {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .trails .ability-dice {
@@ -460,7 +461,10 @@
   border-bottom: none;
 }
 
-.trails .item-list .item.disabled {
+/* 不能用 .disabled：核心样式 `.application .disabled` 会禁用点击，导致停用的效果无法再启用或删除 */
+.trails .item-list .item.effect-off .item-img,
+.trails .item-list .item.effect-off .item-name,
+.trails .item-list .item.effect-off .item-meta {
   opacity: 0.5;
 }
 

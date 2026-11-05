@@ -9,7 +9,7 @@ const abilitiesField = () => new SchemaField(Object.fromEntries(
   ABILITY_KEYS.map(k => [k, new SchemaField({ value: int(10, { min: 0 }) })])
 ));
 
-/** 角色与 NPC 共用：属性加值骰、负伤等派生值。 */
+/** 角色与 NPC 共用：属性奖励骰、负伤等派生值。 */
 class TrailsActorModel extends foundry.abstract.TypeDataModel {
   prepareAbilities() {
     for (const [key, ability] of Object.entries(this.abilities)) {

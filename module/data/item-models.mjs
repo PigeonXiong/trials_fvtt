@@ -43,7 +43,7 @@ export class ArmorData extends foundry.abstract.TypeDataModel {
   }
 }
 
-/** 战技：消耗耐力或魔力；可选攻击检定与伤害。 */
+/** 战技：消耗活力或魔力；每次使用都进行行动检定，targets 决定对抗物防、魔防或不对抗。 */
 export class CraftData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return {
@@ -54,7 +54,7 @@ export class CraftData extends foundry.abstract.TypeDataModel {
       skill: choice(SKILL_KEYS, "lightWeapons"),
       ability: choice(ABILITY_KEYS, "agi"),
       targets: choice(["none", "guard", "ward"], "guard"),
-      area: choice(["self", "melee", "target", "burst", "line", "cone"], "target"),
+      area: choice(["self", "melee", "target", "area", "burst", "line", "cone"], "target"),
       areaSize: str(),
       damage: int(0, { min: 0 }),
       quality: choice(RANK_KEYS, "ordinary"),

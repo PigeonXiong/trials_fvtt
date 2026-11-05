@@ -23,7 +23,7 @@ test("升级与额外加成", () => {
   assert.equal(max.ep, 320);
 });
 
-test("移动力与耐力恢复", () => {
+test("移动力与活力恢复", () => {
   assert.equal(movementFeet(10), 10);
   assert.equal(movementFeet(20), 20);
   assert.equal(vigorRecovery(17), 3);

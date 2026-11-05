@@ -17,7 +17,7 @@ export const TRAILS = {
   weaponSkills: label("Skill", ["lightWeapons", "heavyWeapons", "rangedWeapons", "unarmed"]),
   craftTypes: label("CraftType", ["martial", "magical", "sCraft"]),
   craftResources: label("Resource", ["vigor", "mana"]),
-  areas: label("Area", ["self", "melee", "target", "burst", "line", "cone"]),
+  areas: label("Area", ["self", "melee", "target", "area", "burst", "line", "cone"]),
   defenseTargets: label("DefenseTarget", ["none", "guard", "ward"]),
   elements: label("Element", ["none", "earth", "water", "fire", "wind", "time", "space", "mirage"]),
   quartzRarities: label("Rarity", ["common", "rare", "superRare", "ultraRare"]),

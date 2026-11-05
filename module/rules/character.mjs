@@ -33,9 +33,7 @@ export const SKILL_DEFAULT_ABILITY = Object.freeze({
 
 export const RESOURCE_KEYS = Object.freeze(["durability", "health", "vigor", "mana", "ep"]);
 
-/**
- * 每级成长。规则书未写明魔力的每级成长值（原文缺数字），暂按耐力的 4 处理，待勘误。
- */
+/** 每级成长（V1.1 第 14 章「升级加成」）。 */
 export const PER_LEVEL = Object.freeze({ durability: 6, health: 10, vigor: 4, mana: 4, ep: 0 });
 
 export const BASE_GUARD = 15;
@@ -69,12 +67,12 @@ export function resourceMaxima(abilities, level = 1, bonus = {}) {
   return out;
 }
 
-/** 移动力（尺）：10 尺 + 每个速度加值骰 5 尺。 */
+/** 移动力（尺）：10 尺 + 每个速度奖励骰 5 尺。 */
 export function movementFeet(speedScore) {
   return BASE_MOVE_FT + MOVE_FT_PER_SPEED_DIE * abilityBonusDice(speedScore).dice;
 }
 
-/** 每轮恢复的耐力：每 5 点体魄恢复 1 点。 */
+/** 每轮恢复的活力：每 5 点耐力恢复 1 点。 */
 export function vigorRecovery(staminaScore) {
   return Math.floor((Number(staminaScore) || 0) / 5);
 }

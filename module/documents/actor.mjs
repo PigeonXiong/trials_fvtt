@@ -47,8 +47,8 @@ export class TrailsActor extends Actor {
   }
 
   /**
-   * 生成骰池函数：固定加值骰 + 所选属性的加值骰。
-   * @param {number} fixedDice 技能、战斗数值等固定加值骰
+   * 生成骰池函数：固定奖励骰 + 所选属性的奖励骰。
+   * @param {number} fixedDice 技能、战斗数值等固定奖励骰
    * @param {string[]} fixedNotes 对话框中显示的说明
    * @param {{useAbilityDice?: boolean}} [options] NPC 的战斗数值已含属性，不再叠加
    */
@@ -66,7 +66,7 @@ export class TrailsActor extends Actor {
     };
   }
 
-  /** 当前唯一选中目标的防护/抗护。 */
+  /** 当前唯一选中目标的物防/魔防。 */
   targetDefense(defense) {
     if (!defense || defense === "none") return { vs: null, subtitle: "" };
     const targets = Array.from(game.user.targets);
@@ -108,7 +108,7 @@ export class TrailsActor extends Actor {
     });
   }
 
-  /** 防御反应：速度 + 防御技能，消耗 5 耐力，不可承担机会。 */
+  /** 防御反应：速度 + 防御技能，消耗 5 活力，不可承担冒险。 */
   rollDefense(options = {}) {
     const fixed = this.isCharacter ? this.system.skills.defense.dice : this.system.combat.defense;
     return rollAction(this, {
@@ -121,7 +121,7 @@ export class TrailsActor extends Actor {
     });
   }
 
-  /** 抵抗反应：按袭击性质选择属性 + 抵抗技能，消耗 5 魔力，不可承担机会。 */
+  /** 抵抗反应：按侵袭性质选择属性 + 抵抗技能，消耗 5 魔力，不可承担冒险。 */
   rollResistance(options = {}) {
     const fixed = this.isCharacter ? this.system.skills.resistance.dice : this.system.combat.resistance;
     return rollAction(this, {
@@ -174,17 +174,9 @@ export class TrailsActor extends Actor {
     return rollDamage(this, item, options);
   }
 
-  /** 使用物品：武器攻击；战技按是否需要命中检定分别处理；其他物品发卡片。 */
+  /** 使用物品：武器与战技进行行动检定（V1.1：所有战技都需行动检定）；其他物品发卡片。 */
   async useItem(item, options = {}) {
-    if (item.type === "weapon") return this.rollAttack(item, options);
-    if (item.type === "craft") {
-      if (item.system.targets !== "none") return this.rollAttack(item, options);
-      const { resource, cost } = item.system;
-      if (cost && !this.canSpend(resource, cost)) return null;
-      if (cost) await this.spendResource(resource, cost);
-      const tags = cost ? [format("TRAILS.Roll.CostTag", { n: cost, resource: localize(TRAILS.resources[resource]) })] : [];
-      return postItemCard(this, item, { tags });
-    }
+    if (item.type === "weapon" || item.type === "craft") return this.rollAttack(item, options);
     return postItemCard(this, item);
   }
 
@@ -202,10 +194,15 @@ export class TrailsActor extends Actor {
     return false;
   }
 
+  /** 扣除资源；活力耗尽时陷入气短状态。 */
   async spendResource(resource, amount) {
     const current = this.system.resources?.[resource];
     if (!current) return;
-    await this.update({ [`system.resources.${resource}.value`]: Math.max(0, current.value - amount) });
+    const value = Math.max(0, current.value - amount);
+    await this.update({ [`system.resources.${resource}.value`]: value });
+    if (resource === "vigor" && value === 0 && typeof this.toggleStatusEffect === "function") {
+      await this.toggleStatusEffect("winded", { active: true });
+    }
   }
 
   /**

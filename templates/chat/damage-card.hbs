@@ -10,6 +10,9 @@
   {{#if critical}}
   <div class="card-outcome"><span class="outcome-burst"><i class="fa-solid fa-burst"></i> {{localize "TRAILS.Roll.Critical"}} ×{{bursts}}</span></div>
   {{/if}}
+  {{#if destined}}
+  <div class="card-destined"><i class="fa-solid fa-star"></i> {{localize "TRAILS.Destined.Gained"}}（{{destined}}）</div>
+  {{/if}}
   <div class="card-buttons">
     <button type="button" data-trails-action="applyDamage" data-tooltip="TRAILS.Damage.ApplyHint"><i class="fa-solid fa-heart-crack"></i> {{localize "TRAILS.Damage.Apply"}}</button>
   </div>

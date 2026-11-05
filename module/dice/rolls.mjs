@@ -1,8 +1,9 @@
-import { actionPool, effectPool, countBursts, resolveAction, MAX_CHANCES, CHANCE_VS } from "../rules/dice.mjs";
+import { actionPool, effectPool, countBursts, resolveAction, burstDestinedReasons, MAX_CHANCES, CHANCE_VS }
+  from "../rules/dice.mjs";
 import { SYSTEM_ID, TRAILS } from "../config.mjs";
 import { renderTemplate, templatePath, FormDataExtendedImpl, localize, format, enrich } from "../utils.mjs";
 
-/** 带 x（爆发）修饰的骰项即加值骰。 */
+/** 带 x（爆发）修饰的骰项即奖励骰。 */
 const isBonusTerm = term => term.modifiers?.some(m => m.startsWith("x"));
 
 function countRollBursts(roll) {
@@ -62,7 +63,7 @@ async function maybeBecomeDestined(actor, outcome) {
 }
 
 /**
- * 执行一次动作检定（技能、攻击、反应、属性检定共用）。
+ * 执行一次行动检定（技能、攻击、反应、属性检定共用）。
  * @param {Actor} actor
  * @param {object} cfg
  * @param {string} cfg.title 卡片标题
@@ -71,8 +72,8 @@ async function maybeBecomeDestined(actor, outcome) {
  *   由属性计算基础骰池；notes 显示在对话框，warnings（负伤等自动挑战）显示在卡片
  * @param {string|null} [cfg.ability] 默认属性
  * @param {boolean} [cfg.allowAbility] 是否允许在对话框中改用其他属性
- * @param {boolean} [cfg.allowChances] 是否允许承担机会（反应不可）
- * @param {number|null} [cfg.vs] 默认成功总和
+ * @param {boolean} [cfg.allowChances] 是否允许承担冒险（反应不可）
+ * @param {number|null} [cfg.vs] 默认胜利总值
  * @param {{resource: string, amount: number}|null} [cfg.cost] 资源消耗
  * @param {Item|null} [cfg.item] 关联物品（武器、战技）
  * @param {boolean} [cfg.offerDamage] 命中后提供伤害按钮
@@ -151,7 +152,7 @@ export async function rollAction(actor, cfg) {
 }
 
 /**
- * 掷效果（伤害）骰。机会转化的充能只提升加值骰，且不超过传说（d20）。
+ * 掷效果（伤害）骰。冒险转化的蓄势只提升奖励骰，且不超过传奇（d20）。
  * @param {Actor} actor
  * @param {Item} item 武器或战技
  * @param {{chances?: number}} [options]
@@ -168,6 +169,7 @@ export async function rollDamage(actor, item, { chances = 0 } = {}) {
   });
   const roll = await new Roll(pool.formula).evaluate();
   const bursts = countRollBursts(roll);
+  const destined = await maybeBecomeDestined(actor, { destinedReasons: burstDestinedReasons(bursts) });
 
   const tags = [localize(TRAILS.ranks[sys.quality])];
   if (sys.damageType) tags.push(sys.damageType);
@@ -181,14 +183,15 @@ export async function rollDamage(actor, item, { chances = 0 } = {}) {
     tags,
     rollHTML: await roll.render(),
     critical: bursts > 0,
-    bursts
+    bursts,
+    destined
   }, {
     rolls: [roll],
     flags: { kind: "damage", actorUuid: actor.uuid, itemUuid: item.uuid }
   });
 }
 
-/** 发布一张无检定的物品卡片（如不需要命中的战技）。 */
+/** 发布一张无检定的物品卡片（道具、天赋、结晶回路等）。 */
 export async function postItemCard(actor, item, { tags = [] } = {}) {
   return createCard(actor, "chat/action-card.hbs", {
     title: item.name,

@@ -32,6 +32,13 @@ test("模板中引用的局部模板都存在", () => {
   }
 });
 
+test("模板不使用 disabled 类（核心样式会让其无法点击）", () => {
+  for (const file of templates) {
+    const text = readFileSync(file, "utf8");
+    assert.doesNotMatch(text, /class="[^"]*\bdisabled\b(?!\}\})/, relative(root, file));
+  }
+});
+
 test("ApplicationV2 的每个 PARTS 模板只有一个根元素", () => {
   const parts = templates.filter(f => /actor[\\/][^\\/]+\.hbs$|item[\\/]item-sheet\.hbs$/.test(f));
   for (const file of parts) {

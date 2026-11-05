@@ -37,8 +37,11 @@
       "epic": "Epic d12", "legendary": "Legendary d20", "mythic": "Mythic d100"
     },
     "CraftType": { "martial": "Martial Craft", "magical": "Magical Craft", "sCraft": "S-Craft" },
-    "Area": { "self": "Self", "melee": "Melee", "target": "Target", "burst": "Burst", "line": "Line", "cone": "Cone" },
-    "DefenseTarget": { "none": "No hit roll", "guard": "Guard", "ward": "Ward" },
+    "Area": {
+      "self": "Self", "melee": "Melee Target (single)", "target": "Ranged Target (single)", "area": "Area (radius)",
+      "burst": "Burst (self radius)", "line": "Line (path)", "cone": "Cone"
+    },
+    "DefenseTarget": { "none": "No defense", "guard": "Guard", "ward": "Ward" },
     "Element": {
       "none": "None", "earth": "Earth", "water": "Water", "fire": "Fire", "wind": "Wind",
       "time": "Time", "space": "Space", "mirage": "Mirage"
@@ -137,9 +140,9 @@
       "Resource": "Resource",
       "Cost": "Cost",
       "ActionCost": "Actions",
-      "Targets": "Hit Roll vs",
-      "Area": "Area",
-      "AreaSize": "Area Size",
+      "Targets": "Action Roll vs",
+      "Area": "Range & Area",
+      "AreaSize": "Size",
       "Affinity": "Affinity Effect",
       "Modifier": "Modifier",
       "QuartzType": "Quartz Type",
@@ -204,12 +207,12 @@
       "ApplyHint": "Apply damage to the selected tokens (minus Armor Rank); Shift-click to ignore armor",
       "Summary": "{name} takes {net} damage ({absorbed} absorbed by armor). Durability {durabilityFrom} → {durabilityTo}, Health {healthFrom} → {healthTo}.",
       "Wounded": "Durability reduced to 0: Wounded.",
-      "Shock": "Health reduced to 0: unconscious and in shock. Will die without immediate medical attention!",
+      "Shock": "Health reduced to 0: in shock. Dies after rounds equal to Stamina unless stabilized (Medicine VS 20).",
       "Dead": "Damaged while at 0 Health: dead."
     },
     "Destined": {
       "Label": "Destined",
-      "Hint": "Destined: spend for +3 bonus dice, an extra action, recover 1/4 of a resource, or trigger your S-Craft",
+      "Hint": "Destined: unfold for +3 bonus dice, an action out of turn, recover 1/4 of Durability/Vigor/Mana, trigger your S-Craft on your turn, or Charge an action result beyond Legendary by taking Chances",
       "Gained": "Became Destined",
       "Reason": {
         "natural20": "natural 20 on the action die",

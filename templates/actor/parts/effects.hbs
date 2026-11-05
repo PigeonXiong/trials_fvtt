@@ -7,7 +7,7 @@
   </header>
   <ol class="item-list">
     {{#each effects}}
-    <li class="item {{#if disabled}}disabled{{/if}}" data-effect-id="{{id}}" data-parent-id="{{parentId}}">
+    <li class="item {{#if disabled}}effect-off{{/if}}" data-effect-id="{{id}}" data-parent-id="{{parentId}}">
       <img class="item-img" src="{{img}}" alt="">
       <a class="item-name" data-action="editEffect">{{name}}</a>
       <span class="item-meta">{{source}}</span>
