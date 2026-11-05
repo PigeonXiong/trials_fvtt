@@ -318,7 +318,8 @@
       "NotEnough": "Not enough {resource}: need {need}, have {have}.",
       "NotOwner": "You do not own this actor.",
       "SelectToken": "Select the token(s) that take the damage first.",
-      "SourceMissing": "The source actor or item could not be found."
+      "SourceMissing": "The source actor or item could not be found.",
+      "TokenBarsMigrated": "Updated resource bar visibility for {actors} prototype token(s) and {tokens} scene token(s) (PCs: everyone, NPCs: owners)."
     },
     "Hud": {
       "FormulaHint": "Final formula: 1d20 action die + bonus dice (x = explodes on max)",

@@ -3,16 +3,22 @@ import { CharacterData } from "../data/actor-models.mjs";
 import { rollAction, rollDamage, postItemCard } from "../dice/rolls.mjs";
 import { SYSTEM_ID, TRAILS } from "../config.mjs";
 import { localize, format, renderTemplate, templatePath } from "../utils.mjs";
+import { prototypeTokenDefaults, barBrawlActive } from "../token-bars.mjs";
 
 export class TrailsActor extends Actor {
   async _preCreate(data, options, user) {
     if ((await super._preCreate(data, options, user)) === false) return false;
-    if (this.type !== "character") return;
-    const updates = {
+    // 资源条可见性与 Bar Brawl 全套资源条（Bar Brawl 自己的 preCreateActor 钩子在此之后运行）
+    const updates = prototypeTokenDefaults(this.type, data, { brawlActive: barBrawlActive() });
+    if (this.type !== "character") {
+      this.updateSource(updates);
+      return;
+    }
+    Object.assign(updates, {
       "prototypeToken.actorLink": true,
       "prototypeToken.disposition": CONST.TOKEN_DISPOSITIONS.FRIENDLY,
       "prototypeToken.sight.enabled": true
-    };
+    });
     const maxima = CharacterData.initialResources(this._source.system);
     for (const [key, max] of Object.entries(maxima)) {
       if (data.system?.resources?.[key]?.value !== undefined) continue;

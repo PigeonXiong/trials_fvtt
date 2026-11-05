@@ -18,6 +18,8 @@ import { Flow, flowSteps } from "./flows/flow.mjs";
 import { ActionFlow, registerActionSteps } from "./flows/action-flow.mjs";
 import { EffectFlow, registerEffectSteps } from "./flows/effect-flow.mjs";
 import { RollHud } from "./apps/roll-hud.mjs";
+import { registerMigrationSetting, migrateWorld } from "./migration.mjs";
+import * as tokenBars from "./token-bars.mjs";
 
 const PARTIALS = [
   "actor/parts/combat-strip.hbs",
@@ -37,8 +39,10 @@ Hooks.once("init", () => {
     flows: { Flow, ActionFlow, EffectFlow },
     flowSteps,
     apps: { RollHud },
+    tokenBars,
     useItem
   };
+  registerMigrationSetting();
 
   CONFIG.Actor.documentClass = TrailsActor;
   CONFIG.Item.documentClass = TrailsItem;
@@ -78,6 +82,8 @@ Hooks.once("init", () => {
   registerChatListeners();
   return loadTemplates([...PARTIALS, ...ITEM_DETAIL_TEMPLATES]);
 });
+
+Hooks.once("ready", () => migrateWorld());
 
 /* -------------------------------------------- */
 /*  快捷栏宏                                     */

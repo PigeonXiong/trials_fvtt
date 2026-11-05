@@ -318,7 +318,8 @@
       "NotEnough": "{resource}不足：需要 {need}，当前 {have}。",
       "NotOwner": "你没有该角色的权限。",
       "SelectToken": "请先选中要承受伤害的 Token。",
-      "SourceMissing": "找不到对应的角色或物品。"
+      "SourceMissing": "找不到对应的角色或物品。",
+      "TokenBarsMigrated": "已更新资源条可见性：{actors} 个角色的原型 Token、{tokens} 个场景 Token（PC 对所有人显示，NPC 对拥有者显示）。"
     },
     "Hud": {
       "FormulaHint": "最终掷骰公式：1d20 行动骰 + 奖励骰（x 表示掷出最大值时爆发）",
