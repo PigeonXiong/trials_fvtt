@@ -10,6 +10,10 @@
   "authors": [
     { "name": "PigMourne" }
   ],
+  "url": "https://github.com/PigeonXiong/trials_fvtt",
+  "manifest": "https://github.com/PigeonXiong/trials_fvtt/releases/latest/download/system.json",
+  "download": "https://github.com/PigeonXiong/trials_fvtt/releases/latest/download/trails-of-destiny.zip",
+  "bugs": "https://github.com/PigeonXiong/trials_fvtt/issues",
   "esmodules": ["module/trails.mjs"],
   "styles": ["styles/trails.css"],
   "languages": [
