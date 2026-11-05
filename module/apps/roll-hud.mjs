@@ -4,9 +4,9 @@
  */
 import {
   applyToggles, buildActionPool, buildEffectPool, rankLadder, clampAdjust, targetVS,
-  coverArmorBonus, COVER, COVER_KEYS
+  coverArmorBonus, toggleSource, forcedChances, COVER, COVER_KEYS
 } from "../rules/roll-config.mjs";
-import { CHANCE_VS, MAX_CHANCES } from "../rules/dice.mjs";
+import { CHANCE_VS, MAX_CHANCES, MAX_BONUS_FACES, DEFAULT_BONUS_FACES } from "../rules/dice.mjs";
 import { TRAILS } from "../config.mjs";
 import { templatePath, localize } from "../utils.mjs";
 import { sourceEffect, isHindrance, currentTargets } from "../flows/common.mjs";
@@ -110,6 +110,9 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
     const c = this.config;
     c.sources = applyToggles(c.getSources(c.ability), c.toggles);
     const isAction = c.kind === "action";
+    const forced = isAction && c.allowChances ? forcedChances(c.sources) : null;
+    c.chancesLocked = forced !== null;
+    if (c.chancesLocked) c.chances = forced;
     const pool = isAction ? buildActionPool(c) : buildEffectPool(c);
 
     const sources = c.sources.map(s => ({ ...s, effect: sourceEffect(s) }));
@@ -148,7 +151,8 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
       pool,
       chips,
       hiddenChips,
-      ladder: rankLadder(pool.faces),
+      ladder: rankLadder(pool.faces, DEFAULT_BONUS_FACES, isAction ? MAX_BONUS_FACES : pool.maxFaces),
+      mythicCap: !isAction && pool.maxFaces > MAX_BONUS_FACES,
       boosts: sources.filter(s => !isHindrance(s)),
       hindrances: sources.filter(isHindrance),
       chancePips: Array.from({ length: MAX_CHANCES }, (_, i) => ({ n: i + 1, active: i < chances })),
@@ -234,16 +238,19 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** 点亮第 n 个冒险点；再次点击最高的那个则熄灭它。 */
   static #onSetChances(event, target) {
+    if (this.config.chancesLocked) return;
     const n = Number(target.dataset.value) || 0;
     this.config.chances = clampAdjust("chances", this.config.chances === n ? n - 1 : n);
     this.render();
   }
 
   static #onToggleSource(event, target) {
+    const c = this.config;
     const id = target.dataset.source;
-    const source = this.config.sources.find(s => s.id === id);
+    const source = c.sources.find(s => s.id === id);
     if (!source || source.locked) return;
-    this.config.toggles[id] = !source.enabled;
+    // 取消「突破传奇」后冒险恢复为可调，但保留当前点数（由 _prepareContext 重新计算锁定状态）
+    c.toggles = toggleSource(c.sources, c.toggles, id);
     this.render();
   }
 

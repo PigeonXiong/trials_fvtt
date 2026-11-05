@@ -26,7 +26,7 @@
     </div>
   </div>
   {{#if badges.length}}
-  <div class="card-badges">{{#each badges}}<span class="card-badge {{cls}}">{{label}}</span>{{/each}}</div>
+  <div class="card-badges">{{#each badges}}<span class="card-badge {{cls}}" {{#if tooltip}}data-tooltip="{{tooltip}}"{{/if}}>{{label}}</span>{{/each}}</div>
   {{/if}}
 
   {{#if targets.length}}
@@ -62,7 +62,7 @@
   {{/if}}
   {{#if showDamage}}
   <button type="button" class="card-big-button" data-trails-action="damage">
-    <i class="fa-solid fa-burst"></i> {{localize "TRAILS.Roll.Damage"}}{{#if damageCharges}}（+{{damageCharges}} {{localize "TRAILS.Roll.Charges"}}）{{/if}}
+    <i class="fa-solid fa-burst"></i> {{localize "TRAILS.Roll.Damage"}}{{#if damageCharges}}（+{{damageCharges}} {{localize "TRAILS.Roll.Charges"}}{{#if beyondLegendary}} · {{localize "TRAILS.Hud.MythicCap"}}{{/if}}）{{/if}}
   </button>
   {{/if}}
 </div>

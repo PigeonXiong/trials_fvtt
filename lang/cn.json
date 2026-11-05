@@ -357,7 +357,10 @@
         "VersusDefense": "{kind} VS {defense}",
         "Damage": "伤害检定",
         "DamageBurst": "伤害检定 · 爆发 ×{n}"
-      }
+      },
+      "ChancesLocked": "突破传奇：已锁定 3 点冒险",
+      "MythicCap": "上限 d100",
+      "MythicCapNote": "突破传奇：奖励骰上限提升到神话级（d100），实际骰阶由蓄势决定"
     },
     "Cover": {
       "none": "无掩护",
@@ -381,12 +384,15 @@
       "Skill": "{skill}技能",
       "LowAbility": "{ability}过低",
       "Wounded": "负伤",
-      "Bloom": "绽放命运",
+      "Bloom": "绽放命运：加骰",
       "BloomHint": "消耗命定状态，为这次行动或反应掷骰 +3 奖励骰；本回合不能再次进入命定",
       "Strength": "力量奖励骰",
       "ItemBonus": "物品额外奖励骰",
       "ChanceCharges": "冒险转化",
-      "ChanceChargesHint": "行动检定中每承担 1 点冒险，效应掷骰获得 1 点蓄势（不能超过传奇级 d20）"
+      "ChanceChargesHint": "行动检定中每承担 1 点冒险，效应掷骰获得 1 点蓄势（不能超过传奇级 d20）",
+      "BeyondLegendary": "绽放命运：突破传奇",
+      "BeyondLegendaryHint": "消耗命定状态，强制承担 3 点冒险（VS +45）。之后的效应掷骰奖励骰上限提升到神话级（d100），实际骰阶仍由获得的蓄势决定。本回合不能再次进入命定",
+      "BeyondLegendaryEffect": "锁定 3 冒险 · 效应上限 d100"
     }
   }
 }

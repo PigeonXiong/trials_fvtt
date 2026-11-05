@@ -6,7 +6,8 @@
  */
 import { Flow, flowSteps } from "./flow.mjs";
 import { RollHud } from "../apps/roll-hud.mjs";
-import { applyToggles, buildActionPool, resolveTargets, coverGuardBonus } from "../rules/roll-config.mjs";
+import { applyToggles, buildActionPool, resolveTargets, coverGuardBonus, forcedChances } from "../rules/roll-config.mjs";
+import { MAX_CHANCES } from "../rules/dice.mjs";
 import { TRAILS } from "../config.mjs";
 import { localize, format, enrich } from "../utils.mjs";
 import {
@@ -45,22 +46,42 @@ export class ActionFlow extends Flow {
  * @property {boolean} [fastForward]   跳过面板，按默认值直接掷骰
  */
 
-/** 命定状态下可以「绽放命运」：消耗命定，为一次行动或反应掷骰 +3 奖励骰。 */
-function bloomSource(actor) {
-  if (!actor.system.destined || !actor.isOwner) return null;
-  return {
+/**
+ * 命定状态下可以「绽放命运」，消耗命定并选择其中一项（同一互斥组）：
+ * - +3 奖励骰：行动或反应掷骰均可。
+ * - 突破传奇：强制承担 3 点冒险，之后的效应掷骰奖励骰上限提升到神话级（d100）。反应不能承担冒险，故不提供。
+ */
+function bloomSources(actor, { allowChances }) {
+  if (!actor.system.destined || !actor.isOwner) return [];
+  const sources = [{
     id: "bloom",
     label: localize("TRAILS.Source.Bloom"),
     hint: localize("TRAILS.Source.BloomHint"),
     dice: 3,
     enabled: false,
+    group: "bloom",
     consumesDestined: true
-  };
+  }];
+  if (allowChances) {
+    sources.push({
+      id: "beyondLegendary",
+      label: localize("TRAILS.Source.BeyondLegendary"),
+      hint: localize("TRAILS.Source.BeyondLegendaryHint"),
+      effectText: localize("TRAILS.Source.BeyondLegendaryEffect"),
+      enabled: false,
+      group: "bloom",
+      forceChances: MAX_CHANCES,
+      consumesDestined: true,
+      beyondLegendary: true
+    });
+  }
+  return sources;
 }
 
 async function initActionData(state) {
   const { actor, data } = state;
-  const bloom = bloomSource(actor);
+  const allowChances = data.allowChances !== false;
+  const bloom = bloomSources(actor, { allowChances });
   const cost = data.cost?.amount ? data.cost : null;
   let costInfo = null;
   if (cost) {
@@ -83,11 +104,12 @@ async function initActionData(state) {
     stats: itemStats(item),
     ability: data.ability ?? null,
     abilityChoices: data.allowAbility && data.ability ? TRAILS.abilities : null,
-    getSources: ability => [...data.pool(ability).sources, ...(bloom ? [bloom] : [])],
+    getSources: ability => [...data.pool(ability).sources, ...bloom],
     sources: [],
     toggles: {},
-    allowChances: data.allowChances !== false,
+    allowChances,
     chances: 0,
+    chancesLocked: false,
     extraDice: 0,
     charges: 0,
     challenges: 0,
@@ -124,6 +146,8 @@ async function rollActionCheck(state) {
   const { data } = state;
   const hud = data.hud;
   hud.sources = applyToggles(hud.getSources(hud.ability), hud.toggles);
+  const forced = forcedChances(hud.sources);
+  if (forced !== null && hud.allowChances) hud.chances = forced;
   const pool = buildActionPool(hud);
   const roll = await new Roll(pool.formula).evaluate();
   const natural = naturalResult(roll);
@@ -144,6 +168,7 @@ async function rollActionCheck(state) {
     strict: hud.reaction
   });
   data.bloomed = hud.sources.some(s => s.consumesDestined && s.enabled);
+  data.beyondLegendary = hud.sources.some(s => s.beyondLegendary && s.enabled);
 }
 
 async function spendActionCost(state) {
@@ -190,7 +215,11 @@ async function printActionCard(state) {
   if (outcome.natural === 20) badges.push({ cls: "nat20", label: localize("TRAILS.Roll.Natural20") });
   if (outcome.bursts) badges.push({ cls: "burst", label: `${localize("TRAILS.Roll.Burst")} ×${outcome.bursts}` });
   if (outcome.chances) badges.push({ cls: "chance", label: `${localize("TRAILS.Roll.Chances")} ×${outcome.chances}` });
-  if (data.bloomed) badges.push({ cls: "bloom", label: localize("TRAILS.Source.Bloom") });
+  if (data.beyondLegendary) {
+    badges.push({ cls: "bloom", label: localize("TRAILS.Source.BeyondLegendary"), tooltip: localize("TRAILS.Source.BeyondLegendaryEffect") });
+  } else if (data.bloomed) {
+    badges.push({ cls: "bloom", label: localize("TRAILS.Source.Bloom") });
+  }
 
   data.message = await createCard(actor, "chat/action-card.hbs", {
     title: hud.title,
@@ -209,7 +238,8 @@ async function printActionCard(state) {
     tags,
     description: item ? await enrich(item.system.description) : "",
     showDamage,
-    damageCharges: outcome.chances
+    damageCharges: outcome.chances,
+    beyondLegendary: !!data.beyondLegendary
   }, {
     rolls: [roll],
     rollMode: hud.rollMode,
@@ -218,6 +248,7 @@ async function printActionCard(state) {
       actorUuid: actor.uuid,
       itemUuid: item?.uuid ?? null,
       chances: outcome.chances,
+      beyondLegendary: !!data.beyondLegendary,
       success: outcome.success,
       targets: outcome.targets.map(t => ({
         tokenUuid: t.tokenUuid, actorUuid: t.actorUuid, name: t.name, img: t.img,

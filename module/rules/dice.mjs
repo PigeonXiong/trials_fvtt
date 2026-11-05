@@ -22,6 +22,8 @@ export const DEFAULT_BONUS_FACES = 10;
 export const MIN_BONUS_FACES = 4;
 /** 冒险与蓄势不能把效果推过传奇（d20）。 */
 export const MAX_BONUS_FACES = 20;
+/** 绽放命运「突破传奇」后，效应奖励骰的上限提升到神话级（d100）。 */
+export const MYTHIC_FACES = 100;
 export const MAX_CHANCES = 3;
 export const CHANCE_VS = 15;
 export const BURSTS_FOR_DESTINED = 3;
@@ -103,11 +105,12 @@ export function actionPool({ bonusDice = 0, charges = 0, challenges = 0, flat = 
  * @param {number} [p.bonusDice] 奖励骰数量（如力量奖励骰）
  * @param {number} [p.charges] 蓄势（通常来自冒险）
  * @param {number} [p.challenges] 挑战（负伤等）
+ * @param {number} [p.maxFaces] 奖励骰上限：默认传奇（d20），突破传奇时为神话（d100）
  */
-export function effectPool({ effectDice = 0, effectFaces = 8, bonusDice = 0, charges = 0, challenges = 0, flat = 0 } = {}) {
+export function effectPool({ effectDice = 0, effectFaces = 8, bonusDice = 0, charges = 0, challenges = 0, flat = 0, maxFaces = MAX_BONUS_FACES } = {}) {
   const dice = clampInt(effectDice, 0);
   const bonus = clampInt(bonusDice, 0);
-  const faces = shiftFaces(DEFAULT_BONUS_FACES, clampInt(charges, 0), clampInt(challenges, 0));
+  const faces = shiftFaces(DEFAULT_BONUS_FACES, clampInt(charges, 0), clampInt(challenges, 0), { max: maxFaces });
   rankIndex(effectFaces);
   const parts = [];
   if (dice > 0) parts.push(`${dice}d${effectFaces}`);

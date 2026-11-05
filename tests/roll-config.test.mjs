@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   COVER, clampAdjust, applyToggles, sumSources, buildActionPool, buildEffectPool, rankLadder,
-  coverGuardBonus, coverArmorBonus, targetVS, resolveTargets
+  coverGuardBonus, coverArmorBonus, targetVS, resolveTargets, toggleSource, forcedChances
 } from "../module/rules/roll-config.mjs";
-import { resolveAction } from "../module/rules/dice.mjs";
+import { resolveAction, effectPool } from "../module/rules/dice.mjs";
 
 const sources = [
   { id: "skill", label: "轻武器", dice: 2, locked: true },
@@ -105,4 +105,44 @@ test("无目标时使用手动 VS；反应检定需严格高于", () => {
   assert.equal(resolveTargets({ total: 21, vs: 20, strict: true }).success, true);
   assert.equal(resolveTargets({ total: 12 }).success, null);
   assert.equal(resolveAction({ total: 20, vs: 20, strict: true }).success, false);
+});
+
+const bloomOptions = [
+  { id: "bloom", label: "绽放命运：+3 奖励骰", dice: 3, enabled: false, group: "bloom" },
+  { id: "beyondLegendary", label: "绽放命运：突破传奇", enabled: false, group: "bloom", forceChances: 3 },
+  { id: "wounded", label: "负伤", challenges: 1 }
+];
+
+test("绽放命运的选项互斥：勾选一项会取消同组其他项", () => {
+  let toggles = toggleSource(applyToggles(bloomOptions), {}, "bloom");
+  assert.deepEqual(applyToggles(bloomOptions, toggles).map(s => s.enabled), [true, false, true]);
+  toggles = toggleSource(applyToggles(bloomOptions, toggles), toggles, "beyondLegendary");
+  assert.deepEqual(applyToggles(bloomOptions, toggles).map(s => s.enabled), [false, true, true]);
+  toggles = toggleSource(applyToggles(bloomOptions, toggles), toggles, "beyondLegendary");
+  assert.deepEqual(applyToggles(bloomOptions, toggles).map(s => s.enabled), [false, false, true], "再次点击取消");
+  toggles = toggleSource(applyToggles(bloomOptions, toggles), toggles, "wounded");
+  assert.equal(applyToggles(bloomOptions, toggles)[2].enabled, false, "不在组内的来源照常切换");
+});
+
+test("突破传奇强制承担 3 点冒险", () => {
+  assert.equal(forcedChances(applyToggles(bloomOptions)), null);
+  assert.equal(forcedChances(applyToggles(bloomOptions, { beyondLegendary: true })), 3);
+  assert.equal(forcedChances([{ id: "x", forceChances: 9 }]), 3, "不超过冒险上限");
+});
+
+test("突破传奇：效应奖励骰上限提升到 d100，实际骰阶仍由蓄势决定", () => {
+  const base = { effectDice: 2, effectFaces: 8, sources: [{ id: "str", dice: 2 }] };
+  assert.equal(buildEffectPool({ ...base, charges: 3 }).formula, "2d8 + 2d20x", "默认上限 d20");
+  assert.equal(buildEffectPool({ ...base, charges: 3, maxFaces: 100 }).formula, "2d8 + 2d100x");
+  assert.equal(buildEffectPool({ ...base, charges: 2, maxFaces: 100 }).formula, "2d8 + 2d20x", "蓄势不足时到不了 d100");
+  assert.equal(buildEffectPool({ ...base, charges: 4, challenges: 1, maxFaces: 100 }).formula, "2d8 + 2d100x");
+  assert.equal(buildEffectPool({ ...base, charges: 3, challenges: 1, maxFaces: 100 }).formula, "2d8 + 2d20x", "挑战照常抵消");
+  assert.equal(buildEffectPool({ ...base, charges: 9, maxFaces: 100 }).faces, 100, "d100 是最高一级");
+  assert.equal(buildEffectPool({ ...base, charges: 3, maxFaces: 12 }).maxFaces, 20, "只接受 d20 或 d100 两种上限");
+  assert.equal(effectPool({ effectDice: 1, bonusDice: 1, charges: 3, maxFaces: 100 }).formula, "1d8 + 1d100x");
+});
+
+test("骰阶条在突破传奇时延伸到 d100", () => {
+  assert.deepEqual(rankLadder(100, 10, 100).map(r => r.faces), [4, 6, 8, 10, 12, 20, 100]);
+  assert.equal(rankLadder(100, 10, 100).find(r => r.current).faces, 100);
 });

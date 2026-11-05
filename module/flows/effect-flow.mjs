@@ -6,7 +6,7 @@
 import { Flow, flowSteps } from "./flow.mjs";
 import { RollHud } from "../apps/roll-hud.mjs";
 import { applyToggles, buildEffectPool, coverArmorBonus } from "../rules/roll-config.mjs";
-import { burstDestinedReasons } from "../rules/dice.mjs";
+import { burstDestinedReasons, MAX_BONUS_FACES, MYTHIC_FACES } from "../rules/dice.mjs";
 import { TRAILS } from "../config.mjs";
 import { localize, format } from "../utils.mjs";
 import {
@@ -28,7 +28,7 @@ export class EffectFlow extends Flow {
  * 伤害来源：力量奖励骰、物品额外奖励骰、冒险转化的蓄势、负伤。
  * 效应掷骰的奖励骰只受益于蓄势；挑战仅在明确说明时（如负伤）才生效。
  */
-function damageSources(actor, item, chances) {
+function damageSources(actor, item, chances, beyondLegendary = false) {
   const sys = item.system;
   const sources = [];
   const strength = actor.system.abilities?.str?.dice ?? 0;
@@ -44,6 +44,12 @@ function damageSources(actor, item, chances) {
       hint: localize("TRAILS.Source.ChanceChargesHint")
     });
   }
+  if (beyondLegendary) {
+    sources.push({
+      id: "beyondLegendary", label: localize("TRAILS.Source.BeyondLegendary"), locked: true,
+      effectText: localize("TRAILS.Hud.MythicCap"), hint: localize("TRAILS.Hud.MythicCapNote")
+    });
+  }
   if (actor.system.wounded) {
     sources.push({ id: "wounded", label: localize("TRAILS.Source.Wounded"), challenges: 1 });
   }
@@ -53,6 +59,7 @@ function damageSources(actor, item, chances) {
 /**
  * state.data 输入：
  * @property {number} [chances]   来自行动检定的冒险
+ * @property {boolean} [beyondLegendary] 行动检定中绽放命运「突破传奇」：奖励骰上限提升到 d100
  * @property {object[]} [targets] 来自行动卡片的命中目标
  * @property {boolean} [fastForward]
  */
@@ -60,6 +67,7 @@ async function initEffectData(state) {
   const { actor, item, data } = state;
   const sys = item.system;
   const chances = data.chances ?? 0;
+  const beyondLegendary = !!data.beyondLegendary;
   data.hud = {
     kind: "effect",
     title: format("TRAILS.Roll.DamageTitle", { name: item.name }),
@@ -70,7 +78,8 @@ async function initEffectData(state) {
     effectFaces: TRAILS.rankFaces[sys.quality],
     effectRank: localize(TRAILS.ranks[sys.quality]),
     ability: null,
-    getSources: () => damageSources(actor, item, chances),
+    getSources: () => damageSources(actor, item, chances, beyondLegendary),
+    maxFaces: beyondLegendary ? MYTHIC_FACES : MAX_BONUS_FACES,
     sources: [],
     toggles: {},
     allowChances: false,
@@ -119,7 +128,8 @@ async function printEffectCard(state) {
   if (hud.damageType) tags.push(hud.damageType);
   for (const s of hud.sources) {
     if (!s.enabled) continue;
-    if (s.dice) tags.push(`${s.label} +${s.dice}`);
+    if (s.id === "beyondLegendary") tags.push(`${s.label}（${localize("TRAILS.Hud.MythicCap")}）`);
+    else if (s.dice) tags.push(`${s.label} +${s.dice}`);
     else if (s.charges) tags.push(`${s.label} ${format("TRAILS.Roll.ChargeTag", { n: s.charges })}`);
     else if (s.challenges) tags.push(s.label);
   }

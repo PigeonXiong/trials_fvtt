@@ -40,7 +40,7 @@ async function onRollDamage(flags) {
   if (!actor || !item) return ui.notifications.warn(localize("TRAILS.Notify.SourceMissing"));
   if (!actor.isOwner) return ui.notifications.warn(localize("TRAILS.Notify.NotOwner"));
   const targets = (flags.targets ?? []).filter(t => t.success);
-  return actor.rollDamage(item, { chances: flags.chances ?? 0, targets });
+  return actor.rollDamage(item, { chances: flags.chances ?? 0, beyondLegendary: !!flags.beyondLegendary, targets });
 }
 
 function damageTotal(message) {

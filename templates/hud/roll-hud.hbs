@@ -17,9 +17,10 @@
       {{#unless pool.dice}}{{#if isAction}}<span class="hud-muted">{{localize "TRAILS.Hud.NoBonusDice"}}</span>{{/if}}{{/unless}}
     </div>
     <ol class="hud-ladder" data-tooltip="TRAILS.Hud.LadderHint">
-      {{#each ladder}}<li class="{{#if base}}base{{/if}} {{#if current}}current{{/if}}">d{{faces}}</li>{{/each}}
+      {{#each ladder}}<li class="d{{faces}} {{#if base}}base{{/if}} {{#if current}}current{{/if}}">d{{faces}}</li>{{/each}}
     </ol>
     {{#if c.effectRank}}<p class="hud-muted">{{localize "TRAILS.Hud.EffectRank" rank=c.effectRank faces=pool.effectFaces}}</p>{{/if}}
+    {{#if mythicCap}}<p class="hud-mythic-note"><i class="fa-solid fa-star"></i> {{localize "TRAILS.Hud.MythicCapNote"}}</p>{{/if}}
   </section>
 
   {{#if abilityChoices}}
@@ -58,15 +59,16 @@
   </section>
 
   {{#if isAction}}
-  <section class="hud-chances {{#unless c.allowChances}}locked{{/unless}}">
+  <section class="hud-chances {{#unless c.allowChances}}locked{{/unless}} {{#if c.chancesLocked}}forced{{/if}}">
     <h4>
       {{localize "TRAILS.Roll.Chances"}}
       {{#if c.allowChances}}<span class="hud-muted">{{localize "TRAILS.Hud.ChancesSummary" vs=chanceVS charges=chances}}</span>{{/if}}
     </h4>
     {{#if c.allowChances}}
-    <div class="hud-pips" data-tooltip="TRAILS.Roll.ChancesHint">
-      {{#each chancePips}}<a class="hud-pip {{#if active}}on{{/if}}" data-action="setChances" data-value="{{n}}">{{n}}</a>{{/each}}
+    <div class="hud-pips" data-tooltip="{{#if c.chancesLocked}}TRAILS.Hud.ChancesLocked{{else}}TRAILS.Roll.ChancesHint{{/if}}">
+      {{#each chancePips}}<a class="hud-pip {{#if active}}on{{/if}} {{#if @root.c.chancesLocked}}locked{{/if}}" data-action="setChances" data-value="{{n}}">{{#if @root.c.chancesLocked}}<i class="fa-solid fa-lock"></i>{{else}}{{n}}{{/if}}</a>{{/each}}
     </div>
+    {{#if c.chancesLocked}}<p class="hud-muted hud-forced-note"><i class="fa-solid fa-lock"></i> {{localize "TRAILS.Hud.ChancesLocked"}}</p>{{/if}}
     {{else}}
     <p class="hud-muted">{{localize "TRAILS.Hud.NoChances"}}</p>
     {{/if}}

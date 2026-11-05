@@ -357,7 +357,10 @@
         "VersusDefense": "{kind} vs {defense}",
         "Damage": "Damage",
         "DamageBurst": "Damage · Burst ×{n}"
-      }
+      },
+      "ChancesLocked": "Beyond Legendary: 3 chances locked",
+      "MythicCap": "cap d100",
+      "MythicCapNote": "Beyond Legendary: bonus dice can reach Mythic (d100); the actual rank depends on charges"
     },
     "Cover": {
       "none": "No Cover",
@@ -381,12 +384,15 @@
       "Skill": "{skill} skill",
       "LowAbility": "Low {ability}",
       "Wounded": "Wounded",
-      "Bloom": "Bloom Destiny",
+      "Bloom": "Bloom Destiny: +Dice",
       "BloomHint": "Spend your Destined state for +3 bonus dice on this action or reaction roll; you cannot become Destined again this turn",
       "Strength": "Strength bonus dice",
       "ItemBonus": "Item bonus dice",
       "ChanceCharges": "From chances",
-      "ChanceChargesHint": "Each chance taken on the action roll gives the effect roll 1 charge (never above Legendary d20)"
+      "ChanceChargesHint": "Each chance taken on the action roll gives the effect roll 1 charge (never above Legendary d20)",
+      "BeyondLegendary": "Bloom Destiny: Beyond Legendary",
+      "BeyondLegendaryHint": "Spend your Destined state and take 3 chances (VS +45). The following effect roll may raise its bonus dice up to Mythic (d100); the actual rank still depends on the charges gained. You cannot become Destined again this turn",
+      "BeyondLegendaryEffect": "3 chances locked · effect cap d100"
     }
   }
 }

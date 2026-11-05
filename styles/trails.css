@@ -662,6 +662,7 @@
 .trails-hud .die-chip.bonus.d10 { background: var(--trails-accent); }
 .trails-hud .die-chip.bonus.d12 { background: #5b4a9b; }
 .trails-hud .die-chip.bonus.d20 { background: var(--trails-gold); }
+.trails-hud .die-chip.bonus.d100 { background: #7a4a9b; }
 .trails-hud .die-chip.more { color: var(--trails-muted); background: transparent; }
 
 .trails-hud .hud-ladder {
@@ -747,6 +748,25 @@
   color: #fff;
   background: var(--trails-gold);
 }
+
+/* 突破传奇：冒险被锁定为 3 点 */
+.trails-hud .hud-pip.locked {
+  cursor: not-allowed;
+  border-color: #7a4a9b;
+}
+
+.trails-hud .hud-pip.locked.on { background: #7a4a9b; }
+
+.trails-hud .hud-forced-note,
+.trails-hud .hud-mythic-note {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  color: #7a4a9b;
+}
+
+.trails-hud .hud-ladder li.d100.current { background: #7a4a9b; }
 
 /* 加减按钮 */
 .trails-hud .hud-counters {

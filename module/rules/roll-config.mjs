@@ -4,7 +4,7 @@
  */
 import {
   actionPool, effectPool, resolveAction, DIE_RANKS, MAX_CHANCES, CHANCE_VS,
-  DEFAULT_BONUS_FACES, MIN_BONUS_FACES, MAX_BONUS_FACES
+  DEFAULT_BONUS_FACES, MIN_BONUS_FACES, MAX_BONUS_FACES, MYTHIC_FACES
 } from "./dice.mjs";
 
 /**
@@ -55,6 +55,8 @@ export function clampAdjust(key, value) {
  * @property {number} [flat]        固定修正
  * @property {boolean} [enabled]    是否计入（默认计入）
  * @property {boolean} [locked]     不可在面板上取消
+ * @property {string} [group]       互斥组：同组只能勾选一项（如绽放命运的各个选项）
+ * @property {number} [forceChances] 勾选时强制承担的冒险点数（突破传奇：3）
  */
 
 /** 按 id 应用面板上的勾选状态；锁定的来源总是计入。 */
@@ -63,6 +65,30 @@ export function applyToggles(sources = [], toggles = {}) {
     const enabled = s.locked ? true : (s.id in toggles ? !!toggles[s.id] : s.enabled !== false);
     return { ...s, enabled };
   });
+}
+
+/**
+ * 在面板上切换一个来源，返回新的勾选状态。勾选同一互斥组中的某项时，取消该组其他项。
+ * @param {RollSource[]} sources 已应用勾选状态的来源
+ * @param {Record<string, boolean>} toggles
+ * @param {string} id
+ */
+export function toggleSource(sources, toggles, id) {
+  const source = sources.find(s => s.id === id);
+  if (!source || source.locked) return { ...toggles };
+  const next = { ...toggles, [id]: !source.enabled };
+  if (next[id] && source.group) {
+    for (const other of sources) {
+      if (other.id !== id && other.group === source.group && !other.locked) next[other.id] = false;
+    }
+  }
+  return next;
+}
+
+/** 启用的来源中要求强制承担的冒险点数；没有时为 null。 */
+export function forcedChances(sources = []) {
+  const forced = sources.filter(s => s.enabled !== false && Number.isFinite(s.forceChances)).map(s => s.forceChances);
+  return forced.length ? clampAdjust("chances", Math.max(...forced)) : null;
 }
 
 /** 汇总所有启用的来源。 */
@@ -102,23 +128,25 @@ export function buildActionPool(config = {}) {
 /**
  * 效应检定面板 → 骰池（效应骰按品质、不爆发；奖励骰爆发且不超过传奇级）。
  * @param {{effectDice?: number, effectFaces?: number, sources?: RollSource[], extraDice?: number,
- *   charges?: number, challenges?: number, flat?: number}} config
+ *   charges?: number, challenges?: number, flat?: number, maxFaces?: number}} config
+ *   maxFaces：奖励骰上限，默认传奇（d20）；突破传奇时为神话（d100）
  */
 export function buildEffectPool(config = {}) {
   const parts = combine(config);
   const effectDice = Math.max(0, toInt(config.effectDice));
   const effectFaces = toInt(config.effectFaces) || 8;
-  const pool = effectPool({ ...parts, effectDice, effectFaces });
-  return { ...parts, effectDice, effectFaces, dice: pool.bonusDice, faces: pool.faces, formula: pool.formula };
+  const maxFaces = config.maxFaces === MYTHIC_FACES ? MYTHIC_FACES : MAX_BONUS_FACES;
+  const pool = effectPool({ ...parts, effectDice, effectFaces, maxFaces });
+  return { ...parts, effectDice, effectFaces, maxFaces, dice: pool.bonusDice, faces: pool.faces, formula: pool.formula };
 }
 
 /**
- * 骰阶条：d4 … d20，标出基础骰阶（d10）与升降后的骰阶。
+ * 骰阶条：d4 … d20（突破传奇时到 d100），标出基础骰阶（d10）与升降后的骰阶。
  * @returns {{faces: number, base: boolean, current: boolean}[]}
  */
-export function rankLadder(faces, baseFaces = DEFAULT_BONUS_FACES) {
+export function rankLadder(faces, baseFaces = DEFAULT_BONUS_FACES, maxFaces = MAX_BONUS_FACES) {
   return DIE_RANKS
-    .filter(r => r.faces >= MIN_BONUS_FACES && r.faces <= MAX_BONUS_FACES)
+    .filter(r => r.faces >= MIN_BONUS_FACES && r.faces <= maxFaces)
     .map(r => ({ key: r.key, faces: r.faces, base: r.faces === baseFaces, current: r.faces === faces }));
 }
 
