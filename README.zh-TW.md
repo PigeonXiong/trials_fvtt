@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="README.md">简体中文</a> · <a href="README.en.md">English</a> · <b>繁體中文</b>
+  <a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a> · <b>繁體中文</b>
 </p>
 
 # 英雄傳說：命之軌跡 TRPG — Foundry VTT 系統
