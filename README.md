@@ -28,7 +28,7 @@ Requires Foundry VTT **v12** (tested on 12.343).
    https://github.com/PigeonXiong/trials_fvtt/releases/latest/download/system.json
    ```
 
-3. When creating a world, choose **英雄传说：命之轨迹 TRPG（非官方）** as the game system.
+3. When creating a world, choose **The Legend of Heroes: Trails of Destiny (Unofficial)** as the game system.
 
 You can also download `trails-of-destiny.zip` from [Releases](https://github.com/PigeonXiong/trials_fvtt/releases) and extract it to `Data/systems/trails-of-destiny` in your Foundry data folder.
 

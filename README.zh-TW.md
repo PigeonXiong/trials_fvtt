@@ -28,7 +28,7 @@
    https://github.com/PigeonXiong/trials_fvtt/releases/latest/download/system.json
    ```
 
-3. 建立世界時，遊戲系統選擇「英雄传说：命之轨迹 TRPG（非官方）」。
+3. 建立世界時，遊戲系統選擇「The Legend of Heroes: Trails of Destiny (Unofficial)」。
 
 也可以在 [Releases](https://github.com/PigeonXiong/trials_fvtt/releases) 頁面下載 `trails-of-destiny.zip`，解壓縮到 Foundry 資料目錄的 `Data/systems/trails-of-destiny`。
 

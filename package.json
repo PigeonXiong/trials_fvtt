@@ -2,7 +2,7 @@
   "name": "trails-of-destiny-fvtt",
   "version": "0.1.0",
   "private": true,
-  "description": "英雄传说：命之轨迹 TRPG 的非官方 Foundry VTT 系统",
+  "description": "Unofficial Foundry VTT system for The Legend of Heroes: Trails of Destiny TRPG",
   "type": "module",
   "scripts": {
     "test": "node --test \"tests/*.test.mjs\""
