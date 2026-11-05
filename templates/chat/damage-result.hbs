@@ -1,0 +1,12 @@
+<div class="trails chat-card damage-result {{#if undone}}undone{{/if}}">
+  <div class="result-row">
+    <img src="{{img}}" alt="">
+    <div class="result-text">{{{headline}}}</div>
+    {{#unless undone}}
+    <button type="button" class="result-undo" data-trails-action="undoDamage" data-tooltip="TRAILS.Damage.Undo"><i class="fa-solid fa-rotate-left"></i></button>
+    {{/unless}}
+  </div>
+  <div class="result-detail">{{detail}}</div>
+  {{#each notes}}<p class="result-note">{{this}}</p>{{/each}}
+  {{#if undone}}<p class="result-undone"><i class="fa-solid fa-rotate-left"></i> {{localize "TRAILS.Damage.Undone"}}</p>{{/if}}
+</div>

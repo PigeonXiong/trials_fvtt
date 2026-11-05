@@ -135,12 +135,13 @@ export function burstDestinedReasons(bursts) {
  * @param {number} [p.chances] 承担的冒险点数（每点 VS +15）
  * @param {number} [p.natural] 行动骰原始点数
  * @param {number} [p.bursts] 奖励骰爆发次数
+ * @param {boolean} [p.strict] 反应检定：需严格高于 VS（平局归行动方）
  */
-export function resolveAction({ total, vs = null, chances = 0, natural = 0, bursts = 0 }) {
+export function resolveAction({ total, vs = null, chances = 0, natural = 0, bursts = 0, strict = false }) {
   const chanceCount = clampInt(chances, 0, MAX_CHANCES);
   const hasTarget = vs !== null && vs !== undefined && vs !== "" && Number.isFinite(Number(vs));
   const targetVS = hasTarget ? Number(vs) + chanceCount * CHANCE_VS : null;
-  const success = hasTarget ? total >= targetVS : null;
+  const success = hasTarget ? (strict ? total > targetVS : total >= targetVS) : null;
   const destinedReasons = [];
   if (natural === ACTION_DIE_FACES) destinedReasons.push("natural20");
   destinedReasons.push(...burstDestinedReasons(bursts));

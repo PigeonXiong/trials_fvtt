@@ -519,80 +519,472 @@
   margin-left: auto;
 }
 
-/* ---------- 检定对话框 ---------- */
+/* ---------- 检定面板（画面右下角，聊天栏左侧） ---------- */
 
-.trails-dialog .trails-roll-form .form-group {
+.trails-hud-zone {
+  position: fixed;
+  right: 310px;
+  bottom: 8px;
+  z-index: 70;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+
+/* 无边框的 ApplicationV2 不带 .application 类 */
+.trails-hud-zone > .trails-hud {
+  position: relative;
+  inset: auto;
+  width: 340px;
+  min-width: 0;
+  max-height: calc(100vh - 24px);
+  padding: 0;
+  overflow: hidden auto;
+  color: var(--trails-ink);
+  background: var(--trails-paper);
+  border: 1px solid #232a38;
+  border-radius: var(--trails-radius);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+  font-size: 13px;
+  pointer-events: auto;
+}
+
+.trails-hud .hud-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.trails .hud-title,
+.trails .card-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 4px 0;
+  padding: 6px 10px;
+  color: #fff;
+  background: #232a38;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.04em;
 }
 
-.trails-dialog .trails-roll-form .form-group label {
-  flex: 0 0 110px;
-}
-
-.trails-dialog .trails-roll-form .hint {
+.trails .hud-stats,
+.trails .card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 12px;
+  padding: 2px 8px;
   font-size: 12px;
-  opacity: 0.8;
-  margin: 4px 0;
+  color: var(--trails-muted);
+  background: var(--trails-panel);
+  border-bottom: 1px solid var(--trails-line);
 }
+
+.trails .hud-band,
+.trails .card-band {
+  padding: 2px 8px;
+  text-align: center;
+  color: #fff;
+  background: var(--trails-accent);
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+}
+
+.trails .card-band.burst {
+  background: var(--trails-gold);
+}
+
+.trails-hud section {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--trails-line);
+}
+
+.trails-hud h4 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--trails-accent);
+  border: none;
+}
+
+.trails-hud .hud-muted {
+  margin: 0;
+  font-size: 11px;
+  font-weight: normal;
+  color: var(--trails-muted);
+}
+
+/* 骰池预览 */
+.trails-hud .hud-preview {
+  text-align: center;
+  background: var(--trails-panel);
+}
+
+.trails-hud .hud-formula {
+  padding: 4px;
+  font-family: var(--font-mono, monospace);
+  font-size: 18px;
+  font-weight: bold;
+  background: #fbfaf6;
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
+}
+
+.trails-hud .hud-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.trails-hud .die-chip {
+  min-width: 30px;
+  padding: 2px 4px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+  background: #6b7385;
+  border-radius: 4px;
+}
+
+.trails-hud .die-chip.action { background: var(--trails-ink); }
+.trails-hud .die-chip.effect { background: #8a8170; }
+.trails-hud .die-chip.bonus.d4 { background: #9a5a5a; }
+.trails-hud .die-chip.bonus.d6 { background: #a06a42; }
+.trails-hud .die-chip.bonus.d8 { background: #7d7d45; }
+.trails-hud .die-chip.bonus.d10 { background: var(--trails-accent); }
+.trails-hud .die-chip.bonus.d12 { background: #5b4a9b; }
+.trails-hud .die-chip.bonus.d20 { background: var(--trails-gold); }
+.trails-hud .die-chip.more { color: var(--trails-muted); background: transparent; }
+
+.trails-hud .hud-ladder {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  margin: 6px 0 2px;
+  padding: 0;
+  list-style: none;
+}
+
+.trails-hud .hud-ladder li {
+  flex: 0 0 38px;
+  padding: 1px 0;
+  font-size: 11px;
+  color: var(--trails-muted);
+  background: #ece7dc;
+  border-radius: 3px;
+}
+
+.trails-hud .hud-ladder li.base { outline: 1px dashed var(--trails-muted); outline-offset: -1px; }
+.trails-hud .hud-ladder li.current { color: #fff; font-weight: bold; background: var(--trails-accent); }
+
+/* 来源复选框 */
+.trails-hud .hud-sources {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.trails-hud .hud-col.hindrances {
+  padding-left: 8px;
+  border-left: 1px dashed var(--trails-line);
+}
+
+.trails-hud .hud-col.hindrances h4 { color: var(--trails-bad); }
+
+.trails-hud .hud-source {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  column-gap: 4px;
+  align-items: center;
+  padding: 2px 0;
+  color: var(--trails-ink);
+  cursor: pointer;
+}
+
+.trails-hud .hud-source .source-effect {
+  grid-column: 2;
+  font-size: 11px;
+  color: var(--trails-muted);
+}
+
+.trails-hud .hud-source:not(.on) .source-label { color: var(--trails-muted); }
+.trails-hud .hud-source.locked { cursor: default; }
+.trails-hud .hud-source.locked i { opacity: 0.45; }
+.trails-hud .boosts .hud-source.on i { color: var(--trails-good); }
+.trails-hud .hindrances .hud-source.on i { color: var(--trails-bad); }
+
+/* 冒险 */
+.trails-hud .hud-chances h4 .hud-muted { margin-left: auto; }
+
+.trails-hud .hud-pips {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.trails-hud .hud-pip {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-weight: bold;
+  color: var(--trails-gold);
+  background: #fff;
+  border: 2px solid var(--trails-gold);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.trails-hud .hud-pip.on {
+  color: #fff;
+  background: var(--trails-gold);
+}
+
+/* 加减按钮 */
+.trails-hud .hud-counters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+}
+
+.trails-hud .hud-counter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.trails-hud .counter-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.trails-hud .counter-control {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.trails-hud .counter-step {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  font-size: 11px;
+  color: #fff;
+  background: var(--trails-accent);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.trails-hud .hud-counter.challenges .counter-step { background: var(--trails-bad); }
+.trails-hud .counter-step:hover { filter: brightness(1.15); }
+
+.trails-hud .counter-value {
+  min-width: 24px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.trails-hud .counter-value.nonzero { color: var(--trails-accent); }
+
+/* 目标 */
+.trails-hud .hud-targets {
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.trails-hud .hud-target {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0 6px;
+  padding: 6px;
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
+}
+
+.trails-hud .hud-target img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  background: var(--trails-icon-bg);
+  border: none;
+  border-radius: 4px;
+}
+
+.trails-hud .target-main { min-width: 0; }
+.trails-hud .target-name { font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trails-hud .target-detail { font-size: 11px; color: var(--trails-muted); }
+
+.trails-hud .cover-picker {
+  display: flex;
+  gap: 2px;
+  margin-top: 4px;
+}
+
+.trails-hud .cover-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 0;
+  font-size: 10px;
+  color: var(--trails-muted);
+  border: 1px solid var(--trails-line);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.trails-hud .cover-option.on {
+  color: #fff;
+  background: var(--trails-accent);
+  border-color: var(--trails-accent);
+}
+
+.trails-hud .target-total {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 48px;
+  padding: 2px 6px;
+  color: #fff;
+  background: #232a38;
+  border-radius: 4px;
+}
+
+.trails-hud .target-total-label { font-size: 10px; opacity: 0.8; }
+.trails-hud .target-total-value { font-size: 18px; font-weight: bold; }
+
+.trails-hud .target-remove {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  color: #fff;
+  background: #6b7385;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* 行 / 底部 */
+.trails-hud .hud-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--trails-line);
+}
+
+.trails-hud .hud-row > span {
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.trails-hud .hud-row select,
+.trails-hud .hud-row input,
+.trails-hud .hud-footer select {
+  flex: 1;
+  height: 26px;
+  color: var(--trails-ink);
+  background: #fff;
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
+}
+
+.trails-hud .hud-cost {
+  margin: 0;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--trails-muted);
+}
+
+.trails-hud .hud-cost.short { font-weight: bold; color: var(--trails-bad); }
+
+.trails-hud .hud-footer {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 6px;
+  padding: 8px 10px;
+  background: #ece7dc;
+}
+
+.trails-hud .hud-footer button {
+  height: 30px;
+  padding: 0 12px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+.trails-hud .hud-footer .hud-roll { background: var(--trails-accent); }
+.trails-hud .hud-footer .hud-cancel { background: #6b7385; }
 
 /* ---------- 聊天卡片 ---------- */
 
-.trails.chat-card .card-header {
+.trails.chat-card {
+  overflow: hidden;
+  color: var(--trails-ink);
+  background: var(--trails-paper);
+  border: 1px solid #232a38;
+  border-radius: var(--trails-radius);
+}
+
+.trails.chat-card .card-item-img {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  background: var(--trails-icon-bg);
+  border: none;
+  border-radius: 3px;
+}
+
+.trails.chat-card .card-roll-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+}
+
+.trails.chat-card .card-actor-img {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  object-fit: cover;
+  background: var(--trails-icon-bg);
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
+}
+
+.trails.chat-card .card-roll-main { flex: 1; min-width: 0; }
+
+.trails.chat-card .card-actor-line {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 4px;
 }
 
-.trails.chat-card .card-header img {
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 4px;
-  background: #3a4254;
-  flex: 0 0 auto;
-}
+.trails.chat-card .card-actor-name { font-size: 14px; font-weight: bold; }
 
-.trails.chat-card .card-header h3 {
-  margin: 0;
-  font-size: 15px;
-  border: none;
-}
-
-.trails.chat-card .card-subtitle {
-  margin: 0;
-  font-size: 12px;
-  opacity: 0.8;
-}
-
-.trails.chat-card .card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  list-style: none;
-  margin: 4px 0;
-  padding: 0;
-}
-
-.trails.chat-card .card-tags li {
-  padding: 0 6px;
-  font-size: 11px;
-  border: 1px solid #9aa3b5;
-  border-radius: 10px;
-}
-
-.trails.chat-card .card-outcome {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin: 4px 0;
-}
-
-.trails.chat-card .outcome-result {
+.trails.chat-card .card-result {
   margin-left: auto;
   padding: 1px 10px;
   font-weight: bold;
@@ -600,30 +992,223 @@
   border-radius: 10px;
 }
 
-.trails.chat-card .outcome-result.success { background: #2e7d4f; }
-.trails.chat-card .outcome-result.failure { background: #b23b3b; }
+.trails.chat-card .card-result.success { background: var(--trails-good); }
+.trails.chat-card .card-result.failure { background: var(--trails-bad); }
 
-.trails.chat-card .outcome-burst,
-.trails.chat-card .outcome-nat20 {
-  color: #b8892b;
-  font-weight: bold;
+.trails.chat-card .trails-roll { cursor: pointer; }
+
+.trails.chat-card .trails-roll-line {
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
 }
 
-.trails.chat-card .card-destined {
-  margin: 4px 0;
-  padding: 2px 8px;
+.trails.chat-card .trails-formula {
+  flex: 1;
+  align-self: center;
+  padding: 4px 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.trails.chat-card .trails-total {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  padding: 0 8px;
+  font-size: 20px;
+  font-weight: bold;
   color: #fff;
-  background: #b8892b;
+  background: #232a38;
+}
+
+.trails.chat-card .trails-roll .dice-tooltip { margin-top: 4px; }
+
+.trails.chat-card .card-badges,
+.trails.chat-card .card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px 6px;
+  list-style: none;
+}
+
+.trails.chat-card .card-badge,
+.trails.chat-card .card-tags li {
+  padding: 0 8px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #fff;
+  background: #6b7385;
+  border-radius: 10px;
+}
+
+.trails.chat-card .card-tags li { font-weight: normal; background: var(--trails-accent); }
+.trails.chat-card .card-badge.nat20,
+.trails.chat-card .card-badge.burst { background: var(--trails-gold); }
+.trails.chat-card .card-badge.chance { background: var(--trails-accent); }
+.trails.chat-card .card-badge.bloom { background: #7a4a9b; }
+
+.trails.chat-card .card-targets {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px 6px;
+  list-style: none;
+}
+
+.trails.chat-card .card-target {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px 3px 3px;
+  background: #fff;
+  border: 1px solid var(--trails-line);
+  border-left: 4px solid #6b7385;
+  border-radius: 4px;
+}
+
+.trails.chat-card .card-target.hit { border-left-color: var(--trails-good); }
+.trails.chat-card .card-target.miss { border-left-color: var(--trails-bad); }
+
+.trails.chat-card .card-target img {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  object-fit: cover;
+  background: var(--trails-icon-bg);
+  border: none;
+  border-radius: 3px;
+}
+
+.trails.chat-card .card-target .target-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trails.chat-card .target-vs,
+.trails.chat-card .target-armor { font-size: 12px; color: var(--trails-muted); white-space: nowrap; }
+.trails.chat-card .target-cover { font-size: 11px; color: var(--trails-accent); white-space: nowrap; }
+.trails.chat-card .target-armor.covered { font-weight: bold; color: var(--trails-accent); }
+.trails.chat-card .target-result { font-weight: bold; }
+.trails.chat-card .hit .target-result { color: var(--trails-good); }
+.trails.chat-card .miss .target-result { color: var(--trails-bad); }
+
+.trails.chat-card .damage-multiplier {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 24px;
+  padding: 0 2px;
+}
+
+.trails.chat-card .target-apply {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 26px;
+  padding: 0;
+  line-height: 24px;
+  color: #fff;
+  background: var(--trails-bad);
+  border: none;
+  border-radius: 4px;
+}
+
+.trails.chat-card .card-vs-line { padding: 0 8px 6px; font-size: 12px; }
+.trails.chat-card .card-vs-line.muted { color: var(--trails-muted); }
+
+.trails.chat-card .card-destined {
+  margin: 0 8px 6px;
+  padding: 2px 8px;
+  font-weight: bold;
+  color: #fff;
+  background: var(--trails-gold);
   border-radius: 4px;
 }
 
 .trails.chat-card .card-description {
-  margin: 4px 0;
+  margin: 0 8px 6px;
   font-size: 12px;
 }
+
+.trails.chat-card .card-description summary {
+  color: var(--trails-muted);
+  cursor: pointer;
+}
+
+.trails.chat-card .card-big-button {
+  display: block;
+  width: calc(100% - 16px);
+  height: 36px;
+  margin: 0 8px 8px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  background: var(--trails-gold);
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 2px 0 #8a6418;
+}
+
+.trails.chat-card .card-big-button:hover { filter: brightness(1.08); }
 
 .trails.chat-card .card-buttons {
   display: flex;
   gap: 4px;
-  margin-top: 4px;
+  padding: 0 8px 8px;
 }
+
+.trails.chat-card .card-buttons button {
+  flex: 1;
+  height: 28px;
+  font-size: 12px;
+}
+
+/* 伤害记录 */
+.trails.chat-card.damage-result { padding: 6px 8px; }
+
+.trails.chat-card .result-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trails.chat-card .result-row img {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  object-fit: cover;
+  background: var(--trails-icon-bg);
+  border: none;
+  border-radius: 4px;
+}
+
+.trails.chat-card .result-text { flex: 1; font-size: 14px; }
+.trails.chat-card .damage-number { font-size: 18px; font-weight: bold; color: var(--trails-bad); }
+
+.trails.chat-card .result-undo {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  line-height: 26px;
+  color: var(--trails-ink);
+  background: #fff;
+  border: 1px solid var(--trails-line);
+  border-radius: 4px;
+}
+
+.trails.chat-card .result-detail { margin-top: 4px; font-size: 11px; color: var(--trails-muted); }
+.trails.chat-card .result-note { margin: 4px 0 0; font-size: 12px; color: var(--trails-bad); }
+.trails.chat-card.damage-result.undone .result-row,
+.trails.chat-card.damage-result.undone .result-detail { opacity: 0.5; text-decoration: line-through; }
+.trails.chat-card .result-undone { margin: 4px 0 0; font-size: 12px; font-weight: bold; color: var(--trails-muted); }

@@ -13,19 +13,30 @@ import { registerChatListeners } from "./chat.mjs";
 import { loadTemplates, templatePath, localize, DocumentSheetConfigImpl } from "./utils.mjs";
 import * as diceRules from "./rules/dice.mjs";
 import * as characterRules from "./rules/character.mjs";
+import * as rollConfig from "./rules/roll-config.mjs";
+import { Flow, flowSteps } from "./flows/flow.mjs";
+import { ActionFlow, registerActionSteps } from "./flows/action-flow.mjs";
+import { EffectFlow, registerEffectSteps } from "./flows/effect-flow.mjs";
+import { RollHud } from "./apps/roll-hud.mjs";
 
 const PARTIALS = [
   "actor/parts/combat-strip.hbs",
   "actor/parts/item-list.hbs",
-  "actor/parts/effects.hbs"
+  "actor/parts/effects.hbs",
+  "hud/parts/counter.hbs"
 ].map(templatePath);
 
 Hooks.once("init", () => {
   console.log(`${SYSTEM_ID} | 初始化命之轨迹系统`);
 
   CONFIG.TRAILS = TRAILS;
+  registerActionSteps(flowSteps);
+  registerEffectSteps(flowSteps);
   game.trails = {
-    rules: { dice: diceRules, character: characterRules },
+    rules: { dice: diceRules, character: characterRules, rollConfig },
+    flows: { Flow, ActionFlow, EffectFlow },
+    flowSteps,
+    apps: { RollHud },
     useItem
   };
 

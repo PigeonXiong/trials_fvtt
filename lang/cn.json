@@ -15,49 +15,138 @@
   },
   "TRAILS": {
     "Ability": {
-      "str": "力量", "agi": "敏捷", "sta": "耐力", "spd": "速度", "sol": "灵性",
-      "emp": "共情", "mem": "记忆", "rsn": "理性", "rsl": "决心"
+      "str": "力量",
+      "agi": "敏捷",
+      "sta": "耐力",
+      "spd": "速度",
+      "sol": "灵性",
+      "emp": "共情",
+      "mem": "记忆",
+      "rsn": "理性",
+      "rsl": "决心"
     },
     "AbilityAbbr": {
-      "str": "力", "agi": "敏", "sta": "耐", "spd": "速", "sol": "灵",
-      "emp": "共", "mem": "记", "rsn": "理", "rsl": "决"
+      "str": "力",
+      "agi": "敏",
+      "sta": "耐",
+      "spd": "速",
+      "sol": "灵",
+      "emp": "共",
+      "mem": "记",
+      "rsn": "理",
+      "rsl": "决"
     },
     "Skill": {
-      "athletics": "运动", "awareness": "察觉", "beastHandling": "驯兽", "crafting": "工艺",
-      "defense": "防御", "entertain": "表演", "heavyWeapons": "重武器", "legerdemain": "巧手",
-      "lightWeapons": "轻武器", "medicine": "医学", "occult": "奥秘", "orbalArts": "导力魔法",
-      "piloting": "驾驶", "rangedWeapons": "远程武器", "resistance": "抵抗", "science": "科学与技术",
-      "social": "社交", "stealth": "潜行", "studies": "学识", "survival": "生存", "unarmed": "徒手"
+      "athletics": "运动",
+      "awareness": "察觉",
+      "beastHandling": "驯兽",
+      "crafting": "工艺",
+      "defense": "防御",
+      "entertain": "表演",
+      "heavyWeapons": "重武器",
+      "legerdemain": "巧手",
+      "lightWeapons": "轻武器",
+      "medicine": "医学",
+      "occult": "奥秘",
+      "orbalArts": "导力魔法",
+      "piloting": "驾驶",
+      "rangedWeapons": "远程武器",
+      "resistance": "抵抗",
+      "science": "科学与技术",
+      "social": "社交",
+      "stealth": "潜行",
+      "studies": "学识",
+      "survival": "生存",
+      "unarmed": "徒手"
     },
     "Resource": {
-      "durability": "耐久", "health": "生命值", "vigor": "活力", "mana": "魔力", "ep": "导力能量"
+      "durability": "耐久",
+      "health": "生命值",
+      "vigor": "活力",
+      "mana": "魔力",
+      "ep": "导力能量"
     },
     "Rank": {
-      "feeble": "孱弱 d4", "poor": "弱小 d6", "ordinary": "普通 d8", "heroic": "英雄 d10",
-      "epic": "史诗 d12", "legendary": "传奇 d20", "mythic": "神话 d100"
+      "feeble": "孱弱 d4",
+      "poor": "弱小 d6",
+      "ordinary": "普通 d8",
+      "heroic": "英雄 d10",
+      "epic": "史诗 d12",
+      "legendary": "传奇 d20",
+      "mythic": "神话 d100"
     },
-    "CraftType": { "martial": "武艺战技", "magical": "魔法战技", "sCraft": "S战技" },
+    "CraftType": {
+      "martial": "武艺战技",
+      "magical": "魔法战技",
+      "sCraft": "S战技"
+    },
     "Area": {
-      "self": "自身", "melee": "近战目标（单体）", "target": "远程目标（单体）", "area": "区域（圆形半径）",
-      "burst": "爆发（自身半径）", "line": "线形（矩形路径）", "cone": "锥形（扇形）"
+      "self": "自身",
+      "melee": "近战目标（单体）",
+      "target": "远程目标（单体）",
+      "area": "区域（圆形半径）",
+      "burst": "爆发（自身半径）",
+      "line": "线形（矩形路径）",
+      "cone": "锥形（扇形）"
     },
-    "DefenseTarget": { "none": "不对抗防御值", "guard": "物防", "ward": "魔防" },
+    "DefenseTarget": {
+      "none": "不对抗防御值",
+      "guard": "物防",
+      "ward": "魔防"
+    },
     "Element": {
-      "none": "无", "earth": "地", "water": "水", "fire": "火", "wind": "风",
-      "time": "时", "space": "空", "mirage": "幻"
+      "none": "无",
+      "earth": "地",
+      "water": "水",
+      "fire": "火",
+      "wind": "风",
+      "time": "时",
+      "space": "空",
+      "mirage": "幻"
     },
-    "Rarity": { "common": "普通", "rare": "稀有", "superRare": "超稀有", "ultraRare": "极稀有" },
-    "Tier": { "ordinary": "普通", "heroic": "英雄", "epic": "史诗" },
+    "Rarity": {
+      "common": "普通",
+      "rare": "稀有",
+      "superRare": "超稀有",
+      "ultraRare": "极稀有"
+    },
+    "Tier": {
+      "ordinary": "普通",
+      "heroic": "英雄",
+      "epic": "史诗"
+    },
     "Condition": {
-      "burning": "灼烧", "freeze": "冻结", "petrify": "石化", "seal": "封技", "magicSeal": "封魔",
-      "poisoned": "中毒", "confused": "混乱", "bleed": "流血", "blinded": "目盲", "dazed": "恍惚",
-      "dazzled": "迷眩", "deafened": "耳聋", "encumbered": "超载", "enthralled": "魅惑", "fatigued": "疲劳",
-      "fear": "恐惧", "restrained": "束缚", "sickened": "恶心", "unconscious": "昏迷", "winded": "气短",
-      "wounded": "负伤", "knockedDown": "击倒"
+      "burning": "灼烧",
+      "freeze": "冻结",
+      "petrify": "石化",
+      "seal": "封技",
+      "magicSeal": "封魔",
+      "poisoned": "中毒",
+      "confused": "混乱",
+      "bleed": "流血",
+      "blinded": "目盲",
+      "dazed": "恍惚",
+      "dazzled": "迷眩",
+      "deafened": "耳聋",
+      "encumbered": "超载",
+      "enthralled": "魅惑",
+      "fatigued": "疲劳",
+      "fear": "恐惧",
+      "restrained": "束缚",
+      "sickened": "恶心",
+      "unconscious": "昏迷",
+      "winded": "气短",
+      "wounded": "负伤",
+      "knockedDown": "击倒"
     },
     "Tab": {
-      "main": "属性值与技能", "combat": "战斗", "inventory": "天赋与物品", "bio": "背景",
-      "details": "详情", "description": "描述", "effects": "效果"
+      "main": "属性值与技能",
+      "combat": "战斗",
+      "inventory": "天赋与物品",
+      "bio": "背景",
+      "details": "详情",
+      "description": "描述",
+      "effects": "效果"
     },
     "Sheet": {
       "CharacterSheet": "命之轨迹角色卡",
@@ -87,7 +176,8 @@
       "Delete": "删除",
       "Post": "发送到聊天",
       "Use": "使用",
-      "Empty": "（空）"
+      "Empty": "（空）",
+      "Description": "描述"
     },
     "Details": {
       "vantageHistory": "过往命位",
@@ -169,9 +259,7 @@
       "VSPlaceholder": "留空表示对抗检定",
       "NoTarget": "无固定胜利总值（对抗检定）",
       "Chances": "冒险",
-      "ChanceOption": "{n} 点（VS +{vs}）",
       "ChancesHint": "每承担 1 点冒险，胜利总值 +15，并为效应掷骰（如伤害）获得 1 点蓄势；最多 3 点，且效应不能超过传奇级（d20）。",
-      "ExtraDice": "额外奖励骰",
       "Charges": "蓄势",
       "Challenges": "挑战",
       "Challenge": "挑战",
@@ -179,36 +267,42 @@
       "Success": "成功",
       "Failure": "失败",
       "Burst": "爆发",
-      "Critical": "暴击（伤害奖励骰爆发）",
       "Natural20": "自然 20",
       "AbilityCheck": "{ability}检定",
       "SkillCheck": "{skill}检定",
-      "AbilityNote": "{ability}奖励骰 {n}",
-      "SkillNote": "{skill}技能奖励骰 {n}",
-      "FixedNote": "奖励骰 {n}",
       "BonusDiceTag": "{n} 颗奖励骰 d{faces}",
       "CostTag": "消耗 {n} 点{resource}",
-      "StrengthTag": "力量奖励骰 {n}",
       "ChargeTag": "蓄势 {n}",
-      "WoundedTag": "负伤：奖励骰下降一级",
       "WoundedBanner": "负伤：所有奖励骰下降一级",
-      "LowAbilityTag": "{ability}过低：1 点挑战",
-      "TargetSubtitle": "目标：{name}（{defense} {vs}）",
       "Initiative": "先攻",
       "Defense": "防御反应",
       "Resistance": "抵抗反应",
       "Attack": "攻击",
       "UseCraft": "使用战技",
       "Damage": "掷伤害",
-      "DamageTitle": "{name}：伤害"
+      "DamageTitle": "{name}：伤害",
+      "Hit": "命中",
+      "Miss": "未命中"
     },
     "Damage": {
       "Apply": "应用伤害",
       "ApplyHint": "对选中的 Token 应用伤害（减去护甲等级）；按住 Shift 点击则无视护甲",
-      "Summary": "{name} 受到 {net} 点伤害（护甲等级吸收 {absorbed}）。耐久 {durabilityFrom} → {durabilityTo}，生命值 {healthFrom} → {healthTo}。",
       "Wounded": "耐久降至 0，进入负伤状态。",
       "Shock": "生命值降至 0：陷入休克，将在等于耐力值的轮数后死亡；成功通过 VS 20 的医学检定可使其稳定。",
-      "Dead": "在 0 生命值时再次受到伤害——死亡。"
+      "Dead": "在 0 生命值时再次受到伤害——死亡。",
+      "ApplySelected": "应用到选中的 Token",
+      "ApplyTargetHint": "对该目标应用伤害（扣除护甲等级与掩护）；按住 Shift 点击则无视护甲",
+      "MultiplierHint": "伤害倍率：例如成功的防御反应使伤害减半",
+      "Headline": "{name} 受到 {net} 点伤害",
+      "DetailRaw": "伤害 {raw}",
+      "DetailMultiplied": "伤害 {amount} ×{multiplier} = {raw}",
+      "DetailArmor": "护甲等级 {armor} 吸收 {absorbed}",
+      "DetailIgnoreArmor": "无视护甲",
+      "DetailResources": "耐久 {durabilityFrom} → {durabilityTo}，生命值 {healthFrom} → {healthTo}",
+      "Undo": "撤销这次伤害",
+      "Undone": "已撤销",
+      "ArmorTooltip": "护甲等级 {rank}",
+      "ArmorTooltipCover": "护甲等级 {rank} + {cover} {bonus}"
     },
     "Destined": {
       "Label": "命定",
@@ -225,6 +319,74 @@
       "NotOwner": "你没有该角色的权限。",
       "SelectToken": "请先选中要承受伤害的 Token。",
       "SourceMissing": "找不到对应的角色或物品。"
+    },
+    "Hud": {
+      "FormulaHint": "最终掷骰公式：1d20 行动骰 + 奖励骰（x 表示掷出最大值时爆发）",
+      "NoBonusDice": "没有奖励骰",
+      "LadderHint": "奖励骰骰阶：虚线框为基础 d10，高亮为蓄势与挑战抵消后的骰阶",
+      "EffectRank": "效应骰：{rank}（d{faces}），不爆发",
+      "Boosts": "加值",
+      "Hindrances": "减值",
+      "None": "无",
+      "ChancesSummary": "VS +{vs} · 效应 +{charges} 蓄势",
+      "NoChances": "反应检定不能承担冒险。",
+      "EffectDice": "效应骰",
+      "ExtraDice": "额外奖励骰",
+      "Targets": "目标",
+      "Cover": "掩护",
+      "NoDefense": "该目标没有防御值",
+      "ArmorDetail": "护甲等级 {rank} + 掩护 {bonus}",
+      "ArmorShort": "护甲",
+      "RemoveTarget": "取消选中该目标",
+      "NoTargets": "未选中目标。在场景中选中目标后，会自动读取其{defense}。",
+      "NoDamageTargets": "未选中目标。可以在场景中选中目标，或稍后对选中的 Token 应用伤害。",
+      "ReactionVSPlaceholder": "填写对方的行动检定总值",
+      "Cancel": "取消",
+      "Cost": "消耗 {n} 点{resource}（当前 {have}）",
+      "SourceDice": "{n} 奖励骰",
+      "SourceCharges": "+{n} 蓄势",
+      "SourceChallenges": "{n} 挑战",
+      "TagExtraDice": "额外奖励骰 {n}",
+      "TagChallenges": "挑战 {n}",
+      "Band": {
+        "Ability": "属性检定",
+        "Skill": "技能检定",
+        "Reaction": "反应检定",
+        "Attack": "攻击",
+        "Craft": "战技",
+        "VersusDefense": "{kind} VS {defense}",
+        "Damage": "伤害检定",
+        "DamageBurst": "伤害检定 · 爆发 ×{n}"
+      }
+    },
+    "Cover": {
+      "none": "无掩护",
+      "light": "轻度掩护",
+      "partial": "部分掩护",
+      "full": "完全掩护",
+      "Short": {
+        "none": "无",
+        "light": "轻度",
+        "partial": "部分",
+        "full": "完全"
+      },
+      "Hint": {
+        "none": "不受掩护",
+        "light": "物防 +10，仅针对直接远程攻击，区域攻击不受影响",
+        "partial": "物防 +3，针对攻击护甲等级 +5（伤害作用于掩体）",
+        "full": "物防 +5，对抗远程攻击时护甲等级 +10（掩体足够坚固时）"
+      }
+    },
+    "Source": {
+      "Skill": "{skill}技能",
+      "LowAbility": "{ability}过低",
+      "Wounded": "负伤",
+      "Bloom": "绽放命运",
+      "BloomHint": "消耗命定状态，为这次行动或反应掷骰 +3 奖励骰；本回合不能再次进入命定",
+      "Strength": "力量奖励骰",
+      "ItemBonus": "物品额外奖励骰",
+      "ChanceCharges": "冒险转化",
+      "ChanceChargesHint": "行动检定中每承担 1 点冒险，效应掷骰获得 1 点蓄势（不能超过传奇级 d20）"
     }
   }
 }

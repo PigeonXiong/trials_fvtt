@@ -15,49 +15,138 @@
   },
   "TRAILS": {
     "Ability": {
-      "str": "Strength", "agi": "Agility", "sta": "Stamina", "spd": "Speed", "sol": "Soul",
-      "emp": "Empathy", "mem": "Memory", "rsn": "Reason", "rsl": "Resolve"
+      "str": "Strength",
+      "agi": "Agility",
+      "sta": "Stamina",
+      "spd": "Speed",
+      "sol": "Soul",
+      "emp": "Empathy",
+      "mem": "Memory",
+      "rsn": "Reason",
+      "rsl": "Resolve"
     },
     "AbilityAbbr": {
-      "str": "STR", "agi": "AGI", "sta": "STA", "spd": "SPD", "sol": "SOL",
-      "emp": "EMP", "mem": "MEM", "rsn": "RSN", "rsl": "RSL"
+      "str": "STR",
+      "agi": "AGI",
+      "sta": "STA",
+      "spd": "SPD",
+      "sol": "SOL",
+      "emp": "EMP",
+      "mem": "MEM",
+      "rsn": "RSN",
+      "rsl": "RSL"
     },
     "Skill": {
-      "athletics": "Athletics", "awareness": "Awareness", "beastHandling": "Beast Handling", "crafting": "Crafting",
-      "defense": "Defense", "entertain": "Entertain", "heavyWeapons": "Heavy Weapons", "legerdemain": "Legerdemain",
-      "lightWeapons": "Light Weapons", "medicine": "Medicine", "occult": "Occult", "orbalArts": "Orbal Arts",
-      "piloting": "Piloting", "rangedWeapons": "Ranged Weapons", "resistance": "Resistance", "science": "Science & Technology",
-      "social": "Social", "stealth": "Stealth", "studies": "Studies", "survival": "Survival", "unarmed": "Unarmed"
+      "athletics": "Athletics",
+      "awareness": "Awareness",
+      "beastHandling": "Beast Handling",
+      "crafting": "Crafting",
+      "defense": "Defense",
+      "entertain": "Entertain",
+      "heavyWeapons": "Heavy Weapons",
+      "legerdemain": "Legerdemain",
+      "lightWeapons": "Light Weapons",
+      "medicine": "Medicine",
+      "occult": "Occult",
+      "orbalArts": "Orbal Arts",
+      "piloting": "Piloting",
+      "rangedWeapons": "Ranged Weapons",
+      "resistance": "Resistance",
+      "science": "Science & Technology",
+      "social": "Social",
+      "stealth": "Stealth",
+      "studies": "Studies",
+      "survival": "Survival",
+      "unarmed": "Unarmed"
     },
     "Resource": {
-      "durability": "Durability", "health": "Health", "vigor": "Vigor", "mana": "Mana", "ep": "Orbal Energy"
+      "durability": "Durability",
+      "health": "Health",
+      "vigor": "Vigor",
+      "mana": "Mana",
+      "ep": "Orbal Energy"
     },
     "Rank": {
-      "feeble": "Feeble d4", "poor": "Poor d6", "ordinary": "Ordinary d8", "heroic": "Heroic d10",
-      "epic": "Epic d12", "legendary": "Legendary d20", "mythic": "Mythic d100"
+      "feeble": "Feeble d4",
+      "poor": "Poor d6",
+      "ordinary": "Ordinary d8",
+      "heroic": "Heroic d10",
+      "epic": "Epic d12",
+      "legendary": "Legendary d20",
+      "mythic": "Mythic d100"
     },
-    "CraftType": { "martial": "Martial Craft", "magical": "Magical Craft", "sCraft": "S-Craft" },
+    "CraftType": {
+      "martial": "Martial Craft",
+      "magical": "Magical Craft",
+      "sCraft": "S-Craft"
+    },
     "Area": {
-      "self": "Self", "melee": "Melee Target (single)", "target": "Ranged Target (single)", "area": "Area (radius)",
-      "burst": "Burst (self radius)", "line": "Line (path)", "cone": "Cone"
+      "self": "Self",
+      "melee": "Melee Target (single)",
+      "target": "Ranged Target (single)",
+      "area": "Area (radius)",
+      "burst": "Burst (self radius)",
+      "line": "Line (path)",
+      "cone": "Cone"
     },
-    "DefenseTarget": { "none": "No defense", "guard": "Guard", "ward": "Ward" },
+    "DefenseTarget": {
+      "none": "No defense",
+      "guard": "Guard",
+      "ward": "Ward"
+    },
     "Element": {
-      "none": "None", "earth": "Earth", "water": "Water", "fire": "Fire", "wind": "Wind",
-      "time": "Time", "space": "Space", "mirage": "Mirage"
+      "none": "None",
+      "earth": "Earth",
+      "water": "Water",
+      "fire": "Fire",
+      "wind": "Wind",
+      "time": "Time",
+      "space": "Space",
+      "mirage": "Mirage"
     },
-    "Rarity": { "common": "Common", "rare": "Rare", "superRare": "Super Rare", "ultraRare": "Ultra Rare" },
-    "Tier": { "ordinary": "Ordinary", "heroic": "Heroic", "epic": "Epic" },
+    "Rarity": {
+      "common": "Common",
+      "rare": "Rare",
+      "superRare": "Super Rare",
+      "ultraRare": "Ultra Rare"
+    },
+    "Tier": {
+      "ordinary": "Ordinary",
+      "heroic": "Heroic",
+      "epic": "Epic"
+    },
     "Condition": {
-      "burning": "Burning", "freeze": "Freeze", "petrify": "Petrify", "seal": "Seal", "magicSeal": "Magic Seal",
-      "poisoned": "Poisoned", "confused": "Confused", "bleed": "Bleed", "blinded": "Blinded", "dazed": "Dazed",
-      "dazzled": "Dazzled", "deafened": "Deafened", "encumbered": "Encumbered", "enthralled": "Enthralled", "fatigued": "Fatigued",
-      "fear": "Fear", "restrained": "Restrained", "sickened": "Sickened", "unconscious": "Unconscious", "winded": "Winded",
-      "wounded": "Wounded", "knockedDown": "Knocked Down"
+      "burning": "Burning",
+      "freeze": "Freeze",
+      "petrify": "Petrify",
+      "seal": "Seal",
+      "magicSeal": "Magic Seal",
+      "poisoned": "Poisoned",
+      "confused": "Confused",
+      "bleed": "Bleed",
+      "blinded": "Blinded",
+      "dazed": "Dazed",
+      "dazzled": "Dazzled",
+      "deafened": "Deafened",
+      "encumbered": "Encumbered",
+      "enthralled": "Enthralled",
+      "fatigued": "Fatigued",
+      "fear": "Fear",
+      "restrained": "Restrained",
+      "sickened": "Sickened",
+      "unconscious": "Unconscious",
+      "winded": "Winded",
+      "wounded": "Wounded",
+      "knockedDown": "Knocked Down"
     },
     "Tab": {
-      "main": "Abilities & Skills", "combat": "Combat", "inventory": "Talents & Items", "bio": "Background",
-      "details": "Details", "description": "Description", "effects": "Effects"
+      "main": "Abilities & Skills",
+      "combat": "Combat",
+      "inventory": "Talents & Items",
+      "bio": "Background",
+      "details": "Details",
+      "description": "Description",
+      "effects": "Effects"
     },
     "Sheet": {
       "CharacterSheet": "Trails Character Sheet",
@@ -87,7 +176,8 @@
       "Delete": "Delete",
       "Post": "Post to chat",
       "Use": "Use",
-      "Empty": "(none)"
+      "Empty": "(none)",
+      "Description": "Description"
     },
     "Details": {
       "vantageHistory": "Vantage of History",
@@ -169,9 +259,7 @@
       "VSPlaceholder": "Leave empty for an opposed roll",
       "NoTarget": "No fixed Victory Sum (opposed roll)",
       "Chances": "Chances",
-      "ChanceOption": "{n} (VS +{vs})",
       "ChancesHint": "Each Chance adds +15 to the VS and grants 1 Charge to the effect roll (e.g. damage). Max 3.",
-      "ExtraDice": "Extra bonus dice",
       "Charges": "Charges",
       "Challenges": "Challenges",
       "Challenge": "Challenge",
@@ -179,36 +267,42 @@
       "Success": "Success",
       "Failure": "Failure",
       "Burst": "Burst",
-      "Critical": "Critical hit (damage bonus dice burst)",
       "Natural20": "Natural 20",
       "AbilityCheck": "{ability} Check",
       "SkillCheck": "{skill} Check",
-      "AbilityNote": "{ability} bonus dice {n}",
-      "SkillNote": "{skill} bonus dice {n}",
-      "FixedNote": "Bonus dice {n}",
       "BonusDiceTag": "{n} bonus dice d{faces}",
       "CostTag": "Spent {n} {resource}",
-      "StrengthTag": "Strength bonus dice {n}",
       "ChargeTag": "Charges {n}",
-      "WoundedTag": "Wounded: bonus dice down one rank",
       "WoundedBanner": "Wounded: all bonus dice down one rank",
-      "LowAbilityTag": "Low {ability}: 1 Challenge",
-      "TargetSubtitle": "Target: {name} ({defense} {vs})",
       "Initiative": "Initiative",
       "Defense": "Defense Reaction",
       "Resistance": "Resistance Reaction",
       "Attack": "Attack",
       "UseCraft": "Use Craft",
       "Damage": "Roll Damage",
-      "DamageTitle": "{name}: Damage"
+      "DamageTitle": "{name}: Damage",
+      "Hit": "Hit",
+      "Miss": "Miss"
     },
     "Damage": {
       "Apply": "Apply Damage",
       "ApplyHint": "Apply damage to the selected tokens (minus Armor Rank); Shift-click to ignore armor",
-      "Summary": "{name} takes {net} damage ({absorbed} absorbed by armor). Durability {durabilityFrom} → {durabilityTo}, Health {healthFrom} → {healthTo}.",
       "Wounded": "Durability reduced to 0: Wounded.",
       "Shock": "Health reduced to 0: in shock. Dies after rounds equal to Stamina unless stabilized (Medicine VS 20).",
-      "Dead": "Damaged while at 0 Health: dead."
+      "Dead": "Damaged while at 0 Health: dead.",
+      "ApplySelected": "Apply to Selected Tokens",
+      "ApplyTargetHint": "Apply to this target (minus Armor Rank and cover); Shift-click to ignore armor",
+      "MultiplierHint": "Damage multiplier, e.g. a successful defense reaction halves damage",
+      "Headline": "{name} took {net} damage",
+      "DetailRaw": "Damage {raw}",
+      "DetailMultiplied": "Damage {amount} ×{multiplier} = {raw}",
+      "DetailArmor": "Armor Rank {armor} absorbed {absorbed}",
+      "DetailIgnoreArmor": "Armor ignored",
+      "DetailResources": "Durability {durabilityFrom} → {durabilityTo}, Health {healthFrom} → {healthTo}",
+      "Undo": "Undo this damage",
+      "Undone": "Undone",
+      "ArmorTooltip": "Armor Rank {rank}",
+      "ArmorTooltipCover": "Armor Rank {rank} + {cover} {bonus}"
     },
     "Destined": {
       "Label": "Destined",
@@ -225,6 +319,74 @@
       "NotOwner": "You do not own this actor.",
       "SelectToken": "Select the token(s) that take the damage first.",
       "SourceMissing": "The source actor or item could not be found."
+    },
+    "Hud": {
+      "FormulaHint": "Final formula: 1d20 action die + bonus dice (x = explodes on max)",
+      "NoBonusDice": "No bonus dice",
+      "LadderHint": "Bonus die rank: dashed = base d10, highlighted = rank after charges and challenges",
+      "EffectRank": "Effect dice: {rank} (d{faces}), do not explode",
+      "Boosts": "Boosts",
+      "Hindrances": "Hindrances",
+      "None": "None",
+      "ChancesSummary": "VS +{vs} · effect +{charges} charge",
+      "NoChances": "Reactions cannot take chances.",
+      "EffectDice": "Effect Dice",
+      "ExtraDice": "Extra Bonus Dice",
+      "Targets": "Targets",
+      "Cover": "Cover",
+      "NoDefense": "This target has no defense value",
+      "ArmorDetail": "Armor Rank {rank} + cover {bonus}",
+      "ArmorShort": "Armor",
+      "RemoveTarget": "Untarget",
+      "NoTargets": "No targets. Target tokens on the scene to read their {defense}.",
+      "NoDamageTargets": "No targets. Target tokens on the scene, or apply damage to selected tokens later.",
+      "ReactionVSPlaceholder": "Opponent's action roll total",
+      "Cancel": "Cancel",
+      "Cost": "Costs {n} {resource} (have {have})",
+      "SourceDice": "{n} bonus dice",
+      "SourceCharges": "+{n} charge",
+      "SourceChallenges": "{n} challenge",
+      "TagExtraDice": "Extra bonus dice {n}",
+      "TagChallenges": "Challenges {n}",
+      "Band": {
+        "Ability": "Ability Check",
+        "Skill": "Skill Check",
+        "Reaction": "Reaction",
+        "Attack": "Attack",
+        "Craft": "Craft",
+        "VersusDefense": "{kind} vs {defense}",
+        "Damage": "Damage",
+        "DamageBurst": "Damage · Burst ×{n}"
+      }
+    },
+    "Cover": {
+      "none": "No Cover",
+      "light": "Light Cover",
+      "partial": "Partial Cover",
+      "full": "Full Cover",
+      "Short": {
+        "none": "None",
+        "light": "Light",
+        "partial": "Partial",
+        "full": "Full"
+      },
+      "Hint": {
+        "none": "Not in cover",
+        "light": "+10 Guard, direct ranged attacks only; area attacks are unaffected",
+        "partial": "+3 Guard, +5 Armor Rank against attacks (damage hits the cover)",
+        "full": "+5 Guard, +10 Armor Rank against ranged attacks (if the cover is sturdy)"
+      }
+    },
+    "Source": {
+      "Skill": "{skill} skill",
+      "LowAbility": "Low {ability}",
+      "Wounded": "Wounded",
+      "Bloom": "Bloom Destiny",
+      "BloomHint": "Spend your Destined state for +3 bonus dice on this action or reaction roll; you cannot become Destined again this turn",
+      "Strength": "Strength bonus dice",
+      "ItemBonus": "Item bonus dice",
+      "ChanceCharges": "From chances",
+      "ChanceChargesHint": "Each chance taken on the action roll gives the effect roll 1 charge (never above Legendary d20)"
     }
   }
 }

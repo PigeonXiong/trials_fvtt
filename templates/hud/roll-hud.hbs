@@ -1,0 +1,138 @@
+<div class="hud-card {{c.kind}}">
+  <header class="hud-title">
+    <i class="{{c.icon}}"></i>
+    <span class="hud-title-text">{{c.title}}</span>
+  </header>
+  {{#if c.stats.length}}
+  <div class="hud-stats">{{#each c.stats}}<span>{{this}}</span>{{/each}}</div>
+  {{/if}}
+  <div class="hud-band">// {{c.band}} //</div>
+
+  {{!-- 骰池预览：随每次调整即时更新 --}}
+  <section class="hud-preview">
+    <div class="hud-formula" data-tooltip="TRAILS.Hud.FormulaHint">{{pool.formula}}</div>
+    <div class="hud-chips">
+      {{#each chips}}<span class="die-chip {{cls}}">d{{faces}}</span>{{/each}}
+      {{#if hiddenChips}}<span class="die-chip more">+{{hiddenChips}}</span>{{/if}}
+      {{#unless pool.dice}}{{#if isAction}}<span class="hud-muted">{{localize "TRAILS.Hud.NoBonusDice"}}</span>{{/if}}{{/unless}}
+    </div>
+    <ol class="hud-ladder" data-tooltip="TRAILS.Hud.LadderHint">
+      {{#each ladder}}<li class="{{#if base}}base{{/if}} {{#if current}}current{{/if}}">d{{faces}}</li>{{/each}}
+    </ol>
+    {{#if c.effectRank}}<p class="hud-muted">{{localize "TRAILS.Hud.EffectRank" rank=c.effectRank faces=pool.effectFaces}}</p>{{/if}}
+  </section>
+
+  {{#if abilityChoices}}
+  <label class="hud-row hud-ability">
+    <span>{{localize "TRAILS.Sheet.Ability"}}</span>
+    <select name="ability">{{selectOptions abilityChoices selected=c.ability localize=true}}</select>
+  </label>
+  {{/if}}
+
+  {{!-- 来源：与 Lancer 的 Accuracy / Difficulty 两栏相同的操作方式 --}}
+  <section class="hud-sources">
+    <div class="hud-col boosts">
+      <h4><i class="fa-solid fa-circle-plus"></i> {{localize "TRAILS.Hud.Boosts"}}</h4>
+      {{#each boosts}}
+      <a class="hud-source {{#if enabled}}on{{/if}} {{#if locked}}locked{{/if}}" data-action="toggleSource" data-source="{{id}}" {{#if hint}}data-tooltip="{{hint}}"{{/if}}>
+        <i class="fa-{{#if enabled}}solid fa-square-check{{else}}regular fa-square{{/if}}"></i>
+        <span class="source-label">{{label}}</span>
+        <span class="source-effect">{{effect}}</span>
+      </a>
+      {{else}}
+      <p class="hud-muted">{{localize "TRAILS.Hud.None"}}</p>
+      {{/each}}
+    </div>
+    <div class="hud-col hindrances">
+      <h4><i class="fa-solid fa-circle-minus"></i> {{localize "TRAILS.Hud.Hindrances"}}</h4>
+      {{#each hindrances}}
+      <a class="hud-source {{#if enabled}}on{{/if}} {{#if locked}}locked{{/if}}" data-action="toggleSource" data-source="{{id}}" {{#if hint}}data-tooltip="{{hint}}"{{/if}}>
+        <i class="fa-{{#if enabled}}solid fa-square-check{{else}}regular fa-square{{/if}}"></i>
+        <span class="source-label">{{label}}</span>
+        <span class="source-effect">{{effect}}</span>
+      </a>
+      {{else}}
+      <p class="hud-muted">{{localize "TRAILS.Hud.None"}}</p>
+      {{/each}}
+    </div>
+  </section>
+
+  {{#if isAction}}
+  <section class="hud-chances {{#unless c.allowChances}}locked{{/unless}}">
+    <h4>
+      {{localize "TRAILS.Roll.Chances"}}
+      {{#if c.allowChances}}<span class="hud-muted">{{localize "TRAILS.Hud.ChancesSummary" vs=chanceVS charges=chances}}</span>{{/if}}
+    </h4>
+    {{#if c.allowChances}}
+    <div class="hud-pips" data-tooltip="TRAILS.Roll.ChancesHint">
+      {{#each chancePips}}<a class="hud-pip {{#if active}}on{{/if}}" data-action="setChances" data-value="{{n}}">{{n}}</a>{{/each}}
+    </div>
+    {{else}}
+    <p class="hud-muted">{{localize "TRAILS.Hud.NoChances"}}</p>
+    {{/if}}
+  </section>
+  {{/if}}
+
+  <section class="hud-counters">
+    {{#each counters}}
+    {{> "systems/trails-of-destiny/templates/hud/parts/counter.hbs"}}
+    {{/each}}
+  </section>
+
+  {{#if showTargets}}
+  <section class="hud-targets">
+    <h4><i class="fa-solid fa-crosshairs"></i> {{localize "TRAILS.Hud.Targets"}}{{#if defenseLabel}} · {{defenseLabel}}{{/if}}</h4>
+    {{#each targets}}
+    <div class="hud-target">
+      <img src="{{img}}" alt="">
+      <div class="target-main">
+        <div class="target-name">{{name}}</div>
+        {{#if @root.isAction}}
+          {{#if vs}}
+          <div class="target-detail">{{@root.defenseLabel}} {{vs.base}}{{#if vs.cover}} + {{localize "TRAILS.Hud.Cover"}} {{vs.cover}}{{/if}}{{#if vs.chances}} + {{localize "TRAILS.Roll.Chances"}} {{vs.chances}}{{/if}}</div>
+          {{else}}
+          <div class="target-detail">{{localize "TRAILS.Hud.NoDefense"}}</div>
+          {{/if}}
+        {{else}}
+          <div class="target-detail">{{localize "TRAILS.Hud.ArmorDetail" rank=armorRank bonus=armorBonus}}</div>
+        {{/if}}
+        <div class="cover-picker">
+          {{#each covers}}
+          <a class="cover-option {{#if active}}on{{/if}}" data-action="setCover" data-index="{{../index}}" data-cover="{{key}}" data-tooltip="{{tooltip}}">
+            <i class="{{icon}}"></i><span>{{label}}</span>
+          </a>
+          {{/each}}
+        </div>
+      </div>
+      <div class="target-total">
+        {{#if @root.isAction}}
+        <span class="target-total-label">VS</span><span class="target-total-value">{{#if vs}}{{vs.total}}{{else}}—{{/if}}</span>
+        {{else}}
+        <span class="target-total-label">{{localize "TRAILS.Hud.ArmorShort"}}</span><span class="target-total-value">{{armorTotal}}</span>
+        {{/if}}
+      </div>
+      <a class="target-remove" data-action="removeTarget" data-index="{{index}}" data-tooltip="TRAILS.Hud.RemoveTarget"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+    {{else}}
+    <p class="hud-muted">{{#if isAction}}{{localize "TRAILS.Hud.NoTargets" defense=defenseLabel}}{{else}}{{localize "TRAILS.Hud.NoDamageTargets"}}{{/if}}</p>
+    {{/each}}
+  </section>
+  {{/if}}
+
+  {{#if showManualVS}}
+  <label class="hud-row hud-vs">
+    <span>{{localize "TRAILS.Roll.VS"}}{{#if c.allowChances}}{{#if chanceVS}} <span class="hud-muted">（+{{chanceVS}}）</span>{{/if}}{{/if}}</span>
+    <input type="number" name="vs" value="{{c.vs}}" placeholder="{{localize vsPlaceholder}}">
+  </label>
+  {{/if}}
+
+  {{#if c.cost}}
+  <p class="hud-cost {{#if c.cost.short}}short{{/if}}"><i class="fa-solid fa-bolt"></i> {{c.cost.label}}</p>
+  {{/if}}
+
+  <footer class="hud-footer">
+    <select name="rollMode">{{selectOptions rollModes selected=c.rollMode localize=true}}</select>
+    <button type="button" class="hud-roll" data-action="roll"><i class="fa-solid fa-dice-d20"></i> {{localize "TRAILS.Roll.Roll"}}</button>
+    <button type="button" class="hud-cancel" data-action="cancel"><i class="fa-solid fa-xmark"></i> {{localize "TRAILS.Hud.Cancel"}}</button>
+  </footer>
+</div>

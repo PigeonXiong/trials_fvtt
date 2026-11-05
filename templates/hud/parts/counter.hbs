@@ -1,0 +1,8 @@
+<div class="hud-counter {{field}}">
+  <span class="counter-label">{{localize label}}</span>
+  <div class="counter-control">
+    <a class="counter-step" data-action="adjust" data-field="{{field}}" data-delta="-1" aria-label="-1"><i class="fa-solid fa-minus"></i></a>
+    <span class="counter-value {{#if value}}nonzero{{/if}}">{{value}}</span>
+    <a class="counter-step" data-action="adjust" data-field="{{field}}" data-delta="1" aria-label="+1"><i class="fa-solid fa-plus"></i></a>
+  </div>
+</div>
