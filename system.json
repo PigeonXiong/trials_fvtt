@@ -2,7 +2,7 @@
   "id": "trails-of-destiny",
   "title": "The Legend of Heroes: Trails of Destiny (Unofficial)",
   "description": "An unofficial fan-made system for The Legend of Heroes: Trails of Destiny TRPG (Promethium System), with Simplified Chinese and English interfaces.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "compatibility": {
     "minimum": "12",
     "verified": "12.343"

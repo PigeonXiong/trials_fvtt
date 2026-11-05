@@ -1,6 +1,6 @@
 {
   "name": "trails-of-destiny-fvtt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Unofficial Foundry VTT system for The Legend of Heroes: Trails of Destiny TRPG",
   "type": "module",
