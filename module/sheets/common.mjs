@@ -1,10 +1,8 @@
-import { localize } from "../utils.mjs";
+import { localize, FilePickerImpl } from "../utils.mjs";
 
 /*
  * 角色卡与物品卡共用的动作处理器。均以 sheet 实例为 this 调用（ApplicationV2 actions 约定）。
  */
-
-const FilePickerImpl = () => foundry.applications.apps?.FilePicker?.implementation ?? globalThis.FilePicker;
 
 export async function onEditImage(event, target) {
   if (!this.isEditable) return;
@@ -14,15 +12,6 @@ export async function onEditImage(event, target) {
     callback: path => this.document.update({ img: path })
   });
   return picker.browse();
-}
-
-/** 自定义标签页切换：只切换 class，不触发重新渲染，以保留滚动位置与输入焦点。 */
-export function onSwitchTab(event, target) {
-  const { tab, group = "primary" } = target.dataset;
-  this.tabGroups[group] = tab;
-  for (const el of this.element.querySelectorAll(`[data-group="${group}"][data-tab]`)) {
-    el.classList.toggle("active", el.dataset.tab === tab);
-  }
 }
 
 /* -------------------------------------------- */

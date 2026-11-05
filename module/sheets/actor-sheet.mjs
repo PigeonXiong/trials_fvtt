@@ -1,7 +1,7 @@
 import { ABILITY_KEYS } from "../rules/character.mjs";
 import { TRAILS } from "../config.mjs";
 import { templatePath, localize, TextEditorImpl } from "../utils.mjs";
-import { onEditImage, onSwitchTab, effectActions, prepareEffects } from "./common.mjs";
+import { onEditImage, effectActions, prepareEffects } from "./common.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -22,7 +22,6 @@ class TrailsActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
     form: { submitOnChange: true },
     actions: {
       editImage: onEditImage,
-      switchTab: onSwitchTab,
       rollAbility: TrailsActorSheet.#onRollAbility,
       rollSkill: TrailsActorSheet.#onRollSkill,
       rollDefense: TrailsActorSheet.#onRollDefense,

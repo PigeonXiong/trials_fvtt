@@ -11,6 +11,7 @@
   --trails-gold: #b8892b;
   --trails-good: #2e7d4f;
   --trails-bad: #b23b3b;
+  --trails-icon-bg: #3a4254;
   --trails-radius: 6px;
 }
 
@@ -87,6 +88,7 @@
   width: 96px;
   height: 96px;
   object-fit: cover;
+  background: var(--trails-icon-bg);
   border: 2px solid var(--trails-line);
   border-radius: var(--trails-radius);
   cursor: pointer;
@@ -191,14 +193,20 @@
   border-bottom: 1px solid var(--trails-line);
 }
 
-.trails .sheet-tabs .item {
+/* 需高于核心的 `.application nav.tabs .item` */
+.application.trails nav.sheet-tabs .item {
   padding: 4px 12px;
   border-radius: var(--trails-radius) var(--trails-radius) 0 0;
   color: var(--trails-muted);
+  text-shadow: none;
   cursor: pointer;
 }
 
-.trails .sheet-tabs .item.active {
+.application.trails nav.sheet-tabs .item:hover {
+  color: var(--trails-accent);
+}
+
+.application.trails nav.sheet-tabs .item.active {
   background: var(--trails-accent);
   color: #fff;
 }
@@ -323,7 +331,7 @@
 
 .trails .skill {
   display: grid;
-  grid-template-columns: 1fr 52px 48px 36px;
+  grid-template-columns: 1fr 64px 48px 36px;
   align-items: center;
   gap: 4px;
   padding: 2px 0;
@@ -417,13 +425,15 @@
 
 .trails .item-header .col,
 .trails .item .col {
-  width: 90px;
+  width: 100px;
+  flex: 0 0 auto;
   text-align: center;
   font-size: 12px;
 }
 
 .trails .item-header .item-create {
-  width: 64px;
+  width: 88px;
+  flex: 0 0 auto;
   text-align: right;
   color: #fff;
 }
@@ -458,6 +468,8 @@
   width: 26px;
   height: 26px;
   border: none;
+  border-radius: 4px;
+  background: var(--trails-icon-bg);
   flex: 0 0 auto;
 }
 
@@ -474,7 +486,8 @@
 .trails .item-controls {
   display: flex;
   gap: 8px;
-  width: 64px;
+  width: 88px;
+  flex: 0 0 auto;
   justify-content: flex-end;
   color: var(--trails-muted);
 }
@@ -534,6 +547,8 @@
   width: 36px;
   height: 36px;
   border: none;
+  border-radius: 4px;
+  background: #3a4254;
   flex: 0 0 auto;
 }
 

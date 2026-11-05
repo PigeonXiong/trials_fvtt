@@ -1,6 +1,6 @@
 import { TRAILS } from "../config.mjs";
 import { templatePath } from "../utils.mjs";
-import { onEditImage, onSwitchTab, effectActions, prepareEffects } from "./common.mjs";
+import { onEditImage, effectActions, prepareEffects } from "./common.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ItemSheetV2 } = foundry.applications.sheets;
@@ -16,7 +16,6 @@ export class TrailsItemSheet extends HandlebarsApplicationMixin(ItemSheetV2) {
     form: { submitOnChange: true },
     actions: {
       editImage: onEditImage,
-      switchTab: onSwitchTab,
       use: TrailsItemSheet.#onUse,
       ...effectActions
     }

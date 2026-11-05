@@ -51,7 +51,7 @@ tests/                 Node 单元测试
 
    如果你改过 Foundry 的数据路径，可以在启动界面的 Configuration 页查看「User Data Path」。
 3. 重启 Foundry，Game Systems 列表中会出现「英雄传说：命之轨迹 TRPG（非官方）」。用它新建一个测试世界。
-4. 中文界面需要先安装简体中文核心翻译模块，然后在 Configure Settings → Language 中选择中文。没有中文时界面会显示英文。
+4. 在 Configure Settings → Language 中选择「中文（简体）」并重新加载，本系统的界面会变成中文。Foundry 核心界面需要另装简体中文翻译模块才会变成中文。
 
 ## 开发循环
 

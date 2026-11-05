@@ -10,7 +10,7 @@ import { TrailsCombatant } from "./documents/combatant.mjs";
 import { CharacterSheet, NpcSheet } from "./sheets/actor-sheet.mjs";
 import { TrailsItemSheet, ITEM_DETAIL_TEMPLATES } from "./sheets/item-sheet.mjs";
 import { registerChatListeners } from "./chat.mjs";
-import { loadTemplates, templatePath, localize } from "./utils.mjs";
+import { loadTemplates, templatePath, localize, DocumentSheetConfigImpl } from "./utils.mjs";
 import * as diceRules from "./rules/dice.mjs";
 import * as characterRules from "./rules/character.mjs";
 
@@ -53,7 +53,7 @@ Hooks.once("init", () => {
   CONFIG.statusEffects = STATUS_EFFECTS;
   CONFIG.Combat.initiative = { formula: "1d20", decimals: 0 };
 
-  const SheetConfig = foundry.applications.apps?.DocumentSheetConfig ?? globalThis.DocumentSheetConfig;
+  const SheetConfig = DocumentSheetConfigImpl();
   SheetConfig.registerSheet(Actor, SYSTEM_ID, CharacterSheet, {
     types: ["character"], makeDefault: true, label: "TRAILS.Sheet.CharacterSheet"
   });
