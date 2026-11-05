@@ -27,6 +27,23 @@
   overflow: hidden;
 }
 
+/* 标题栏上的文字按钮（指示物模板、Theatre Inserts 等模组按钮），与旧版表单的样式一致 */
+.application.trails.sheet .window-header .trails-header-button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: var(--button-size, 24px);
+  padding: 0 4px;
+  white-space: nowrap;
+  color: inherit;
+  cursor: pointer;
+}
+
+.application.trails.sheet .window-header .trails-header-button:hover {
+  text-shadow: 0 0 6px var(--color-shadow-primary, #ff6400);
+}
+
 .trails.sheet input,
 .trails.sheet select,
 .trails.sheet textarea {

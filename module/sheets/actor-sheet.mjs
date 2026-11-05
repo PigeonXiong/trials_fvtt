@@ -2,6 +2,7 @@ import { ABILITY_KEYS } from "../rules/character.mjs";
 import { TRAILS } from "../config.mjs";
 import { templatePath, localize, TextEditorImpl } from "../utils.mjs";
 import { onEditImage, effectActions, prepareEffects } from "./common.mjs";
+import { insertHeaderButtons, withoutHeaderButtons } from "./header-buttons.mjs";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -39,6 +40,22 @@ class TrailsActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
   };
 
   tabGroups = { primary: "main" };
+
+  /** 旧版表单的别名：部分模组（如 Theatre Inserts）通过 app.object 取角色。 */
+  get object() {
+    return this.document;
+  }
+
+  /** 「指示物模板」与模组按钮直接放在标题栏，不放进「⋮」菜单。 */
+  _getHeaderControls() {
+    return withoutHeaderButtons(super._getHeaderControls());
+  }
+
+  async _renderFrame(options) {
+    const frame = await super._renderFrame(options);
+    if (this.hasFrame) insertHeaderButtons(this);
+    return frame;
+  }
 
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
