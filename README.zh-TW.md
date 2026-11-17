@@ -6,7 +6,7 @@
 
 ![Foundry VTT v12](https://img.shields.io/badge/Foundry_VTT-v12-orange)
 
-《英雄傳說：命之軌跡》TRPG（*The Legend of Heroes: Trails of Destiny*，Promethium System）的非官方 Foundry VTT 遊戲系統。術語與規則以中文譯本 V1.1 為準，介面目前提供簡體中文與英文。
+《英雄傳說：命之軌跡》TRPG（*The Legend of Heroes: Trails of Destiny*，Promethium System）的非官方 Foundry VTT 遊戲系統。術語以中文譯本 V1.1 為準，規則已依英文原文勘誤版（2026-11-15）校正，介面目前提供簡體中文與英文。
 
 ## 功能
 
@@ -14,7 +14,7 @@
 - **檢定面板**：發起檢定後於畫面右下角彈出，用按鈕調整冒險、獎勵骰、蓄勢與挑戰，最終公式即時預覽；傷害等效應檢定使用同一面板。
 - **目標與掩護**：自動帶入選取的目標，可逐一設定掩護，並顯示各自的 VS 與命中結果。
 - **傷害結算**：依護甲 → 耐久 → 生命值扣減，自動處理負傷、休克與死亡，可一鍵復原。
-- **命定**：自動判定進入命定，支援「綻放命運」的加骰與突破傳奇。
+- **命定**：自動判定進入命定，支援「綻放命運」加骰；處於命定時傷害獎勵骰可突破傳奇級。
 - **Token 資源條**：PC 的資源條對所有人可見，NPC 只對擁有者可見；啟用 [Bar Brawl](https://foundryvtt.com/packages/barbrawl) 後，新建角色自動配置耐久、生命值、活力、魔力與導力能量。
 
 ## 安裝

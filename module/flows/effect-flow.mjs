@@ -7,6 +7,7 @@ import { Flow, flowSteps } from "./flow.mjs";
 import { RollHud } from "../apps/roll-hud.mjs";
 import { applyToggles, buildEffectPool, coverArmorBonus } from "../rules/roll-config.mjs";
 import { burstDestinedReasons, MAX_BONUS_FACES, MYTHIC_FACES } from "../rules/dice.mjs";
+import { craftWeapon } from "../rules/character.mjs";
 import { TRAILS } from "../config.mjs";
 import { localize, format } from "../utils.mjs";
 import {
@@ -25,12 +26,23 @@ export class EffectFlow extends Flow {
 }
 
 /**
- * 伤害来源：力量奖励骰、物品额外奖励骰、冒险转化的蓄势、负伤。
+ * 伤害来源：武器基础伤害骰（武术战技）、力量奖励骰、物品额外奖励骰、冒险转化的蓄势、命定上限、负伤。
  * 效应掷骰的奖励骰只受益于蓄势；挑战仅在明确说明时（如负伤）才生效。
+ * 敌手按数据块中写明的效果结算，不自动加武器基础伤害骰。
  */
-function damageSources(actor, item, chances, beyondLegendary = false) {
+function damageSources(actor, item, chances, mythic = false) {
   const sys = item.system;
   const sources = [];
+  const weapon = actor.type === "character" ? craftWeapon(item, actor.items) : null;
+  if (weapon) {
+    sources.push({
+      id: "weaponBase",
+      label: format("TRAILS.Source.WeaponBase", { name: weapon.name }),
+      effectDice: weapon.system.damage,
+      effectFaces: TRAILS.rankFaces[weapon.system.quality],
+      hint: localize("TRAILS.Source.WeaponBaseHint")
+    });
+  }
   const strength = actor.system.abilities?.str?.dice ?? 0;
   if (strength || sys.addStrength) {
     sources.push({ id: "strength", label: localize("TRAILS.Source.Strength"), dice: strength, enabled: !!sys.addStrength });
@@ -44,9 +56,9 @@ function damageSources(actor, item, chances, beyondLegendary = false) {
       hint: localize("TRAILS.Source.ChanceChargesHint")
     });
   }
-  if (beyondLegendary) {
+  if (mythic) {
     sources.push({
-      id: "beyondLegendary", label: localize("TRAILS.Source.BeyondLegendary"), locked: true,
+      id: "mythicCap", label: localize("TRAILS.Source.DestinedCap"), locked: true,
       effectText: localize("TRAILS.Hud.MythicCap"), hint: localize("TRAILS.Hud.MythicCapNote")
     });
   }
@@ -59,15 +71,18 @@ function damageSources(actor, item, chances, beyondLegendary = false) {
 /**
  * state.data 输入：
  * @property {number} [chances]   来自行动检定的冒险
- * @property {boolean} [beyondLegendary] 行动检定中绽放命运「突破传奇」：奖励骰上限提升到 d100
+ * @property {boolean} [bloomed]  行动检定绽放了命运：这次伤害掷骰不能进入命定
+ * @property {boolean} [beyondLegendary] 旧版本卡片上的「突破传奇」标记：奖励骰上限按 d100 处理
  * @property {object[]} [targets] 来自行动卡片的命中目标
  * @property {boolean} [fastForward]
+ *
+ * 处于命定时，伤害奖励骰可以借蓄势突破传奇级（上限 d100），不需要消耗命定。
  */
 async function initEffectData(state) {
   const { actor, item, data } = state;
   const sys = item.system;
   const chances = data.chances ?? 0;
-  const beyondLegendary = !!data.beyondLegendary;
+  const mythic = !!actor.system.destined || !!data.beyondLegendary;
   data.hud = {
     kind: "effect",
     title: format("TRAILS.Roll.DamageTitle", { name: item.name }),
@@ -78,8 +93,8 @@ async function initEffectData(state) {
     effectFaces: TRAILS.rankFaces[sys.quality],
     effectRank: localize(TRAILS.ranks[sys.quality]),
     ability: null,
-    getSources: () => damageSources(actor, item, chances, beyondLegendary),
-    maxFaces: beyondLegendary ? MYTHIC_FACES : MAX_BONUS_FACES,
+    getSources: () => damageSources(actor, item, chances, mythic),
+    maxFaces: mythic ? MYTHIC_FACES : MAX_BONUS_FACES,
     sources: [],
     toggles: {},
     allowChances: false,
@@ -116,7 +131,9 @@ async function rollEffect(state) {
   data.bursts = countRollBursts(data.roll);
 }
 
+/** 爆发 3 颗奖励骰进入命定；行动检定绽放了命运时，同一次行动的伤害掷骰不能再进入命定。 */
 async function applyEffectDestined(state) {
+  if (state.data.bloomed) return;
   state.data.destined = await maybeBecomeDestined(state.actor, burstDestinedReasons(state.data.bursts));
 }
 
@@ -128,7 +145,8 @@ async function printEffectCard(state) {
   if (hud.damageType) tags.push(hud.damageType);
   for (const s of hud.sources) {
     if (!s.enabled) continue;
-    if (s.id === "beyondLegendary") tags.push(`${s.label}（${localize("TRAILS.Hud.MythicCap")}）`);
+    if (s.id === "mythicCap") tags.push(`${s.label}（${localize("TRAILS.Hud.MythicCap")}）`);
+    else if (s.effectDice) tags.push(`${s.label} ${s.effectDice}d${s.effectFaces}`);
     else if (s.dice) tags.push(`${s.label} +${s.dice}`);
     else if (s.charges) tags.push(`${s.label} ${format("TRAILS.Roll.ChargeTag", { n: s.charges })}`);
     else if (s.challenges) tags.push(s.label);

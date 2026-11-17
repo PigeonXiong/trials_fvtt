@@ -16,14 +16,15 @@ export async function rollAction(actor, cfg) {
 }
 
 /**
- * 掷效应（伤害）骰。冒险转化的蓄势只提升奖励骰，且不超过传奇级（d20；突破传奇时为神话级 d100）。
+ * 掷效应（伤害）骰。冒险转化的蓄势只提升奖励骰；未处于命定时不超过传奇级（d20），处于命定时上限为神话级（d100）。
  * @param {Actor} actor
  * @param {Item} item 武器或战技
- * @param {{chances?: number, beyondLegendary?: boolean, targets?: object[], fastForward?: boolean}} [options]
- *   beyondLegendary：行动检定中绽放命运「突破传奇」，奖励骰上限提升到 d100
+ * @param {{chances?: number, bloomed?: boolean, beyondLegendary?: boolean, targets?: object[], fastForward?: boolean}} [options]
+ *   bloomed：行动检定绽放了命运，这次伤害掷骰不能进入命定
+ *   beyondLegendary：旧版本卡片上的「突破传奇」标记，奖励骰上限按 d100 处理
  */
-export async function rollDamage(actor, item, { chances = 0, beyondLegendary = false, targets = [], fastForward = false } = {}) {
-  const state = await new EffectFlow(actor, { chances, beyondLegendary, targets, fastForward }, { item }).begin();
+export async function rollDamage(actor, item, { chances = 0, bloomed = false, beyondLegendary = false, targets = [], fastForward = false } = {}) {
+  const state = await new EffectFlow(actor, { chances, bloomed, beyondLegendary, targets, fastForward }, { item }).begin();
   return state?.data.message ?? null;
 }
 

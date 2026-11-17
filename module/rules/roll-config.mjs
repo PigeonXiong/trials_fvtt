@@ -55,8 +55,9 @@ export function clampAdjust(key, value) {
  * @property {number} [flat]        固定修正
  * @property {boolean} [enabled]    是否计入（默认计入）
  * @property {boolean} [locked]     不可在面板上取消
- * @property {string} [group]       互斥组：同组只能勾选一项（如绽放命运的各个选项）
- * @property {number} [forceChances] 勾选时强制承担的冒险点数（突破传奇：3）
+ * @property {string} [group]       互斥组：同组只能勾选一项
+ * @property {number} [effectDice]  效应骰数量（仅效应检定；不爆发，如武术战技加上的武器基础伤害骰）
+ * @property {number} [effectFaces] 效应骰骰型（按品质，普通 d8、英雄 d10……）
  */
 
 /** 按 id 应用面板上的勾选状态；锁定的来源总是计入。 */
@@ -85,10 +86,11 @@ export function toggleSource(sources, toggles, id) {
   return next;
 }
 
-/** 启用的来源中要求强制承担的冒险点数；没有时为 null。 */
-export function forcedChances(sources = []) {
-  const forced = sources.filter(s => s.enabled !== false && Number.isFinite(s.forceChances)).map(s => s.forceChances);
-  return forced.length ? clampAdjust("chances", Math.max(...forced)) : null;
+/** 启用的来源中附带的效应骰组，例如武术战技加上的武器基础伤害骰。 */
+export function sourceEffectGroups(sources = []) {
+  return sources
+    .filter(s => s.enabled !== false && toInt(s.effectDice) > 0 && toInt(s.effectFaces) > 0)
+    .map(s => ({ dice: toInt(s.effectDice), faces: toInt(s.effectFaces) }));
 }
 
 /** 汇总所有启用的来源。 */
@@ -127,21 +129,26 @@ export function buildActionPool(config = {}) {
 
 /**
  * 效应检定面板 → 骰池（效应骰按品质、不爆发；奖励骰爆发且不超过传奇级）。
+ * 来源上附带的效应骰（如武器基础伤害骰）按各自骰型追加在物品自身的效应骰之后。
  * @param {{effectDice?: number, effectFaces?: number, sources?: RollSource[], extraDice?: number,
  *   charges?: number, challenges?: number, flat?: number, maxFaces?: number}} config
- *   maxFaces：奖励骰上限，默认传奇（d20）；突破传奇时为神话（d100）
+ *   maxFaces：奖励骰上限，默认传奇（d20）；处于命定时为神话（d100）
  */
 export function buildEffectPool(config = {}) {
   const parts = combine(config);
   const effectDice = Math.max(0, toInt(config.effectDice));
   const effectFaces = toInt(config.effectFaces) || 8;
   const maxFaces = config.maxFaces === MYTHIC_FACES ? MYTHIC_FACES : MAX_BONUS_FACES;
-  const pool = effectPool({ ...parts, effectDice, effectFaces, maxFaces });
-  return { ...parts, effectDice, effectFaces, maxFaces, dice: pool.bonusDice, faces: pool.faces, formula: pool.formula };
+  const effectGroups = sourceEffectGroups(config.sources);
+  const pool = effectPool({ ...parts, effectDice, effectFaces, effectGroups, maxFaces });
+  return {
+    ...parts, effectDice, effectFaces, effects: pool.effects, maxFaces,
+    dice: pool.bonusDice, faces: pool.faces, formula: pool.formula
+  };
 }
 
 /**
- * 骰阶条：d4 … d20（突破传奇时到 d100），标出基础骰阶（d10）与升降后的骰阶。
+ * 骰阶条：d4 … d20（命定时到 d100），标出基础骰阶（d10）与升降后的骰阶。
  * @returns {{faces: number, base: boolean, current: boolean}[]}
  */
 export function rankLadder(faces, baseFaces = DEFAULT_BONUS_FACES, maxFaces = MAX_BONUS_FACES) {

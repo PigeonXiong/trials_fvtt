@@ -285,6 +285,8 @@
 
 .trails .stat-buttons {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 4px;
   margin-left: auto;
 }
@@ -766,15 +768,7 @@
   background: var(--trails-gold);
 }
 
-/* 突破传奇：冒险被锁定为 3 点 */
-.trails-hud .hud-pip.locked {
-  cursor: not-allowed;
-  border-color: #7a4a9b;
-}
-
-.trails-hud .hud-pip.locked.on { background: #7a4a9b; }
-
-.trails-hud .hud-forced-note,
+/* 命定：伤害奖励骰上限提升到 d100 */
 .trails-hud .hud-mythic-note {
   margin: 4px 0 0;
   text-align: center;

@@ -6,8 +6,7 @@
  */
 import { Flow, flowSteps } from "./flow.mjs";
 import { RollHud } from "../apps/roll-hud.mjs";
-import { applyToggles, buildActionPool, resolveTargets, coverGuardBonus, forcedChances } from "../rules/roll-config.mjs";
-import { MAX_CHANCES } from "../rules/dice.mjs";
+import { applyToggles, buildActionPool, resolveTargets, coverGuardBonus } from "../rules/roll-config.mjs";
 import { TRAILS } from "../config.mjs";
 import { localize, format, enrich } from "../utils.mjs";
 import {
@@ -40,6 +39,7 @@ export class ActionFlow extends Flow {
  * @property {boolean} [reaction]      反应检定：需严格高于 VS
  * @property {string} [defense]        guard / ward：读取目标的物防或魔防
  * @property {number|null} [vs]
+ * @property {string} [vsPlaceholder] 手动 VS 输入框的提示文字键
  * @property {{resource: string, amount: number}|null} [cost]
  * @property {Item|null} [item]
  * @property {boolean} [offerDamage]
@@ -47,13 +47,12 @@ export class ActionFlow extends Flow {
  */
 
 /**
- * 命定状态下可以「绽放命运」，消耗命定并选择其中一项（同一互斥组）：
- * - +3 奖励骰：行动或反应掷骰均可。
- * - 突破传奇：强制承担 3 点冒险，之后的效应掷骰奖励骰上限提升到神话级（d100）。反应不能承担冒险，故不提供。
+ * 命定状态下可以「绽放命运」：消耗命定，为这次行动或反应掷骰 +3 奖励骰。
+ * 伤害奖励骰突破传奇级不需要在这里宣告：掷伤害时只要仍处于命定，上限即为神话级（d100），见效应流程。
  */
-function bloomSources(actor, { allowChances }) {
+function bloomSources(actor) {
   if (!actor.system.destined || !actor.isOwner) return [];
-  const sources = [{
+  return [{
     id: "bloom",
     label: localize("TRAILS.Source.Bloom"),
     hint: localize("TRAILS.Source.BloomHint"),
@@ -62,26 +61,12 @@ function bloomSources(actor, { allowChances }) {
     group: "bloom",
     consumesDestined: true
   }];
-  if (allowChances) {
-    sources.push({
-      id: "beyondLegendary",
-      label: localize("TRAILS.Source.BeyondLegendary"),
-      hint: localize("TRAILS.Source.BeyondLegendaryHint"),
-      effectText: localize("TRAILS.Source.BeyondLegendaryEffect"),
-      enabled: false,
-      group: "bloom",
-      forceChances: MAX_CHANCES,
-      consumesDestined: true,
-      beyondLegendary: true
-    });
-  }
-  return sources;
 }
 
 async function initActionData(state) {
   const { actor, data } = state;
   const allowChances = data.allowChances !== false;
-  const bloom = bloomSources(actor, { allowChances });
+  const bloom = bloomSources(actor);
   const cost = data.cost?.amount ? data.cost : null;
   let costInfo = null;
   if (cost) {
@@ -109,7 +94,6 @@ async function initActionData(state) {
     toggles: {},
     allowChances,
     chances: 0,
-    chancesLocked: false,
     extraDice: 0,
     charges: 0,
     challenges: 0,
@@ -118,6 +102,7 @@ async function initActionData(state) {
     targets: [],
     trackTargets: false,
     vs: data.vs ?? null,
+    vsPlaceholder: data.vsPlaceholder ?? null,
     reaction: !!data.reaction,
     cost: costInfo,
     rollMode: game.settings.get("core", "rollMode")
@@ -146,8 +131,6 @@ async function rollActionCheck(state) {
   const { data } = state;
   const hud = data.hud;
   hud.sources = applyToggles(hud.getSources(hud.ability), hud.toggles);
-  const forced = forcedChances(hud.sources);
-  if (forced !== null && hud.allowChances) hud.chances = forced;
   const pool = buildActionPool(hud);
   const roll = await new Roll(pool.formula).evaluate();
   const natural = naturalResult(roll);
@@ -168,7 +151,6 @@ async function rollActionCheck(state) {
     strict: hud.reaction
   });
   data.bloomed = hud.sources.some(s => s.consumesDestined && s.enabled);
-  data.beyondLegendary = hud.sources.some(s => s.beyondLegendary && s.enabled);
 }
 
 async function spendActionCost(state) {
@@ -176,7 +158,7 @@ async function spendActionCost(state) {
   if (cost) await state.actor.spendResource(cost.resource, cost.amount);
 }
 
-/** 绽放命运会消耗命定，且同一回合不能再次进入命定。 */
+/** 绽放命运会消耗命定，且这次行动（含之后的伤害掷骰）不能再次进入命定。 */
 async function applyActionDestined(state) {
   const { actor, data } = state;
   if (data.bloomed) {
@@ -215,11 +197,7 @@ async function printActionCard(state) {
   if (outcome.natural === 20) badges.push({ cls: "nat20", label: localize("TRAILS.Roll.Natural20") });
   if (outcome.bursts) badges.push({ cls: "burst", label: `${localize("TRAILS.Roll.Burst")} ×${outcome.bursts}` });
   if (outcome.chances) badges.push({ cls: "chance", label: `${localize("TRAILS.Roll.Chances")} ×${outcome.chances}` });
-  if (data.beyondLegendary) {
-    badges.push({ cls: "bloom", label: localize("TRAILS.Source.BeyondLegendary"), tooltip: localize("TRAILS.Source.BeyondLegendaryEffect") });
-  } else if (data.bloomed) {
-    badges.push({ cls: "bloom", label: localize("TRAILS.Source.Bloom") });
-  }
+  if (data.bloomed) badges.push({ cls: "bloom", label: localize("TRAILS.Source.Bloom") });
 
   data.message = await createCard(actor, "chat/action-card.hbs", {
     title: hud.title,
@@ -238,8 +216,7 @@ async function printActionCard(state) {
     tags,
     description: item ? await enrich(item.system.description) : "",
     showDamage,
-    damageCharges: outcome.chances,
-    beyondLegendary: !!data.beyondLegendary
+    damageCharges: outcome.chances
   }, {
     rolls: [roll],
     rollMode: hud.rollMode,
@@ -248,7 +225,7 @@ async function printActionCard(state) {
       actorUuid: actor.uuid,
       itemUuid: item?.uuid ?? null,
       chances: outcome.chances,
-      beyondLegendary: !!data.beyondLegendary,
+      bloomed: !!data.bloomed,
       success: outcome.success,
       targets: outcome.targets.map(t => ({
         tokenUuid: t.tokenUuid, actorUuid: t.actorUuid, name: t.name, img: t.img,

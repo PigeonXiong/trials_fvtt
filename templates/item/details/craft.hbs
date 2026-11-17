@@ -32,6 +32,12 @@
   <label>{{localize "TRAILS.Item.Quality"}}
     <select name="system.quality">{{selectOptions config.ranks selected=system.quality localize=true}}</select>
   </label>
+  {{#unless (eq system.craftType "magical")}}
+  <label class="checkbox" data-tooltip="TRAILS.Item.AddWeaponDamageHint">
+    <input type="checkbox" name="system.addWeaponDamage" {{checked system.addWeaponDamage}}>
+    {{localize "TRAILS.Item.AddWeaponDamage"}}
+  </label>
+  {{/unless}}
   <label class="checkbox">
     <input type="checkbox" name="system.addStrength" {{checked system.addStrength}}>
     {{localize "TRAILS.Item.AddStrength"}}

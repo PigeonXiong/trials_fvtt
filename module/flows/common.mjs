@@ -26,6 +26,7 @@ export async function rollDisplay(roll) {
 export function sourceEffect(source) {
   if (source.effectText) return source.effectText;
   const parts = [];
+  if (source.effectDice) parts.push(format("TRAILS.Hud.SourceEffectDice", { n: source.effectDice, faces: source.effectFaces }));
   if (source.dice) parts.push(format("TRAILS.Hud.SourceDice", { n: signed(source.dice) }));
   if (source.charges) parts.push(format("TRAILS.Hud.SourceCharges", { n: source.charges }));
   if (source.challenges) parts.push(format("TRAILS.Hud.SourceChallenges", { n: source.challenges }));

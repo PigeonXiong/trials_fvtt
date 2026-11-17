@@ -1,4 +1,4 @@
-import { applyDamage, DEFENSE_VIGOR_COST, RESISTANCE_MANA_COST } from "../rules/character.mjs";
+import { applyDamage, raisedCurrentValues, DEFENSE_VIGOR_COST, RESISTANCE_MANA_COST } from "../rules/character.mjs";
 import { CharacterData } from "../data/actor-models.mjs";
 import { rollAction, rollDamage, postItemCard } from "../dice/rolls.mjs";
 import { SYSTEM_ID, TRAILS } from "../config.mjs";
@@ -26,6 +26,31 @@ export class TrailsActor extends Actor {
       updates[`system.resources.${key}.max`] = max;
     }
     this.updateSource(updates);
+  }
+
+  async _preUpdate(changed, options, user) {
+    if ((await super._preUpdate(changed, options, user)) === false) return false;
+    if (this.type === "character") this.#raiseCurrentWithMaxima(changed);
+  }
+
+  /**
+   * 提高耐久、活力、魔力上限时（加值、属性或等级），当前值同步增加相同数值，保留已消耗的部分。
+   * 只处理角色自身数据的改动；主动效果带来的上限变化需手动调整当前值。同一次更新已直接改当前值时不干预。
+   */
+  #raiseCurrentWithMaxima(changed) {
+    const expanded = foundry.utils.expandObject(changed);
+    if (!expanded.system) return;
+    const source = this._source.system;
+    const merged = foundry.utils.mergeObject(foundry.utils.deepClone(source), expanded.system, { inplace: false });
+    const current = Object.fromEntries(Object.entries(this.system.resources).map(([key, r]) => [key, r.value]));
+    const raised = raisedCurrentValues(CharacterData.initialResources(source), CharacterData.initialResources(merged), current);
+    const flat = Object.keys(changed).some(key => key.includes("."));
+    for (const [key, value] of Object.entries(raised)) {
+      const path = `system.resources.${key}.value`;
+      if (foundry.utils.hasProperty(expanded, path)) continue;
+      if (flat) changed[path] = value;
+      else foundry.utils.setProperty(changed, path, value);
+    }
   }
 
   get isCharacter() {
@@ -112,12 +137,17 @@ export class TrailsActor extends Actor {
     });
   }
 
-  /** 抵抗反应：按侵袭性质选择属性 + 抵抗技能，消耗 5 魔力，不可承担冒险，需严格高于侵袭方。 */
-  rollResistance(options = {}) {
+  /** 抵抗检定的骰池来源：角色为属性 + 抵抗技能，NPC 为战斗数值中的抵抗（已含属性）。 */
+  #resistancePool() {
     const fixed = this.isCharacter ? this.system.skills.resistance.dice : this.system.combat.resistance;
     const label = this.isCharacter
       ? format("TRAILS.Source.Skill", { skill: localize(TRAILS.skills.resistance) })
       : localize("TRAILS.Npc.Resistance");
+    return this.makePool(fixed, label, { useAbilityDice: this.isCharacter });
+  }
+
+  /** 即时抵抗反应：按侵袭性质选择属性 + 抵抗技能，消耗 5 魔力，不可承担冒险，需严格高于侵袭方。 */
+  rollResistance(options = {}) {
     return rollAction(this, {
       title: localize("TRAILS.Roll.Resistance"),
       band: localize("TRAILS.Hud.Band.Reaction"),
@@ -127,7 +157,25 @@ export class TrailsActor extends Actor {
       allowChances: false,
       reaction: true,
       cost: { resource: "mana", amount: RESISTANCE_MANA_COST },
-      pool: this.makePool(fixed, label, { useAbilityDice: this.isCharacter }),
+      pool: this.#resistancePool(),
+      ...options
+    });
+  }
+
+  /**
+   * 恢复阶段的状态抵抗：对一个生效中的状态进行抵抗检定，不消耗魔力，不可承担冒险，
+   * 达到或超过该状态的抵抗 VS（未写明时为施加者的原攻击或施法骰结果）即成功。
+   */
+  rollRecoveryResistance(options = {}) {
+    return rollAction(this, {
+      title: localize("TRAILS.Roll.RecoveryResistance"),
+      band: localize("TRAILS.Hud.Band.Recovery"),
+      icon: "fa-solid fa-heart-pulse",
+      ability: this.isCharacter ? this.system.skills.resistance.ability : null,
+      allowAbility: this.isCharacter,
+      allowChances: false,
+      vsPlaceholder: "TRAILS.Hud.RecoveryVSPlaceholder",
+      pool: this.#resistancePool(),
       ...options
     });
   }
@@ -208,15 +256,15 @@ export class TrailsActor extends Actor {
   }
 
   /**
-   * 承受伤害：伤害倍率 → 扣护甲等级（含掩护）→ 耐久 → 生命值，并在聊天栏留下可撤销的记录。
+   * 承受伤害：扣护甲等级（含掩护）→ 伤害倍率（减半向下取整）→ 耐久 → 生命值，并在聊天栏留下可撤销的记录。
    * @param {number} amount 原始伤害
    * @param {{ignoreArmor?: boolean, armorBonus?: number, multiplier?: number}} [options]
    */
   async applyDamage(amount, { ignoreArmor = false, armorBonus = 0, multiplier = 1 } = {}) {
     const { durability, health } = this.system.resources;
-    const raw = Math.max(0, Math.floor(amount * multiplier));
+    const raw = Math.max(0, Math.floor(Number(amount) || 0));
     const armorRank = ignoreArmor ? 0 : this.system.defenses.armorRank.value + armorBonus;
-    const result = applyDamage({ durability: durability.value, health: health.value }, raw, armorRank);
+    const result = applyDamage({ durability: durability.value, health: health.value }, raw, armorRank, multiplier);
     const wasWounded = this.statuses?.has("wounded") ?? false;
     await this.update({
       "system.resources.durability.value": result.durability,
@@ -233,12 +281,15 @@ export class TrailsActor extends Actor {
     if (result.shock) notes.push(localize("TRAILS.Damage.Shock"));
     if (result.dead) notes.push(localize("TRAILS.Damage.Dead"));
     const detail = [];
-    detail.push(multiplier === 1
-      ? format("TRAILS.Damage.DetailRaw", { raw })
-      : format("TRAILS.Damage.DetailMultiplied", { amount, multiplier: multiplier === 0.5 ? "½" : multiplier, raw }));
+    detail.push(format("TRAILS.Damage.DetailRaw", { raw }));
     detail.push(ignoreArmor
       ? localize("TRAILS.Damage.DetailIgnoreArmor")
       : format("TRAILS.Damage.DetailArmor", { absorbed: result.absorbed, armor: armorRank }));
+    if (multiplier !== 1) {
+      detail.push(format("TRAILS.Damage.DetailMultiplied", {
+        multiplier: multiplier === 0.5 ? "½" : multiplier, before: result.afterArmor, net: result.net
+      }));
+    }
     detail.push(format("TRAILS.Damage.DetailResources", {
       durabilityFrom: durability.value, durabilityTo: result.durability,
       healthFrom: health.value, healthTo: result.health

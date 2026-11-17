@@ -4,7 +4,7 @@
  */
 import {
   applyToggles, buildActionPool, buildEffectPool, rankLadder, clampAdjust, targetVS,
-  coverArmorBonus, toggleSource, forcedChances, COVER, COVER_KEYS
+  coverArmorBonus, toggleSource, COVER, COVER_KEYS
 } from "../rules/roll-config.mjs";
 import { CHANCE_VS, MAX_CHANCES, MAX_BONUS_FACES, DEFAULT_BONUS_FACES } from "../rules/dice.mjs";
 import { TRAILS } from "../config.mjs";
@@ -110,18 +110,24 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
     const c = this.config;
     c.sources = applyToggles(c.getSources(c.ability), c.toggles);
     const isAction = c.kind === "action";
-    const forced = isAction && c.allowChances ? forcedChances(c.sources) : null;
-    c.chancesLocked = forced !== null;
-    if (c.chancesLocked) c.chances = forced;
     const pool = isAction ? buildActionPool(c) : buildEffectPool(c);
 
     const sources = c.sources.map(s => ({ ...s, effect: sourceEffect(s) }));
     const chips = [];
+    let hiddenChips = 0;
     if (isAction) chips.push({ faces: 20, cls: "action" });
-    else for (let i = 0; i < Math.min(pool.effectDice, MAX_CHIPS); i++) chips.push({ faces: pool.effectFaces, cls: "effect" });
+    else {
+      let room = MAX_CHIPS;
+      for (const group of pool.effects) {
+        const shown = Math.min(group.dice, room);
+        for (let i = 0; i < shown; i++) chips.push({ faces: group.faces, cls: "effect" });
+        hiddenChips += group.dice - shown;
+        room -= shown;
+      }
+    }
     const bonusShown = Math.min(pool.dice, MAX_CHIPS);
     for (let i = 0; i < bonusShown; i++) chips.push({ faces: pool.faces, cls: `bonus d${pool.faces}` });
-    const hiddenChips = (isAction ? 0 : Math.max(0, pool.effectDice - MAX_CHIPS)) + (pool.dice - bonusShown);
+    hiddenChips += pool.dice - bonusShown;
 
     const chances = c.allowChances ? c.chances : 0;
     const targets = c.targets.map((t, index) => {
@@ -163,7 +169,7 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
       targets,
       defenseLabel: c.defense && c.defense !== "none" ? localize(TRAILS.defenseTargets[c.defense]) : "",
       showManualVS: isAction && !targets.length,
-      vsPlaceholder: c.reaction ? "TRAILS.Hud.ReactionVSPlaceholder" : "TRAILS.Roll.VSPlaceholder",
+      vsPlaceholder: c.vsPlaceholder ?? (c.reaction ? "TRAILS.Hud.ReactionVSPlaceholder" : "TRAILS.Roll.VSPlaceholder"),
       abilityChoices: c.abilityChoices,
       rollModes: Object.fromEntries(Object.entries(CONFIG.Dice.rollModes)
         .map(([key, mode]) => [key, typeof mode === "string" ? mode : mode.label]))
@@ -238,7 +244,6 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** 点亮第 n 个冒险点；再次点击最高的那个则熄灭它。 */
   static #onSetChances(event, target) {
-    if (this.config.chancesLocked) return;
     const n = Number(target.dataset.value) || 0;
     this.config.chances = clampAdjust("chances", this.config.chances === n ? n - 1 : n);
     this.render();
@@ -249,7 +254,6 @@ export class RollHud extends HandlebarsApplicationMixin(ApplicationV2) {
     const id = target.dataset.source;
     const source = c.sources.find(s => s.id === id);
     if (!source || source.locked) return;
-    // 取消「突破传奇」后冒险恢复为可调，但保留当前点数（由 _prepareContext 重新计算锁定状态）
     c.toggles = toggleSource(c.sources, c.toggles, id);
     this.render();
   }

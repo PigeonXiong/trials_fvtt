@@ -33,14 +33,23 @@ async function onChatButton(event, message) {
   }
 }
 
-/** 从行动卡片发起伤害流程：承担的冒险转为蓄势，命中的目标带入伤害面板。 */
+/**
+ * 从行动卡片发起伤害流程：承担的冒险转为蓄势，命中的目标带入伤害面板。
+ * 行动检定绽放了命运时，伤害掷骰也不能进入命定。
+ * beyondLegendary 只出现在旧版本的卡片上（旧的「突破传奇」选项），仍按 d100 上限处理。
+ */
 async function onRollDamage(flags) {
   const actor = flags.actorUuid ? await fromUuid(flags.actorUuid) : null;
   const item = flags.itemUuid ? await fromUuid(flags.itemUuid) : null;
   if (!actor || !item) return ui.notifications.warn(localize("TRAILS.Notify.SourceMissing"));
   if (!actor.isOwner) return ui.notifications.warn(localize("TRAILS.Notify.NotOwner"));
   const targets = (flags.targets ?? []).filter(t => t.success);
-  return actor.rollDamage(item, { chances: flags.chances ?? 0, beyondLegendary: !!flags.beyondLegendary, targets });
+  return actor.rollDamage(item, {
+    chances: flags.chances ?? 0,
+    bloomed: !!flags.bloomed || !!flags.beyondLegendary,
+    beyondLegendary: !!flags.beyondLegendary,
+    targets
+  });
 }
 
 function damageTotal(message) {

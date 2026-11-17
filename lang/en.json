@@ -33,7 +33,7 @@
       "sol": "SOL",
       "emp": "EMP",
       "mem": "MEM",
-      "rsn": "RSN",
+      "rsn": "REA",
       "rsl": "RSL"
     },
     "Skill": {
@@ -244,7 +244,9 @@
       "Rank": "Rank",
       "SkillPointCost": "Skill Point Cost",
       "TalentHint": "For talents that raise ability scores or resources, add an Active Effect on the Effects tab, e.g. key system.abilities.str.value, mode Add, value 2.",
-      "Quantity": "Quantity"
+      "Quantity": "Quantity",
+      "AddWeaponDamage": "Add weapon base damage dice",
+      "AddWeaponDamageHint": "When rolling damage for a Martial Craft, add the base damage dice of the equipped weapon that uses the same skill (not for Magical Crafts). Enter only the Craft's own dice as its damage value"
     },
     "Effect": {
       "Title": "Effects",
@@ -259,7 +261,7 @@
       "VSPlaceholder": "Leave empty for an opposed roll",
       "NoTarget": "No fixed Victory Sum (opposed roll)",
       "Chances": "Chances",
-      "ChancesHint": "Each Chance adds +15 to the VS and grants 1 Charge to the effect roll (e.g. damage). Max 3.",
+      "ChancesHint": "Each Chance adds +15 to the VS and grants 1 Charge to the effect roll (e.g. damage). Max 3. Unless you are Destined, effects cannot exceed Legendary (d20).",
       "Charges": "Charges",
       "Challenges": "Challenges",
       "Challenge": "Challenge",
@@ -282,7 +284,9 @@
       "Damage": "Roll Damage",
       "DamageTitle": "{name}: Damage",
       "Hit": "Hit",
-      "Miss": "Miss"
+      "Miss": "Miss",
+      "RecoveryResistance": "Condition Resistance",
+      "RecoveryResistanceHint": "Recovery Phase Resistance check against one active condition: costs no Mana; meet or exceed the condition's Resistance VS to succeed"
     },
     "Damage": {
       "Apply": "Apply Damage",
@@ -292,10 +296,10 @@
       "Dead": "Damaged while at 0 Health: dead.",
       "ApplySelected": "Apply to Selected Tokens",
       "ApplyTargetHint": "Apply to this target (minus Armor Rank and cover); Shift-click to ignore armor",
-      "MultiplierHint": "Damage multiplier, e.g. a successful defense reaction halves damage",
+      "MultiplierHint": "Damage multiplier for a target that takes half or double damage from this damage type. Armor Rank is subtracted first, then the rest is halved (rounded down) or doubled",
       "Headline": "{name} took {net} damage",
       "DetailRaw": "Damage {raw}",
-      "DetailMultiplied": "Damage {amount} ×{multiplier} = {raw}",
+      "DetailMultiplied": "×{multiplier}: {before} → {net}",
       "DetailArmor": "Armor Rank {armor} absorbed {absorbed}",
       "DetailIgnoreArmor": "Armor ignored",
       "DetailResources": "Durability {durabilityFrom} → {durabilityTo}, Health {healthFrom} → {healthTo}",
@@ -357,11 +361,13 @@
         "Craft": "Craft",
         "VersusDefense": "{kind} vs {defense}",
         "Damage": "Damage",
-        "DamageBurst": "Damage · Burst ×{n}"
+        "DamageBurst": "Damage · Burst ×{n}",
+        "Recovery": "Recovery Phase · Resistance"
       },
-      "ChancesLocked": "Beyond Legendary: 3 chances locked",
       "MythicCap": "cap d100",
-      "MythicCapNote": "Beyond Legendary: bonus dice can reach Mythic (d100); the actual rank depends on charges"
+      "MythicCapNote": "Destined: damage bonus dice may rise above Legendary with charges, up to Mythic (d100); the actual rank depends on charges",
+      "RecoveryVSPlaceholder": "Resistance VS of the condition",
+      "SourceEffectDice": "+{n}d{faces} damage dice"
     },
     "Cover": {
       "none": "No Cover",
@@ -386,14 +392,14 @@
       "LowAbility": "Low {ability}",
       "Wounded": "Wounded",
       "Bloom": "Bloom Destiny: +Dice",
-      "BloomHint": "Spend your Destined state for +3 bonus dice on this action or reaction roll; you cannot become Destined again this turn",
+      "BloomHint": "Spend your Destined state for +3 bonus dice on this action or reaction roll; this action (including its damage roll) cannot make you Destined again",
       "Strength": "Strength bonus dice",
       "ItemBonus": "Item bonus dice",
       "ChanceCharges": "From chances",
-      "ChanceChargesHint": "Each chance taken on the action roll gives the effect roll 1 charge (never above Legendary d20)",
-      "BeyondLegendary": "Bloom Destiny: Beyond Legendary",
-      "BeyondLegendaryHint": "Spend your Destined state and take 3 chances (VS +45). The following effect roll may raise its bonus dice up to Mythic (d100); the actual rank still depends on the charges gained. You cannot become Destined again this turn",
-      "BeyondLegendaryEffect": "3 chances locked · effect cap d100"
+      "ChanceChargesHint": "Each chance taken on the action roll gives the effect roll 1 charge (never above Legendary d20 unless you are Destined)",
+      "DestinedCap": "Destined: beyond Legendary",
+      "WeaponBase": "Weapon base damage: {name}",
+      "WeaponBaseHint": "A Martial Craft adds the base damage dice of the weapon used, once, without its bonus dice. Uncheck if the Craft expressly excludes weapon damage"
     }
   }
 }

@@ -27,6 +27,7 @@ class TrailsActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       rollSkill: TrailsActorSheet.#onRollSkill,
       rollDefense: TrailsActorSheet.#onRollDefense,
       rollResistance: TrailsActorSheet.#onRollResistance,
+      rollRecoveryResistance: TrailsActorSheet.#onRollRecoveryResistance,
       rollInitiative: TrailsActorSheet.#onRollInitiative,
       useItem: TrailsActorSheet.#onUseItem,
       rollDamage: TrailsActorSheet.#onRollDamage,
@@ -159,6 +160,10 @@ class TrailsActorSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
 
   static #onRollResistance(event) {
     return this.actor.rollResistance({ fastForward: event.shiftKey });
+  }
+
+  static #onRollRecoveryResistance(event) {
+    return this.actor.rollRecoveryResistance({ fastForward: event.shiftKey });
   }
 
   static #onRollInitiative() {

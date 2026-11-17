@@ -43,7 +43,10 @@ export class ArmorData extends foundry.abstract.TypeDataModel {
   }
 }
 
-/** 战技：消耗活力或魔力；每次使用都进行行动检定，targets 决定对抗物防、魔防或不对抗。 */
+/**
+ * 战技：消耗活力或魔力；每次使用都进行行动检定，targets 决定对抗物防、魔防或不对抗。
+ * addWeaponDamage：武术战技掷伤害时加上所用武器的基础伤害骰（魔法战技不适用）；damage 只填战技自身的伤害骰。
+ */
 export class CraftData extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return {
@@ -58,6 +61,7 @@ export class CraftData extends foundry.abstract.TypeDataModel {
       areaSize: str(),
       damage: int(0, { min: 0 }),
       quality: choice(RANK_KEYS, "ordinary"),
+      addWeaponDamage: new BooleanField({ initial: true }),
       addStrength: new BooleanField({ initial: false }),
       bonusDamageDice: int(0, { min: 0 }),
       damageType: str(),

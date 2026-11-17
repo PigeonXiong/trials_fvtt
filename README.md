@@ -6,7 +6,7 @@
 
 ![Foundry VTT v12](https://img.shields.io/badge/Foundry_VTT-v12-orange)
 
-An unofficial Foundry VTT game system for the *The Legend of Heroes: Trails of Destiny* tabletop RPG (Promethium System). Terms and rules follow the Chinese translation (V1.1). The interface is available in Simplified Chinese and English.
+An unofficial Foundry VTT game system for the *The Legend of Heroes: Trails of Destiny* tabletop RPG (Promethium System). Terms follow the Chinese translation (V1.1); rules are corrected against the English errata edition (2026-11-15). The interface is available in Simplified Chinese and English.
 
 ## Features
 
@@ -14,7 +14,7 @@ An unofficial Foundry VTT game system for the *The Legend of Heroes: Trails of D
 - **Roll HUD**: a panel pops up in the bottom-right corner when you roll. Adjust Chances, bonus dice, Charges and Challenges with buttons and see the final formula update live. Effect rolls such as damage use the same panel.
 - **Targets and cover**: selected targets are listed automatically, each with its own cover setting, VS and hit result.
 - **Damage**: applied to Armor Rank, then Durability, then Health. Wounded, Shock and death are handled automatically, and every damage entry can be undone.
-- **Destined**: entering Destined is detected automatically, and both Bloom Destiny options (+Dice and Beyond Legendary) are supported.
+- **Destined**: entering Destined is detected automatically, Bloom Destiny (+3 dice) is supported, and while Destined, damage bonus dice can go beyond Legendary.
 - **Token resource bars**: PC bars are visible to everyone, NPC bars only to their owners. With [Bar Brawl](https://foundryvtt.com/packages/barbrawl) enabled, new actors get Durability, Health, Vigor, Mana and Orbal Energy bars out of the box.
 
 ## Installation

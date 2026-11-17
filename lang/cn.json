@@ -244,7 +244,9 @@
       "Rank": "阶",
       "SkillPointCost": "技能点花费",
       "TalentHint": "提升属性值、资源等数值的天赋，请在「效果」页添加主动效果，例如键 system.abilities.str.value、模式「加」、值 2。",
-      "Quantity": "数量"
+      "Quantity": "数量",
+      "AddWeaponDamage": "加上武器基础伤害骰",
+      "AddWeaponDamageHint": "武术战技掷伤害时，自动加上已装备的同技能武器的基础伤害骰（魔法战技不适用）。战技伤害值只填战技自身的伤害骰"
     },
     "Effect": {
       "Title": "效果",
@@ -259,7 +261,7 @@
       "VSPlaceholder": "留空表示对抗检定",
       "NoTarget": "无固定胜利总值（对抗检定）",
       "Chances": "冒险",
-      "ChancesHint": "每承担 1 点冒险，胜利总值 +15，并为效应掷骰（如伤害）获得 1 点蓄势；最多 3 点，且效应不能超过传奇级（d20）。",
+      "ChancesHint": "每承担 1 点冒险，胜利总值 +15，并为效应掷骰（如伤害）获得 1 点蓄势；最多 3 点。未处于命定时，效应不能超过传奇级（d20）。",
       "Charges": "蓄势",
       "Challenges": "挑战",
       "Challenge": "挑战",
@@ -282,7 +284,9 @@
       "Damage": "掷伤害",
       "DamageTitle": "{name}：伤害",
       "Hit": "命中",
-      "Miss": "未命中"
+      "Miss": "未命中",
+      "RecoveryResistance": "状态抵抗",
+      "RecoveryResistanceHint": "恢复阶段对一个生效中的状态进行抵抗检定：不消耗魔力，达到或超过该状态的抵抗 VS 即成功"
     },
     "Damage": {
       "Apply": "应用伤害",
@@ -292,10 +296,10 @@
       "Dead": "在 0 生命值时再次受到伤害——死亡。",
       "ApplySelected": "应用到选中的 Token",
       "ApplyTargetHint": "对该目标应用伤害（扣除护甲等级与掩护）；按住 Shift 点击则无视护甲",
-      "MultiplierHint": "伤害倍率：例如成功的防御反应使伤害减半",
+      "MultiplierHint": "伤害倍率：目标对该伤害类型受到减半或加倍伤害时选择。先扣护甲等级，再减半（向下取整）或加倍",
       "Headline": "{name} 受到 {net} 点伤害",
       "DetailRaw": "伤害 {raw}",
-      "DetailMultiplied": "伤害 {amount} ×{multiplier} = {raw}",
+      "DetailMultiplied": "倍率 ×{multiplier}：{before} → {net}",
       "DetailArmor": "护甲等级 {armor} 吸收 {absorbed}",
       "DetailIgnoreArmor": "无视护甲",
       "DetailResources": "耐久 {durabilityFrom} → {durabilityTo}，生命值 {healthFrom} → {healthTo}",
@@ -357,11 +361,13 @@
         "Craft": "战技",
         "VersusDefense": "{kind} VS {defense}",
         "Damage": "伤害检定",
-        "DamageBurst": "伤害检定 · 爆发 ×{n}"
+        "DamageBurst": "伤害检定 · 爆发 ×{n}",
+        "Recovery": "恢复阶段 · 抵抗检定"
       },
-      "ChancesLocked": "突破传奇：已锁定 3 点冒险",
       "MythicCap": "上限 d100",
-      "MythicCapNote": "突破传奇：奖励骰上限提升到神话级（d100），实际骰阶由蓄势决定"
+      "MythicCapNote": "处于命定：伤害奖励骰可以借蓄势突破传奇级，上限为神话级（d100），实际骰阶由蓄势决定",
+      "RecoveryVSPlaceholder": "填写该状态的抵抗 VS",
+      "SourceEffectDice": "+{n}d{faces} 伤害骰"
     },
     "Cover": {
       "none": "无掩护",
@@ -386,14 +392,14 @@
       "LowAbility": "{ability}过低",
       "Wounded": "负伤",
       "Bloom": "绽放命运：加骰",
-      "BloomHint": "消耗命定状态，为这次行动或反应掷骰 +3 奖励骰；本回合不能再次进入命定",
+      "BloomHint": "消耗命定状态，为这次行动或反应掷骰 +3 奖励骰；这次行动（含之后的伤害掷骰）不能再次进入命定",
       "Strength": "力量奖励骰",
       "ItemBonus": "物品额外奖励骰",
       "ChanceCharges": "冒险转化",
-      "ChanceChargesHint": "行动检定中每承担 1 点冒险，效应掷骰获得 1 点蓄势（不能超过传奇级 d20）",
-      "BeyondLegendary": "绽放命运：突破传奇",
-      "BeyondLegendaryHint": "消耗命定状态，强制承担 3 点冒险（VS +45）。之后的效应掷骰奖励骰上限提升到神话级（d100），实际骰阶仍由获得的蓄势决定。本回合不能再次进入命定",
-      "BeyondLegendaryEffect": "锁定 3 冒险 · 效应上限 d100"
+      "ChanceChargesHint": "行动检定中每承担 1 点冒险，效应掷骰获得 1 点蓄势（未处于命定时不能超过传奇级 d20）",
+      "DestinedCap": "命定：突破传奇级",
+      "WeaponBase": "武器基础伤害：{name}",
+      "WeaponBaseHint": "武术战技默认加上所用武器的基础伤害骰（只加一次，不含武器的奖励骰）。战技明确排除武器伤害时取消勾选"
     }
   }
 }

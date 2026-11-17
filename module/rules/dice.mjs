@@ -20,9 +20,9 @@ export const DIE_RANKS = Object.freeze([
 export const ACTION_DIE_FACES = 20;
 export const DEFAULT_BONUS_FACES = 10;
 export const MIN_BONUS_FACES = 4;
-/** 冒险与蓄势不能把效果推过传奇（d20）。 */
+/** 未处于命定时，冒险与蓄势不能把效果推过传奇（d20）。 */
 export const MAX_BONUS_FACES = 20;
-/** 绽放命运「突破传奇」后，效应奖励骰的上限提升到神话级（d100）。 */
+/** 处于命定时，伤害奖励骰可以借蓄势突破传奇，上限为神话级（d100）。 */
 export const MYTHIC_FACES = 100;
 export const MAX_CHANCES = 3;
 export const CHANCE_VS = 15;
@@ -105,19 +105,28 @@ export function actionPool({ bonusDice = 0, charges = 0, challenges = 0, flat = 
  * @param {number} [p.bonusDice] 奖励骰数量（如力量奖励骰）
  * @param {number} [p.charges] 蓄势（通常来自冒险）
  * @param {number} [p.challenges] 挑战（负伤等）
- * @param {number} [p.maxFaces] 奖励骰上限：默认传奇（d20），突破传奇时为神话（d100）
+ * @param {{dice: number, faces: number}[]} [p.effectGroups] 追加的效应骰组（如武术战技加上的武器基础伤害骰）
+ * @param {number} [p.maxFaces] 奖励骰上限：默认传奇（d20），处于命定时为神话（d100）
  */
-export function effectPool({ effectDice = 0, effectFaces = 8, bonusDice = 0, charges = 0, challenges = 0, flat = 0, maxFaces = MAX_BONUS_FACES } = {}) {
+export function effectPool({
+  effectDice = 0, effectFaces = 8, effectGroups = [], bonusDice = 0, charges = 0, challenges = 0, flat = 0,
+  maxFaces = MAX_BONUS_FACES
+} = {}) {
   const dice = clampInt(effectDice, 0);
   const bonus = clampInt(bonusDice, 0);
   const faces = shiftFaces(DEFAULT_BONUS_FACES, clampInt(charges, 0), clampInt(challenges, 0), { max: maxFaces });
   rankIndex(effectFaces);
-  const parts = [];
-  if (dice > 0) parts.push(`${dice}d${effectFaces}`);
+  const effects = [{ dice, faces: effectFaces }];
+  for (const group of effectGroups) {
+    const n = clampInt(group.dice, 0);
+    rankIndex(group.faces);
+    effects.push({ dice: n, faces: group.faces });
+  }
+  const parts = effects.filter(e => e.dice > 0).map(e => `${e.dice}d${e.faces}`);
   if (bonus > 0) parts.push(`${bonus}d${faces}x`);
   let formula = parts.join(" + ") || "0";
   formula += formatFlat(flat);
-  return { dice, effectFaces, bonusDice: bonus, faces, formula };
+  return { dice, effectFaces, effects: effects.filter(e => e.dice > 0), bonusDice: bonus, faces, formula };
 }
 
 /** 统计爆发次数：奖励骰中每个掷出最大值的有效结果计一次。 */
