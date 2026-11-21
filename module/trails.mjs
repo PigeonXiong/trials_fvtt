@@ -20,12 +20,15 @@ import { EffectFlow, registerEffectSteps } from "./flows/effect-flow.mjs";
 import { RollHud } from "./apps/roll-hud.mjs";
 import { registerMigrationSetting, migrateWorld } from "./migration.mjs";
 import * as tokenBars from "./token-bars.mjs";
+import * as checkRequest from "./check-request.mjs";
 
 const PARTIALS = [
   "actor/parts/combat-strip.hbs",
   "actor/parts/item-list.hbs",
   "actor/parts/effects.hbs",
-  "hud/parts/counter.hbs"
+  "hud/parts/counter.hbs",
+  "apps/check-request-dialog.hbs",
+  "chat/check-request.hbs"
 ].map(templatePath);
 
 Hooks.once("init", () => {
@@ -40,6 +43,11 @@ Hooks.once("init", () => {
     flowSteps,
     apps: { RollHud },
     tokenBars,
+    checkRequest: {
+      open: checkRequest.openCheckRequestDialog,
+      post: checkRequest.postCheckRequest,
+      roll: checkRequest.rollCheck
+    },
     useItem
   };
   registerMigrationSetting();
@@ -80,6 +88,7 @@ Hooks.once("init", () => {
   });
 
   registerChatListeners();
+  checkRequest.registerCheckRequests();
   return loadTemplates([...PARTIALS, ...ITEM_DETAIL_TEMPLATES]);
 });
 

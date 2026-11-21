@@ -1,0 +1,38 @@
+<div class="trails-check-request-form">
+  <div class="form-group">
+    <label>{{localize "TRAILS.Request.Check"}}</label>
+    <div class="form-fields">
+      <select name="check" autofocus>
+        <optgroup label="{{localize "TRAILS.Request.Skills"}}">
+          {{#each skills}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+        </optgroup>
+        <optgroup label="{{localize "TRAILS.Request.Abilities"}}">
+          {{#each checkAbilities}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+        </optgroup>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "TRAILS.Sheet.Ability"}}</label>
+    <div class="form-fields">
+      <select name="ability">
+        <option value="">{{localize "TRAILS.Request.DefaultAbility"}}</option>
+        {{#each abilities}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}
+      </select>
+    </div>
+    <p class="hint">{{localize "TRAILS.Request.AbilityHint"}}</p>
+  </div>
+  <div class="form-group">
+    <label>{{localize "TRAILS.Roll.VS"}}</label>
+    <div class="form-fields">
+      <input type="number" name="vs" min="0" step="1" value="{{vs}}" placeholder="{{localize "TRAILS.Request.VSPlaceholder"}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label>{{localize "TRAILS.Request.Label"}}</label>
+    <div class="form-fields">
+      <input type="text" name="label" maxlength="80" value="{{label}}" placeholder="{{localize "TRAILS.Request.LabelPlaceholder"}}">
+    </div>
+  </div>
+  <p class="hint">{{{localize "TRAILS.Request.EnricherHint"}}}</p>
+</div>

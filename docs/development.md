@@ -24,6 +24,7 @@ module/
   dice/rolls.mjs       旧接口：rollAction / rollDamage / postItemCard，内部改为启动流程
   sheets/              ApplicationV2 角色卡与物品卡
   chat.mjs             聊天卡片按钮
+  check-request.mjs    检定请求：GM 对话框、请求卡片与结果汇总、日志中的 @Check 链接（纯逻辑在 rules/check-request.mjs）
   token-bars.mjs       Token 资源条的可见性与 Bar Brawl 默认布局
   migration.mjs        世界数据迁移（GM 载入世界时按版本执行）
   utils.mjs            v12 → v13 API 兼容层
@@ -102,3 +103,5 @@ ActionFlow.insertStepBefore("showActionHUD", "announceAttack");
 9. 在天赋上添加主动效果「system.abilities.str.value / 加 / 2」并拖给角色 → 力量 +2，奖励骰随之变化。
 10. 战斗追踪器中掷先攻；角色负伤时，先攻的奖励骰应下降一级。
 11. 启用 Bar Brawl，分别新建一个角色和一个 NPC 并拖到场景：角色 Token 上方为耐久、生命值（带数值），下方为活力｜魔力一排、导力能量一排；NPC 没有导力能量。以玩家身份登录时，应能看到所有 PC 的资源条，看不到 NPC 的资源条。
+12. GM 点 Token 工具栏的「发起检定」，选「运动」、属性「敏捷」、VS 15、情境「攀爬城墙」→ 聊天栏出现请求卡片。选中一个角色的 Token 点「进行检定」→ 面板标题为运动检定、属性为敏捷、VS 已填 15；承担 1 点冒险后掷骰，卡片 VS 应为 30，请求卡片下方列出该角色的总值与成败。同一角色再掷一次只保留最新结果；选中 NPC 的 Token 时改为敏捷属性检定。
+13. 在日志中写 `@Check[运动|vs:15]{攀爬城墙}` 与 `@Check[str]` → 显示为检定链接；点击链接直接用选中的角色检定（不汇总到请求卡片），GM 点链接旁的喇叭则发出请求卡片。

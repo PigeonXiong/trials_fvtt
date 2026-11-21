@@ -2,6 +2,7 @@ import { SYSTEM_ID } from "./config.mjs";
 import { coverArmorBonus } from "./rules/roll-config.mjs";
 import { targetActor } from "./flows/common.mjs";
 import { localize, renderTemplate, templatePath } from "./utils.mjs";
+import { decorateRequestCard, rollRequestedCheck } from "./check-request.mjs";
 
 /** 为聊天卡片上的按钮绑定事件（v12 用 renderChatMessage，v13 起改为 renderChatMessageHTML）。 */
 export function registerChatListeners() {
@@ -9,6 +10,7 @@ export function registerChatListeners() {
   Hooks.on(hook, (message, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0];
     if (!root) return;
+    decorateRequestCard(message, root);
     for (const button of root.querySelectorAll("[data-trails-action]")) {
       button.addEventListener("click", event => onChatButton(event, message));
     }
@@ -27,6 +29,7 @@ async function onChatButton(event, message) {
       case "applyDamage": return await onApplyDamage(message, { ignoreArmor: event.shiftKey });
       case "applyTargetDamage": return await onApplyTargetDamage(message, button, { ignoreArmor: event.shiftKey });
       case "undoDamage": return await onUndoDamage(message);
+      case "rollRequestedCheck": return await rollRequestedCheck(message, { fastForward: event.shiftKey });
     }
   } finally {
     button.disabled = false;

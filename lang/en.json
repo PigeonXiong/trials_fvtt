@@ -323,7 +323,9 @@
       "NotOwner": "You do not own this actor.",
       "SelectToken": "Select the token(s) that take the damage first.",
       "SourceMissing": "The source actor or item could not be found.",
-      "TokenBarsMigrated": "Updated resource bar visibility for {actors} prototype token(s) and {tokens} scene token(s) (PCs: everyone, NPCs: owners)."
+      "TokenBarsMigrated": "Updated resource bar visibility for {actors} prototype token(s) and {tokens} scene token(s) (PCs: everyone, NPCs: owners).",
+      "SelectCharacter": "Select your token, or assign a character in User Configuration, first.",
+      "InvalidCheck": "Invalid check type."
     },
     "Hud": {
       "FormulaHint": "Final formula: 1d20 action die + bonus dice (x = explodes on max)",
@@ -400,6 +402,31 @@
       "DestinedCap": "Destined: beyond Legendary",
       "WeaponBase": "Weapon base damage: {name}",
       "WeaponBaseHint": "A Martial Craft adds the base damage dice of the weapon used, once, without its bonus dice. Uncheck if the Craft expressly excludes weapon damage"
+    },
+    "Request": {
+      "Tool": "Request Check",
+      "DialogTitle": "Request a Check",
+      "Post": "Post to Chat",
+      "Check": "Check",
+      "Skills": "Skill Checks",
+      "Abilities": "Ability Checks",
+      "DefaultAbility": "Skill's default ability",
+      "AbilityHint": "Skill checks only: the GM may call for a different ability to fit the situation.",
+      "VSPlaceholder": "Leave blank for an opposed check",
+      "Label": "Situation",
+      "LabelPlaceholder": "e.g. Climb the wall (optional)",
+      "EnricherHint": "Write <code>@Check[athletics|vs:15]{Climb the wall}</code> in a journal to create the same check link; click the bullhorn next to it to post the request.",
+      "Band": "Check Request",
+      "Hint": "Click below to roll with your controlled token or assigned character; adjust Chances and bonus dice in the check panel.",
+      "NoVSHint": "No Victory Sum set: an opposed check, or the GM will announce it.",
+      "Roll": "Roll Check",
+      "Hidden": "Rolled",
+      "WithAbility": "{check} ({ability})",
+      "WithVS": "{check} · VS {vs}",
+      "RollBand": "{kind} · {label}",
+      "LinkLabel": "{label} ({check})",
+      "LinkRollHint": "Roll with your controlled token or assigned character (hold Shift to skip the check panel)",
+      "LinkPostHint": "Post to chat and ask players to roll"
     }
   }
 }

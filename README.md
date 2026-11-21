@@ -12,6 +12,7 @@ An unofficial Foundry VTT game system for the *The Legend of Heroes: Trails of D
 
 - **Character and adversary sheets**: ability bonus dice, core skills, resource maximums, Guard, Ward, Armor Rank and movement are calculated automatically.
 - **Roll HUD**: a panel pops up in the bottom-right corner when you roll. Adjust Chances, bonus dice, Charges and Challenges with buttons and see the final formula update live. Effect rolls such as damage use the same panel.
+- **Check requests**: the GM picks a check and its VS from **Request Check** in the Token tools (or writes `@Check[athletics|vs:15]{Climb the wall}` in a journal) and posts it to chat. Players click the card to open the roll HUD with the VS filled in, and every result is collected back on the request card.
 - **Targets and cover**: selected targets are listed automatically, each with its own cover setting, VS and hit result.
 - **Damage**: applied to Armor Rank, then Durability, then Health. Wounded, Shock and death are handled automatically, and every damage entry can be undone.
 - **Destined**: entering Destined is detected automatically, Bloom Destiny (+3 dice) is supported, and while Destined, damage bonus dice can go beyond Legendary.

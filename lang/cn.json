@@ -323,7 +323,9 @@
       "NotOwner": "你没有该角色的权限。",
       "SelectToken": "请先选中要承受伤害的 Token。",
       "SourceMissing": "找不到对应的角色或物品。",
-      "TokenBarsMigrated": "已更新资源条可见性：{actors} 个角色的原型 Token、{tokens} 个场景 Token（PC 对所有人显示，NPC 对拥有者显示）。"
+      "TokenBarsMigrated": "已更新资源条可见性：{actors} 个角色的原型 Token、{tokens} 个场景 Token（PC 对所有人显示，NPC 对拥有者显示）。",
+      "SelectCharacter": "请先选中你的 Token，或在用户配置中指定角色。",
+      "InvalidCheck": "无效的检定类型。"
     },
     "Hud": {
       "FormulaHint": "最终掷骰公式：1d20 行动骰 + 奖励骰（x 表示掷出最大值时爆发）",
@@ -400,6 +402,31 @@
       "DestinedCap": "命定：突破传奇级",
       "WeaponBase": "武器基础伤害：{name}",
       "WeaponBaseHint": "武术战技默认加上所用武器的基础伤害骰（只加一次，不含武器的奖励骰）。战技明确排除武器伤害时取消勾选"
+    },
+    "Request": {
+      "Tool": "发起检定",
+      "DialogTitle": "发起检定",
+      "Post": "发到聊天栏",
+      "Check": "检定",
+      "Skills": "技能检定",
+      "Abilities": "属性检定",
+      "DefaultAbility": "技能的默认属性",
+      "AbilityHint": "仅用于技能检定：GM 可以按情境改用其他属性。",
+      "VSPlaceholder": "留空表示对抗检定",
+      "Label": "情境",
+      "LabelPlaceholder": "例如：攀爬城墙（可留空）",
+      "EnricherHint": "在日志中写 <code>@Check[运动|vs:15]{攀爬城墙}</code> 可以生成同样的检定链接，点击链接旁的喇叭即可发出请求。",
+      "Band": "检定请求",
+      "Hint": "点击下方按钮，用你控制的 Token 或指定的角色检定；冒险、奖励骰等在检定面板中调整。",
+      "NoVSHint": "未设定胜利总值：对抗检定，或由 GM 另行宣布。",
+      "Roll": "进行检定",
+      "Hidden": "已掷骰",
+      "WithAbility": "{check}（{ability}）",
+      "WithVS": "{check} · VS {vs}",
+      "RollBand": "{kind} · {label}",
+      "LinkLabel": "{label}（{check}）",
+      "LinkRollHint": "用你控制的 Token 或指定的角色检定（按住 Shift 跳过检定面板）",
+      "LinkPostHint": "发到聊天栏，请玩家检定"
     }
   }
 }

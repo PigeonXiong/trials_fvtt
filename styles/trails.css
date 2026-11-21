@@ -1243,3 +1243,100 @@
 .trails.chat-card.damage-result.undone .result-row,
 .trails.chat-card.damage-result.undone .result-detail { opacity: 0.5; text-decoration: line-through; }
 .trails.chat-card .result-undone { margin: 4px 0 0; font-size: 12px; font-weight: bold; color: var(--trails-muted); }
+
+/* ---------- 检定请求 ---------- */
+
+.trails.chat-card .request-label {
+  margin: 6px 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.trails.chat-card .request-vs {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 8px 0;
+}
+
+.trails.chat-card .request-vs-label { font-size: 12px; color: var(--trails-muted); }
+.trails.chat-card .request-vs-value { font-size: 26px; font-weight: bold; line-height: 1.1; color: var(--trails-accent); }
+
+.trails.chat-card .request-hint {
+  margin: 2px 8px 6px;
+  font-size: 11px;
+  text-align: center;
+  color: var(--trails-muted);
+}
+
+.trails.chat-card .request-results {
+  margin: 0 8px 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.trails.chat-card .request-result {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  padding: 2px 6px 2px 2px;
+  background: var(--trails-panel);
+  border: 1px solid var(--trails-line);
+  border-left: 4px solid var(--trails-muted);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.trails.chat-card .request-result.success { border-left-color: var(--trails-good); }
+.trails.chat-card .request-result.failure { border-left-color: var(--trails-bad); }
+
+.trails.chat-card .request-result img {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  object-fit: cover;
+  background: var(--trails-icon-bg);
+  border: none;
+  border-radius: 3px;
+}
+
+.trails.chat-card .request-result .result-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trails.chat-card .request-result .result-total { font-size: 15px; font-weight: bold; }
+.trails.chat-card .request-result .result-outcome { font-size: 12px; font-weight: bold; color: var(--trails-muted); }
+.trails.chat-card .request-result.success .result-outcome { color: var(--trails-good); }
+.trails.chat-card .request-result.failure .result-outcome { color: var(--trails-bad); }
+
+.trails-check-request-dialog .hint code { font-size: 11px; }
+
+/* 日志与聊天中的 @Check 链接 */
+.trails-check-link {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  vertical-align: baseline;
+  white-space: nowrap;
+  background: var(--trails-accent-soft, #e3ecf8);
+  border: 1px solid var(--trails-accent, #2f5d9b);
+  border-radius: 3px;
+}
+
+.trails-check-link a {
+  padding: 0 4px;
+  color: var(--trails-ink, #1f2430);
+  cursor: pointer;
+}
+
+.trails-check-link a:hover { text-shadow: none; background: #fff; }
+.trails-check-link .check-roll i { color: var(--trails-accent, #2f5d9b); }
+.trails-check-link .check-post { border-left: 1px solid var(--trails-accent, #2f5d9b); color: var(--trails-accent, #2f5d9b); }

@@ -1,0 +1,17 @@
+<div class="trails chat-card check-request">
+  <header class="card-title">
+    <i class="fa-solid fa-bullhorn"></i>
+    <span>{{title}}</span>
+  </header>
+  <div class="card-band">// {{localize "TRAILS.Request.Band"}} //</div>
+  {{#if label}}<p class="request-label">{{label}}</p>{{/if}}
+  <div class="request-vs">
+    <span class="request-vs-label">{{localize "TRAILS.Roll.VS"}}</span>
+    <span class="request-vs-value">{{#if hasVS}}{{vs}}{{else}}—{{/if}}</span>
+  </div>
+  <p class="request-hint">{{#if hasVS}}{{localize "TRAILS.Request.Hint"}}{{else}}{{localize "TRAILS.Request.NoVSHint"}}{{/if}}</p>
+  <button type="button" class="card-big-button" data-trails-action="rollRequestedCheck">
+    <i class="fa-solid fa-dice-d20"></i> {{localize "TRAILS.Request.Roll"}}
+  </button>
+  <ol class="request-results" hidden></ol>
+</div>

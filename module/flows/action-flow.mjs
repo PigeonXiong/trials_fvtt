@@ -44,6 +44,7 @@ export class ActionFlow extends Flow {
  * @property {Item|null} [item]
  * @property {boolean} [offerDamage]
  * @property {boolean} [fastForward]   跳过面板，按默认值直接掷骰
+ * @property {string|null} [requestId] 回应的检定请求卡片 id（结果会汇总到该卡片上）
  */
 
 /**
@@ -227,6 +228,7 @@ async function printActionCard(state) {
       chances: outcome.chances,
       bloomed: !!data.bloomed,
       success: outcome.success,
+      requestId: data.requestId ?? null,
       targets: outcome.targets.map(t => ({
         tokenUuid: t.tokenUuid, actorUuid: t.actorUuid, name: t.name, img: t.img,
         cover: t.cover, targetVS: t.targetVS, success: t.success
